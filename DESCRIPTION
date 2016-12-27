@@ -1,0 +1,25 @@
+Package: fisabioR
+Type: Package
+Title: Funciones del Área de Desigualdades de FISABIO.
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Miguel Ángel", "Martínez-Beneito", 	email = "martinez_mig@gva.es", 	role = c("aut")),
+    person("Gonzalo", "García-Donato", 		email = "garcia_gon@gva.es", 	role = c("aut"),
+    person("Paloma", "Botella-Rocamora", 	email = "botella_pal@gva.es", 	role = c("aut"),
+    person("Jordi", "Pérez-Panadés", 		email = "perez_jorpan@gva.es", 	role = c("aut"),
+    person("David", "Martín-Baena", 		email = "martin_dav@gva.es", 	role = c("aut"),
+    person("Francisca", "Corpas-Burgos", 	email = "corpas_fra@gva.es", 	role = c("aut"),
+    person("Héctor", "Perpiñán-Fabuel", 	email = "perpinan_hec@gva.es", 	role = c("aut"),
+    person("Carlos", "Vergara-Hernández",	email = "carlos.vergara@uv.es", role = c("aut", "cre"))
+    )
+Maintainer: Carlos Vergara-Hernández <carlos.vergara@uv.es>
+Description: Colección de funciones de uso común en el Área de Desigualdades de FISABIO, las cuales incluyen 'init_proj' para crear una estructura de directorios y archivos unificada.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: TRUE
+URL: http://carlosvergara.github.io/packages/fisabioR, https://github.com/carlosvergara/fisabioR
+BugReports: https://bitbucket.org/carver2/pbugs/issues
+Imports: knitr, rmarkdown, devtools
+Depends: R (>= 3.2.0)
+Suggest: data.table (>= 1.10.0), tidyverse (>= 1.0.0), testthat (>= 0.4), parallel
+VignetteBuilder: knitr, rmarkdown
