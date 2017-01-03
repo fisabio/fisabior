@@ -3,23 +3,37 @@ Type: Package
 Title: Funciones del Área de Desigualdades de FISABIO.
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Miguel Ángel", "Martínez-Beneito", 	email = "martinez_mig@gva.es", 	role = c("aut")),
-    person("Gonzalo", "García-Donato", 		email = "garcia_gon@gva.es", 	role = c("aut"),
-    person("Paloma", "Botella-Rocamora", 	email = "botella_pal@gva.es", 	role = c("aut"),
-    person("Jordi", "Pérez-Panadés", 		email = "perez_jorpan@gva.es", 	role = c("aut"),
-    person("David", "Martín-Baena", 		email = "martin_dav@gva.es", 	role = c("aut"),
-    person("Francisca", "Corpas-Burgos", 	email = "corpas_fra@gva.es", 	role = c("aut"),
-    person("Héctor", "Perpiñán-Fabuel", 	email = "perpinan_hec@gva.es", 	role = c("aut"),
-    person("Carlos", "Vergara-Hernández",	email = "carlos.vergara@uv.es", role = c("aut", "cre"))
+    person("Miguel Ángel", "Martínez-Beneito", 	email = "martinez_mig@gva.es", 	role = c("aut", "cre")),
+    person("Gonzalo", "García-Donato", 		    email = "garcia_gon@gva.es", 	role = c("aut")),
+    person("Paloma", "Botella-Rocamora", 	    email = "botella_pal@gva.es", 	role = c("aut")),
+    person("Jordi", "Pérez-Panadés", 		    email = "perez_jorpan@gva.es", 	role = c("aut")),
+    person("David", "Martín-Baena", 		    email = "martin_dav@gva.es", 	role = c("aut")),
+    person("Francisca", "Corpas-Burgos", 	    email = "corpas_fra@gva.es", 	role = c("aut")),
+    person("Héctor", "Perpiñán-Fabuel", 	    email = "perpinan_hec@gva.es", 	role = c("aut")),
+    person("Carlos", "Vergara-Hernández",	    email = "carlos.vergara@uv.es", role = c("aut"))
     )
-Maintainer: Carlos Vergara-Hernández <carlos.vergara@uv.es>
-Description: Colección de funciones de uso común en el Área de Desigualdades de FISABIO, las cuales incluyen 'init_proj' para crear una estructura de directorios y archivos unificada.
+Maintainer: Miguel Ángel Martínez-Beneito <martinez_mig@gva.es>
+Description: Colección de funciones de uso común en el Área de Desigualdades de
+    FISABIO. Incluye la función 'init_proj()' para crear una estructura unificada de
+    directorios, archivos y funciones comunes.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
-URL: http://carlosvergara.github.io/packages/fisabioR, https://github.com/carlosvergara/fisabioR
+URL: http://carlosvergara.github.io/packages/fisabioR, 
+    https://github.com/carlosvergara/fisabioR
 BugReports: https://bitbucket.org/carver2/pbugs/issues
-Imports: knitr, rmarkdown, devtools
-Depends: R (>= 3.2.0)
-Suggest: data.table (>= 1.10.0), tidyverse (>= 1.0.0), testthat (>= 0.4), parallel
-VignetteBuilder: knitr, rmarkdown
+Imports:
+    data.table (>= 1.10.0),
+    devtools (>= 1.12.0),
+    knitr (>= 1.15.1),
+    parallel (>= 3.3.2),
+    rmarkdown (>= 0.7.7),
+    rstudioapi (>= 0.6),
+    tidyverse (>= 1.0.0)
+    whisker (>= 0.3-2)
+Depends:
+    R (>= 3.2.0)
+Suggest: testthat (>= 0.4)
+VignetteBuilder: knitr (>= 1.15.1),
+    rmarkdown (>= 0.7.7)
+RoxygenNote: 5.0.1
