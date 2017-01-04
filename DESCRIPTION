@@ -1,7 +1,7 @@
 Package: fisabioR
 Type: Package
 Title: Funciones del Área de Desigualdades de FISABIO.
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
     person("Miguel Ángel", "Martínez-Beneito", 	email = "martinez_mig@gva.es", 	role = c("aut", "cre")),
     person("Gonzalo", "García-Donato", 		    email = "garcia_gon@gva.es", 	role = c("aut")),
@@ -19,21 +19,30 @@ Description: Colección de funciones de uso común en el Área de Desigualdades 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
-URL: http://carlosvergara.github.io/packages/fisabioR, 
-    https://github.com/carlosvergara/fisabioR
-BugReports: https://bitbucket.org/carver2/pbugs/issues
+URL: https://github.com/carlosvergara/fisabioR
+BugReports: ttps://github.com/carlosvergara/fisabioR/issues
 Imports:
     data.table (>= 1.10.0),
     devtools (>= 1.12.0),
     knitr (>= 1.15.1),
+    latex2exp (>= 0.4.0),
     parallel (>= 3.3.2),
+    R2WinBUGS (>= 2.1-21),
+    Rcpp (>= 0.12.8),
     rmarkdown (>= 0.7.7),
+    rstan (>= 2.14.1),
     rstudioapi (>= 0.6),
+    runjags (>= 2.0.4-2),
+    sp (>= 1.2-4),
     tidyverse (>= 1.0.0)
-    whisker (>= 0.3-2)
 Depends:
     R (>= 3.2.0)
-Suggest: testthat (>= 0.4)
-VignetteBuilder: knitr (>= 1.15.1),
-    rmarkdown (>= 0.7.7)
+Suggest:
+    lme4 (>= 1.1-12),
+    mapproj (>= 1.2-4),
+    maptools (>= 0.8-40),
+    rgdal (>= 1.2-5),
+    tableone (>= 0.7.3),
+    xtable (>= 1.8-2)
+SystemRequirements: git
 RoxygenNote: 5.0.1

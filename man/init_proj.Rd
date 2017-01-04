@@ -5,7 +5,7 @@
 \title{Crea un proyecto con una jerarquía de directorios unificada, cargando
 archivos y funciones comunes.}
 \usage{
-init_proj(proj_nom = NULL, proj_dir = NULL)
+init_proj(proj_nom = NULL, proj_dir = NULL, git = TRUE)
 }
 \arguments{
 \item{proj_nom}{Cadena de caracteres con el nombre a asignar al proyecto. Por
@@ -14,6 +14,9 @@ defecto se asigna el nombre 'proyecto-yyy-mm-dd'.}
 \item{proj_dir}{Cadena de caracteres indicando la ruta al directorio
 principal donde se creará el proyecto. Por defecto se escoge el directorio
 actual de trabajo, devuelto por la función getwd().}
+
+\item{git}{Valor lógico (TRUE o FALSE), indicando si se desea generar un
+repositorio git asociado al proyecto.}
 }
 \value{
 La función crea la siguiente estructura de directorios en proj_dir/proj_nom/:
@@ -48,10 +51,17 @@ La función crea la siguiente estructura de directorios en proj_dir/proj_nom/:
     \item proof/
   }
 }
+Asimismo, también se crea un archivo en formato proyecto de RStudio, un
+  documento R Markdown y Markdown con información genérica del mismo, y un
+  script de configuración a modo de prueba.
 }
 \description{
 Crea un proyecto con una jerarquía de directorios unificada, cargando
 archivos y funciones comunes.
+}
+\details{
+El valor asignado por defecto al argumento git (TRUE) hace que la
+  función trate de encontrar si git se ha instalado en los lugares habituales.
 }
 \examples{
 proj_dir()
