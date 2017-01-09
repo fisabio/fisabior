@@ -1,5 +1,8 @@
-#' Crea un proyecto con una jerarquía de directorios unificada, cargando
-#' archivos y funciones comunes.
+#' Crea un proyecto fisabior
+#'
+#' Crea automáticamente un proyecto siguiendo la plantilla fisabior, empleando
+#' una jerarquía de directorios unificada, cargando archivos y funciones comunes
+#' del grupo de colaboradores. Opcionalmente, genera un repositorio git.
 #'
 #' @export
 #' @param proj_nom Cadena de caracteres con el nombre a asignar al proyecto. Por
@@ -9,9 +12,8 @@
 #'   actual de trabajo, devuelto por la función getwd().
 #' @param git Valor lógico (TRUE o FALSE), indicando si se desea generar un
 #'   repositorio git asociado al proyecto.
-#' @details El valor asignado por defecto al argumento git (TRUE) hace que la
-#'   función trate de encontrar si git se ha instalado en los lugares habituales.
-#' @return La función crea la siguiente estructura de directorios en proj_dir/proj_nom/:
+#' @return La función crea la siguiente estructura de directorios en
+#'   proj_dir/proj_nom/:
 #' \itemize{
 #'   \item datos/
 #'     \itemize{
@@ -43,12 +45,9 @@
 #'     \item proof/
 #'   }
 #' }
-#' Asimismo, también se crea un archivo en formato proyecto de RStudio, un
-#'   documento R Markdown y Markdown con información genérica del mismo, y un
-#'   script de configuración a modo de prueba.
 #' @examples
-#' proj_dir()
-#' proj_dir(proj_nom = 'proyecto_europeo_X', proj_dir = '~/Proyectos')
+#' init_proj()
+#' init_proj(proj_nom = 'proyecto_europeo_X', proj_dir = '~/Proyectos')
 init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
   if (is.null(proj_dir))
     stop('Por favor, indica el directorio que albergará el proyecto (proj_dir).')
@@ -80,8 +79,8 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
     }
   }
   if (is.null(proj_nom)) {
-  	cat('No has proporcionado un nombre para el proyecto.\n',
-  			'¿Quieres asignar uno por defecto en el directorio de trabajo actual? \n 1:si \n 2:no \n')
+    cat('No has proporcionado un nombre para el proyecto.\n',
+        '¿Quieres asignar uno por defecto en el directorio de trabajo actual? \n 1:si \n 2:no \n')
     acto <- readline()
     if (acto != '1') {
       stop('Por favor, proporciona un nombre para el proyecto (proj_nom).')
@@ -104,11 +103,11 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
     sep = '')
   invisible(sapply(sub_dirs, dir.create, recursive = T))
 
-  template_path <- system.file('templates/template.Rproj', package = 'fisabioR', mustWork = TRUE)
+  template_path <- system.file('templates/template.Rproj', package = 'fisabior', mustWork = TRUE)
   template_out <- paste(readLines(template_path), collapse = '\n')
-  config_path <- system.file('templates/config.R', package = 'fisabioR', mustWork = TRUE)
+  config_path <- system.file('templates/config.R', package = 'fisabior', mustWork = TRUE)
   config_out <- paste(readLines(config_path), collapse = '\n')
-  readme_path <- system.file('templates/README.Rmd', package = 'fisabioR', mustWork = TRUE)
+  readme_path <- system.file('templates/README.Rmd', package = 'fisabior', mustWork = TRUE)
   readme_out <- paste(readLines(readme_path), collapse = '\n')
   writeLines(template_out, paste(proj_dir, '/', proj_nom, '.Rproj', sep = ''))
   writeLines(config_out, paste(proj_dir, '/configuracion/config.R', sep = ''))
@@ -125,12 +124,12 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
   if (!file.exists(Sys.which('git')) && git == TRUE) {
     warning('No tienes instalado git, así que no puedo crear el repositorio.')
   } else if (git == TRUE) {
-      if (git2r::in_repository(proj_dir)) {
-        warning('El exite el repositorio git: no se hace nada.')
-      } else {
-        repo <- git2r::init(proj_dir)
-        git2r::add(repo = repo, path = '*')
-        invisible(git2r::commit(repo = repo, message = 'Primer commit', all = TRUE))
-      }
-    } else message('Proyecto configurado sin git: puedes emplearlo más adelante.')
+    if (git2r::in_repository(proj_dir)) {
+      warning('El exite el repositorio git: no se hace nada.')
+    } else {
+      repo <- git2r::init(proj_dir)
+      git2r::add(repo = repo, path = '*')
+      invisible(git2r::commit(repo = repo, message = 'Primer commit', all = TRUE))
+    }
+  } else message('Proyecto configurado sin git: puedes emplearlo más adelante.')
 }
