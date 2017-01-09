@@ -52,6 +52,8 @@
 init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
   if (is.null(proj_dir))
     stop('Por favor, indica el directorio que albergará el proyecto (proj_dir).')
+  dir_info <- sapply(c(0, 1:2, 4), function(x)
+    file.access(names = dirname(proj_dir), mode = x))
   if (!dir.exists(proj_dir)) {
     cat('El directorio de proyecto proporcionado no existe.\n',
         '¿Quieres crearlo ahora? \n 1:si \n 2:no \n')
@@ -59,21 +61,22 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
     if (acto != '1') {
       stop('Por favor, proporciona un directorio alternativo para el proyecto.')
     } else {
-      dir_info <- file.info(dirname(proj_dir))
-      if (all(is.na.data.frame(dir_info)))
+      if (dir_info[1] != 0)
         stop('Revisa el directorio de proyecto que has proporcionado. ',
              'Quizá el problema sea que no existe el directorio inmediatamente superior ',
              'o alguno intermediario...')
-      if (!as.numeric(substr(dir_info$mode, 1, 1)) > 5 || Sys.info()['user'] != dir_info$uname) {
-        stop('No tienes permisos suficientes para crear ese directorio. Prueba con otro...')
+      if (any(dir_info[-1] != 0)) {
+        stop('No tienes permisos de ejecución, escritura o lectura en ese ',
+             'directorio. Prueba con otro...')
       }
       dir.create(proj_dir, recursive = T)
       proj_nom <- paste('proyecto-', format(Sys.time(), '%Y-%m-%d'), sep = '')
     }
   } else {
-    dir_info <- file.info(proj_dir)
-    if (!as.numeric(substr(dir_info$mode, 1, 1)) > 5 || Sys.info()['user'] != dir_info$uname) {
-      stop('No tienes permisos suficientes para crear ese directorio. Prueba con otro...')
+    if (any(dir_info[-1] != 0)) {
+      stop('Revisa el directorio de proyecto que has proporcionado. ',
+           'Quizá el problema sea que no existe el directorio inmediatamente superior ',
+           'o alguno intermediario...')
     }
   }
   if (is.null(proj_nom)) {
@@ -119,13 +122,15 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
     writeLines('\nsource(configuracion/config.R)', paste(proj_dir, x, sep = ''))
   }))
 
-  if (!file.exists(Sys.which('git')) && git == TRUE)
+  if (!file.exists(Sys.which('git')) && git == TRUE) {
     warning('No tienes instalado git, así que no puedo crear el repositorio.')
-  if (git == TRUE && git2r::in_repository(proj_dir) )
-    warning('El exite el repositorio git: no se hace nada.')
-  if (git == TRUE) {
-    repo <- git2r::init(proj_dir)
-    git2r::add(repo = repo, path = '*')
-    invisible(git2r::commit(repo = repo, message = 'Primer commit', all = TRUE))
-  } else message('Proyecto configurado sin git: puedes emplearlo más adelante.')
+  } else if (git == TRUE) {
+      if (git2r::in_repository(proj_dir)) {
+        warning('El exite el repositorio git: no se hace nada.')
+      } else {
+        repo <- git2r::init(proj_dir)
+        git2r::add(repo = repo, path = '*')
+        invisible(git2r::commit(repo = repo, message = 'Primer commit', all = TRUE))
+      }
+    } else message('Proyecto configurado sin git: puedes emplearlo más adelante.')
 }
