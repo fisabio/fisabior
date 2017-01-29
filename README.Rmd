@@ -38,7 +38,6 @@ fisabioR es el nombre que nos hemos dado como grupo de usuarios de R dentro de l
 + Gonzalo García-Donato (garcia_gon@gva.es),
 + Paloma Botella-Rocamora (botella_pal@gva.es),
 + Jordi Pérez-Panadés (perez_jorpan@gva.es),
-+ David Martín-Baena (martin_dav@gva.es),
 + Francisca Corpas-Burgos (corpas_fra@gva.es),
 + Héctor Perpiñán-Fabuel (perpinan_hec@gva.es),
 + Carlos Vergara-Hernández (carlos.vergara@uv.es).
