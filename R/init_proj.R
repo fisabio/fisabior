@@ -23,7 +23,7 @@
 #'     \itemize{
 #'       \item brutos/
 #'       \item procesados/
-#'       \item shapefiles/
+#'       \item cartografia/
 #'   }
 #'   \item figuras/
 #'   \item informes/
@@ -103,7 +103,7 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
 
   sub_dirs <- paste0(
     proj_dir,
-    c(paste0('datos/', c('brutos', 'procesados', 'shapefiles')), 'figuras',
+    c(paste0('datos/', c('brutos', 'procesados', 'cartografia')), 'figuras',
       paste0('informes/', c('markdown', 'docx', 'odt', 'latex')), 'cache',
       paste0('src/', c('bugs', 'cpp', 'jags', 'stan')),
       'configuracion', 'r',  paste0('articulo/', c('enviado', 'revision', 'proof')))
@@ -127,14 +127,14 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
   invisible(sapply(sample_scripts, function(x) {
     writeLines('\nsource(configuracion/config.R)', paste0(proj_dir, x))
   }))
-  sample_data <- paste0('templates/',
+  sample_data <- paste0('sample_shapefiles/',
                         paste0('ejemplo_aragon',
                                c('.shx', '.shp', '.prj', '.dbf')))
   invisible(sapply(sample_data, function(x) {
     file.copy(system.file(x, package = 'fisabior', mustWork = TRUE),
-              sub('templates/', paste0(proj_dir, 'datos/shapefiles/'), x))
+              sub('sample_shapefiles/', paste0(proj_dir, 'datos/cartografia/'), x))
   }))
-  invisible(file.copy(system.file('templates/ejemplo_aragon.Rdata', package = 'fisabior', mustWork = T),
+  invisible(file.copy(system.file('data/ejemplo_aragon.Rdata', package = 'fisabior', mustWork = T),
                       paste0(proj_dir, 'datos/procesados/ejemplo_aragon.Rdata')))
   if (!file.exists(Sys.which('git')) && git == TRUE) {
     warning('No tienes instalado git, así que no puedo crear el repositorio.')
