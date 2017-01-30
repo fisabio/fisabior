@@ -8,8 +8,7 @@ EnableCodeIndexing: Yes
 Encoding: UTF-8
 
 RnwWeave: knitr
-LaTeX: pdfLaTeX
+LaTeX: XeLaTeX
 
 AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
-
