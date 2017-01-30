@@ -1,0 +1,168 @@
+---
+title: Plantilla de Informe Estadístico
+author:
+  - name: 'Aitor Tilla-Fresca'
+    corresponding: 'correo.falso@dominio.org'
+    affil.number: 1
+  - name: 'Juanito Contento-Metienes'
+    affil.number: 1
+  - name: 'Belén Tejas-Conhierro'
+    affiliation: 2
+affil:
+  - name: 'Área de Desigualdades en Salud, FISABIO-CSISP'
+    number: 1
+  - name: 'Servicio de Estudios Epidemiológicos y Estadísticas Sanitarias, CSISP-DGSP'
+    number: 2
+version: '0.0.1'
+abstract:
+  Esto es el resumen y puede consistir en uno o varios párrafos.
+
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque.
+bibliography:
+  - file: referencias.bib
+    title: 'Referencias Bibliográficas'
+logo: fisabior.png
+output: fisabior::fisabior
+---
+
+```{r setup, include = F, cache = F}
+library(knitr)
+opts_knit$set(root.dir = normalizePath('../../'),
+              base.dir = normalizePath('../../figuras/markdown/'),
+              width    = 100)
+options(formatR.arrow = T)
+opts_chunk$set(  tidy       = F,
+                 prompt     = F,
+                 fig.path   = '../../figuras/markdown/fig_',
+                 cache.path = '../../cache/markdown/chunk_',
+                 fig.align  = 'center',
+                 fig.show   = 'hold',
+                 fig.pos    = 'h',
+                 fig.width  = 10,
+                 fig.height = 5,
+                 cache      = T,
+                 par        = T,
+                 comment    = '#',
+                 size       = 'scriptsize',
+                 warning    = F,
+                 message    = F)
+knit_hooks$set(inline = function(x) {
+  if (is.numeric(x))
+    x <- round(x, 2)
+  as.character(x)
+  }, crop = hook_pdfcrop)
+```
+
+# Acerca de este documento
+Este documento ofrece una base sobre la que trabajar a la hor de redactar informes dinámicos empleando `R`, empleando una sintaxis Markdown y código en `R` gracias al paquete `knitr`.
+
+Pongámonos en situación: has realizado un análisis estadístico sobre un banco de datos y estás preparando el informe de resultados. Te pasas varias horas (o días) copiando y pegando tablas y gráficos o, mucho peor, sufriendo la alienación que supone escribir todos los valores a mano. Tras ello, le llega el turno a la maquetación para que todo sea bonito y el informe solo necesite un lacito para ser enviado a quien corresponda, y esto también requiere un gran esfuerzo.
+
+Sin embargo, es habitual que a alguien se le ocurra algo que pueda mejorar el análisis y el producto final, aunque pensar en pasar una vez más por todo el proceso de *copia-pega* por un cambio mínimo, puede amargarte después de tanta dedicación. Y lo peor es que todo empieza con buenas intenciones y algo parecido a: **y si...** *recodificamos esta variable*, **y si...** *en tal modelo probamos a introducir un factor aleatorio y vemos cómo quedan los residuos* o, en el peor de los casos, **y si...** *repetimos este análisis pero haciendo el pino mientras recitamos el Quijote*.
+
+¿Alguna vez te ha pasado? No estás solo, y es precisamente ahí donde los informes dinámicos pueden sacarnos del apuro. La idea es muy simple: integrar trozos de código de análisis y las salidas de `R` que producen (tanto texto como gráficos) en el informe que se esté preparando, de una manera natural y bastante fácil. ¿Tras la revisión de los compañeros se plantean cambios en el análisis? No pasa nada: modificando el código integrado el informe, este se genera de nuevo automáticamente con el código y las salidas actualizadas. Esto, que en principio parece poco relevante, implica que solo has de concentrarte en tu investigación: pensar en la mejor forma de análisis y en la interpretación de los resultados.
+
+# Acerca de Markdown
+Markdown es un lenguaje muy sencillo que permite escribir textos de una manera fácil y dinámica. De hecho, es tan sencillo que en primera instancia solo deberías conocer un par de cosillas.
+
+
+## Itálica y negrita
+`*Esto es itálica* y esto _también_`: *Esto es itálica* y esto _también_.
+`**Esto es negrita** y esto __también__`: **Esto es negrita** y esto __también__
+`También puedes usar ***itálica y negrita*** si lo ___deseas___`: También puedes usar ***itálica y negrita*** si lo ___deseas___
+
+
+## Vínculos
+`Aquí tienes un hipervínculo a [Google](http://www.google.com/)`: Aquí tienes un hipervínculo a [Google](http://www.google.com/).
+
+
+## Encabezados
+Se crean empleando el caracter `#`, siendo su número el que indica el nivel del encabezado. Por ejemplo, para crear un encabezado de nivel 3 se usaría `### Título del encabezado`, y el resultado sería:
+
+### Encabezado de nivel 3
+
+## Listas
+Puedes crear listas muy sencillas, numeradas o no, empleando los caracteres `-`, `+`, `*`; o una secuenia de números seguidos por un punto, como `1.`, `2.` o `3.`. Por ejemplo, para crear una lista no numerada, se emplea el código:
+
+```
+- primer elemento, primer nivel,
+- segundo elemento, primer nivel,
+  * primer elemento, segundo nivel,
+- tercer elemento, primer nivel.
+```
+
+lo cual produce el siguiente resultado:
+
+- primer elemento, primer nivel,
+- segundo elemento, primer nivel,
+  * primer elemento, segundo nivel,
+- tercer elemento, primer nivel.
+
+
+## Citas textuales
+Para crear citas se usa el símbolo `>` al comienzo de cada línea que compone la cita. Por ejemplo, la instrucción `> Esto es una cita muy importante.` genera el siguiente resultado:
+
+> Esto es una cita muy importante.
+
+
+## Añadir imágenes
+Para cargar imágenes que no procedan del código incrustado en el propio documento lo mejor es utilizar la función `knitr::include_graphics('ruta/a/la/imagen')` en un _chunk_ de código estándar `knitr::include_graphics('fisabior.png')`, cuyo resultado es:
+
+```{r echo = F, fig.height = 3, fig.width = 3, fig.align='center', fig.cap = 'Un logo molón'}
+knitr::include_graphics('fisabior.png')
+```
+
+# Acerca de `knitr`
+Al trabajar con `knitr` en este entorno, en primer lugar hay que identificar los trozos de código, y para ello escribimos ```` ```{r} ````, indicando que comienza código, y ```` ``` ```` para indicar el final de la pieza de código. En la [web del autor de `knitr`](http://yihui.name/knitr/) podrás encontrar un montón de ejemplos y de opciones útiles para obtener la salida deseada: p. ej., imagina que deseas mostrar únicamente un resultado y omitir el código, pues la solución es añadir `echo = F` en el encabezado (```` ```{r echo = F} ````); o que deseas que la figura que se produzca con un `plot(x)` tenga un tamaño de 10 x 5, pues ```` ```{r fig.width = 10, fig.height = 5} ````. Como ves, la sintaxis es muy sencilla y bastante intuitiva, aunque la mejor forma de asimilarlo es mediante un ejemplo:
+
+Por defecto, al iniciar un proyecto con la función `fisabior::init_proj()` se copian unos datos de prueba dentro del directorio `datos/procesados` y `datos/shapefiles`: estos son los datos con los que vamos a trabajar (datos de mortalidad por enfermedad isquémica para hombres en la Región de Aragón, entre 1991 y 2000).
+
+
+```{r ejemplo, fig.cap='Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000', cache=T, eval=T}
+source('configuracion/config.R')
+load('datos/procesados/ejemplo_aragon.Rdata')
+aragon_datos <- data.frame(ID        = 1:729,
+                           O         = O,
+                           E         = E,
+                           distancia = distancia)
+aragon_shp <- readShapeSpatial('datos/cartografia/ejemplo_aragon.shp',
+                               IDvar = 'CODMUNI')
+opar <- par(mar = c(1, 1, 1, 1))
+paleta <- brewer.pal(6, 'OrRd')
+plot(aragon_shp, col = paleta[findInterval(with(aragon_datos, O / E),
+                                           c(0, 0.1, 0.5, 1, 1.5, 2, 10))])
+legend('topleft', c('<0.1', '0.1-0.5', '0.5-1', '1-1.5', '1.5-2', '>=2'),
+       title = 'RME', fill = paleta, bty = 'n')
+getwd()
+```
+
+Además de figuras, también podemos crear una tabla de una manera fácil, gracias a la función `knitr::kable()`. De forma adicional, con la función `xtable::xtable()` se puede obtener un control mucho más fino del resultado. Veamos un ejemplo de cada.
+
+## `knitr::kable()`
+```{r results='asis'}
+n <- 100
+x <- rnorm(n)
+y <- 2*x + rnorm(n)
+out <- lm(y ~ x)
+library(knitr)
+kable(summary(out)$coef, digits = 2, booktabs = TRUE, caption = 'Una tabla con kable')
+```
+
+## `xtable::xtable()`
+```{r xtable, results = "asis"}
+n <- 100
+x <- rnorm(n)
+y <- 2 * x + rnorm(n)
+out <- lm(y ~ x)
+library(xtable)
+tab <- xtable(summary(out)$coef, digits = c(0, 2, 2, 1, 2), caption = 'Una tabla con xtable')
+print(tab, type = "latex", caption.placement = 'top', booktabs = T)
+```
+
+# Citas y referencias bibliográficas
+
+Las referencias se generan con biblatex y biber, siendo muy fácil introducirlas. En cuanto a su número...
+
+  + se pueden meter una [@Congdon2014] a una [@Daniels2008],
+  + de dos en dos [@Gelman2014; @Harrell2015],
+  + o a cascoporro [@Bivand2013; @Blangiardo2015; @Chang2012; @Duda2001; @Fawcett2006; @Greenland2008; @Lash2014; @Lunn2012; @Matloff2016; @Rothman2008; @Wickham2015].
