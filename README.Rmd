@@ -2,9 +2,9 @@
 output: github_document
 ---
 
-# fisabior
+# `fisabior`
 ## Acerca de este proyecto
-fisabior es un paquete de R cuyo único propósito es estructurar y organizar el entorno de trabajo, facilitando el trabajo en equipo. 
+`fisabior` es un paquete de R cuyo único propósito es estructurar y organizar el entorno de trabajo, facilitando el trabajo en equipo. 
 
 El proyecto generado con su función principal (`init_proj()`) se estructura en 8 directorios, lo que permite seguir un criterio unificado a la hora de trabajar en equipo o, sencillamente, retomar un trabajo individual que se aparcase hace algún tiempo. El contenido de cada uno de estos directorios es:
 
@@ -22,8 +22,9 @@ El proyecto generado con su función principal (`init_proj()`) se estructura en 
 + informes: 
     - docx: documentos MS Office Word producidos por rmarkdown-knitr,
     - odt: documentos LibreOffice Writer producidos rmarkdown-knitr,
-    - markdown: documentos markdown y html producidos por rmarkdown-knitr,
-    - latex: documentos TeX y PDF producidos por knitr-LaTeX.
+    - pdf-markdown: documentos markdown y html producidos por rmarkdown-knitr,
+    - pdf-latex: documentos TeX y PDF producidos por knitr-LaTeX,
+    - html: documentos HTML producidos por rmarkdown-knitr.
 + r: directorio principal, el cual contiene todos los scripts de código R necesarios para la ejecución del proyecto. Solo contiene archivos con extensión `*.R`.
 + src: directorio de código secundario, donde se guardan los archivos con código no-R, eligiendo para ello el subdirectorio más apropiado:
     - bugs: modelos escritos con código en lenguaje BUGS,
@@ -32,16 +33,15 @@ El proyecto generado con su función principal (`init_proj()`) se estructura en 
     - stan: modelos escritos con código en lenguaje Stan.
 
 
-## Acerca de fisabior
-fisabioR es el nombre que nos hemos dado como grupo de usuarios de R dentro de la Fundación para el Fomento de la Investigación Sanitaria y Biomédica de la Comunidad Valenciana (FISABIO). A enero de 2017, el grupo está compuesto por:
+## Acerca de `fisabior`
+`fisabior` es el nombre que nos hemos dado como grupo de usuarios de R dentro de la Fundación para el Fomento de la Investigación Sanitaria y Biomédica de la Comunidad Valenciana (FISABIO). A febrero de 2017, el grupo está compuesto por:
 
 + Miguel Ángel Martínez-Beneito (martinez_mig@gva.es),
 + Gonzalo García-Donato (garcia_gon@gva.es),
 + Paloma Botella-Rocamora (botella_pal@gva.es),
 + Jordi Pérez-Panadés (perez_jorpan@gva.es),
-+ David Martín-Baena (martin_dav@gva.es),
 + Francisca Corpas-Burgos (corpas_fra@gva.es),
-+ Héctor Perpiñán-Fabuel (perpinan_hec@gva.es),
++ Hèctor Perpiñán-Fabuel (perpinan_hec@gva.es),
 + Carlos Vergara-Hernández (carlos.vergara@uv.es).
 
-Si, al igual que nosotros, te encanta la estadística en R, o si tuvieras alguna duda en el futuro acerca del grupo o su actividad, puedes contactarnos sin problema.
+Si al igual que nosotros te encanta la estadística en R, o si tuvieras alguna duda acerca del grupo o su actividad, puedes contactarnos sin problema.

@@ -1,162 +1,265 @@
-\documentclass[11pt]{article}
-\usepackage[
-  a4paper,
-  margin     = 2cm,
-  outer      = 1in,
-  inner      = 1in,
-  bottom     = 1in,
-  headheight = 16.6pt
-  ]{geometry}
-\usepackage{polyglossia}
-\setdefaultlanguage{spanish}
-\setotherlanguage{english}
-\usepackage{fontspec}
-\usepackage{xcolor}
+% !TeX program = XeLaTeX
+
+%--------------------------------------------------------%
+% Clase y página                                         %
+%--------------------------------------------------------%
+\documentclass[11pt, a4paper]{article}
+\usepackage[margin = 2cm, bottom = 2.5cm]{geometry}
+
+
+%--------------------------------------------------------%
+% Soporte de fuentes e idiomas                           %
+%--------------------------------------------------------%
+\usepackage[T1]{fontenc}
+\usepackage{
+  fontspec,
+  polyglossia,
+  xltxtra,
+  xunicode,
+  lmodern
+}
+\usepackage[onehalfspacing]{setspace} % Interlineado a 1.5
+\setdefaultlanguage{spanish} % Lenguaje por defecto
+\setotherlanguage{english} % Lenguaje adicional
+\PolyglossiaSetup{spanish}{indentfirst = false} % Primera línea tras título-subtítulo no tiene sangría.
+
+
+%--------------------------------------------------------%
+% Matemáticas y referencias cruzadas                     %
+%--------------------------------------------------------%
+\usepackage{
+  amsmath,
+  mathtools,
+  amssymb,
+  nag,
+  parskip,
+  microtype,
+  hyperref,
+  letltxmacro
+}
+\hypersetup{ % Opciones de hipervínculos
+  pdfpagemode  = {UseOutlines},
+  colorlinks,
+  linkcolor    = {blue},
+  citecolor    = {blue},
+  urlcolor     = {blue},
+  pdfstartview = {FitV},
+  unicode,
+  breaklinks   = true
+}
+\usepackage[capitalize]{cleveref}
+% Customización de cleveref (con el comando \cref{entorno:nombre_elemento}
+% se crea la palabra que define el entorno antes de la cita:
+% p.ej., habiendo marcado \label{tab:1}, \cref{tab:1} genera 'tabla 1' y \Cref{tab:1} 'Tabla 1').
+% Antes hay que cambiar la etiqueta 'cuadro' por 'tabla', tanto en singular como en plural.
+% Para las figuras me decanto por usar siempre la abreviatura 'fig.-Fig.'.
+\crefformat{table}{tabla~#2#1#3}
+\crefmultiformat{table}{tablas~#2#1#3}{ y~#2#1#3}{, #2#1#3}{ y~#2#1#3}
+\Crefformat{table}{Tabla~#2#1#3}
+\Crefmultiformat{Table}{tablas~#2#1#3}{ y~#2#1#3}{, #2#1#3}{ y~#2#1#3}
+\crefformat{figure}{fig.~#2#1#3}
+\crefmultiformat{figure}{figs.~#2#1#3}{ y~#2#1#3}{, #2#1#3}{ y~#2#1#3}
+\Crefformat{figure}{Fig.~#2#1#3}
+\Crefmultiformat{figure}{Figs.~#2#1#3}{ y~#2#1#3}{, #2#1#3}{ y~#2#1#3}
+
+
+%--------------------------------------------------------%
+% Figuras, gráficos y tablas                             %
+%--------------------------------------------------------%
+\usepackage{
+  tikz,
+  graphicx,
+  array,
+  tabularx,
+  float,
+  rotating,
+  caption,
+  multirow,
+  booktabs,
+  longtable
+}
+\usetikzlibrary{arrows, petri, topaths, shapes.geometric}
+\captionsetup{ % Opciones de leyendas
+  indention       = .75cm,
+  justification   = justified,
+  font            = small,
+  labelfont       = bf,
+  labelsep        = period,
+  width           = .8\textwidth,
+  singlelinecheck = false,
+  skip            = 6pt,
+  parskip         = 6pt,
+  textformat      = period
+}
+\captionsetup[table]{position   = top, name = Tabla}
+\captionsetup[figure]{position   = bottom, name = Figura}
+
+
+%--------------------------------------------------------%
+% Encabezados y pies de página                           %
+%--------------------------------------------------------%
 \usepackage{
   fancyhdr,
-  alltt,
-  listings,
-  graphicx,
-  amsmath,
-  latexsym,
-  cancel,
-  tabularx,
-  color,
-  units,
-  booktabs,
-  multirow,
-  rotating,
   lastpage,
-  setspace,
-  array,
-  float,
-  caption,
-  xunicode,
-  textpos,
-  titling,
-  parskip,
-  authblk,
-  tikz,
-  xfrac,
-  tkz-graph,
-  lscape
-  }
-\usetikzlibrary{
-  arrows,
-  petri,
-  topaths,
-  shapes.geometric
-  }
-\usepackage{adjustbox}
-\DeclareCaptionLabelFormat{period}{#1 #2.}
-\captionsetup{
-  font            = small,
-  labelfont       = {bf,sc},
-  labelsep        = space,
-  skip            = 5pt,
-  justification   = justified,
-  singlelinecheck = false,
-  parskip         = 0pt,
-  skip            = 0.1pt,
-  position        = bottom,
-  format          = hang,
-  textformat      = period,
-  labelformat     = period
-  }
-\usepackage[
-  hang,
-  multiple,
-  symbol
-  ]{footmisc}
-\usepackage[hidelinks]{hyperref}
+  stackengine
+}
 
-\setlength{\parindent}{1cm}
-\renewcommand{\headrulewidth}{0pt}
-\makeatletter
-\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
-\makeatother
-
+\setstackEOL{\\}
 \pagestyle{fancy}
-\rfoot{{Página \thepage} {de \pageref{LastPage}}}
+\renewcommand{\headrule}{}
+\renewcommand{\footrule}{}
+\fancyhead{}
 \fancyfoot[L]{}
-\fancyfoot[C]{}
-\fancyfoot[R]{{\scriptsize{Página \thepage} {de \pageref{LastPage}}}}
-\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
+\fancyfoot[R]{}
+\fancyfoot[C]{\scriptsize Página \thepage \space de \pageref*{LastPage}}
 \fancypagestyle{plain}{
-\fancyfoot[L]{}
-\fancyfoot[C]{}
-\fancyfoot[R]{{\scriptsize{Página \thepage} {de \pageref{LastPage}}}}
+  \fancyhead{}
+  \fancyfoot[L]{
+      \scriptsize\vnumber \\ Compilado el \today
+  }
+  \fancyfoot[C]{
+    \raisebox{-.6\height}{
+      \scriptsize Página \thepage \space de \pageref*{LastPage}
+    }
+  }
+  \fancyfoot[R]{
+    \raisebox{-.6\height}{
+      \href{https://creativecommons.org/licenses/by/4.0/}{\includegraphics[width = 2cm]{../../figuras/logo-ccby.png}}
+    }
+  }
 }
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\newcommand{\rowgroup}[1]{\hspace{-1em}#1}
-\setlength\parindent{0pt}
-\setlength{\droptitle}{-5em}
-\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}
-\title{
-\normalfont \normalsize
-\textsc{FISABIO} \\
-\textsc{Fundación para el Fomento de la Investigación Sanitaria y Biomédica}\\
-\horrule{0.5pt} \\\vspace{0.4cm}
-\huge titulo_proj\\
-\horrule{1pt} \\ \vspace{0.4cm}
+
+
+%--------------------------------------------------------%
+% Referencias a imágenes                                 %
+%--------------------------------------------------------%
+\setlength{\XeTeXLinkMargin}{1pt}
+\LetLtxMacro\SavedIncludeGraphics\includegraphics
+\def\includegraphics#1#{% #1 catches optional stuff (star/opt. arg.)
+  \IncludeGraphicsAux{#1}%
+}%
+\newcommand*{\IncludeGraphicsAux}[2]{%
+  \XeTeXLinkBox{%
+    \SavedIncludeGraphics#1{#2}%
+  }%
 }
-\author{nombre_autor}
-\predate{\begin{center}\vskip -.5 cm}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+%--------------------------------------------------------%
+% Bibliografía                                           %
+%--------------------------------------------------------%
+\usepackage[autostyle = true]{csquotes}
+\usepackage[backend = biber, style = apa, hyperref = true]{biblatex}
+\addbibresource{referencias.bib}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+\DefineBibliographyStrings{spanish}{andothers = {et\addabbrvspace al\adddot}}
+
+
+%--------------------------------------------------------%
+% Título, autores, filiaciones y versión                 %
+%--------------------------------------------------------%
+\usepackage{titling}
+\usepackage[noblocks]{authblk}
+\renewcommand{\Affilfont}{\small}
+\renewcommand{\Authands}{ \& }
+\newcommand{\logotitulo}[1]{
+  \begin{figure}
+    \href{https://github.com/fisabio/}{\includegraphics[width = 1.5cm]{#1}}
+  \end{figure}
+}
+\newcommand{\corresmail}[2][Autor para correspondencia (]{%
+  \gdef\corresponding{{#1}{\href{mailto:#2}{#2}) } } }
+\newcommand{\version}[2][Versión del manuscrito: ]{%
+  \gdef\vnumber{{#1}{#2}}}
+\newcommand{\corresponding}{}
+\newcommand{\vnumber}{}
+\pretitle{\begin{center} \scshape \LARGE}
+\posttitle{\par \end{center} }
+\setlength{\droptitle}{-6.8em}
+\predate{\vskip -.5 cm}
 \date{}
-\postdate{\end{center}}
-\affil{\small}
+\postdate{}
+\title{Plantilla de Informe Estadístico}
+\corresmail{Aitor.Tilla@Fresca.com}
+\author[1*]{Aitor Tilla-Fresca}
+\author[1]{Armando Bronca-Segura}
+\author[2]{Belén Tejas-Conhierro}
+\author[2]{Paco Jerte-Dell'Ombro}
+\author[2]{Omar Ciano-Dafuera}
+\affil[1]{Área de Desigualdades en Salud, FISABIO-CSISP}
+\affil[2]{Servicio de Estudios Epidemiológicos y Estadísticas Sanitarias, CSISP-DGSP}
+\affil[*]{\corresponding}
+\version{0.0.1}
 
 
-%%%%%%%%%%%%%%%%%%%%%%
-%%%  Preliminares  %%%
-%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{lipsum} % Texto ciego.
 
 \begin{document}
-
 <<setup, include=F, cache=F>>=
 library(knitr)
-options(formatR.arrow = T,
-        width = 90,
-        tikzDefaultEngine = 'xetex')
-opts_chunk$set(  tidy       = F,
-                 prompt     = F,
-                 fig.path   = '../../figuras/latex/fig_',
-                 dev        = 'tikz',
-                 cache.path = '../../cache/latex/chunk_',
-                 fig.align  = 'center',
-                 fig.show   = 'hold',
-                 fig.pos    = 'h',
-                 fig.width  = 10,
-                 fig.height = 5,
-                 cache      = T,
-                 par        = T,
-                 comment    = '#',
-                 size       = 'scriptsize',
-                 warning    = F,
-                 message    = F)
+if (!dir.exists('../../figuras/latex')) dir.create('../../figuras/latex')
+options(
+  formatR.arrow     = T,
+  width             = 80,
+  tikzDefaultEngine = 'xetex'
+)
+opts_chunk$set(
+  tidy       = T,
+  prompt     = F,
+  fig.path   = '../../figuras/latex/fig_',
+  dev        = 'tikz',
+  cache.path = '../../cache/latex/chunk_',
+  fig.align  = 'center',
+  fig.show   = 'hold',
+  fig.pos    = 'h',
+  fig.width  = 10,
+  fig.height = 5,
+  cache      = T,
+  par        = T,
+  comment    = '#',
+  size       = 'scriptsize',
+  warning    = F,
+  message    = F
+)
 options(tikzMetricsDictionary = paste0(normalizePath('../../'),
                                        '/figuras/latex/tikzMetrics'))
-knit_hooks$set(inline = function(x) {
-  if (is.numeric(x))
-    x <- round(x, 2)
-  as.character(x)
-  }, crop = hook_pdfcrop)
+knit_hooks$set(crop = hook_pdfcrop)
 opts_knit$set(root.dir = normalizePath('../../'))
 @
 
-\maketitle
 
-\section*{Primera sección}
-\subsection*{Ejemplo}
+  \logotitulo{../../figuras/fisabior.png}
+  \maketitle
 
-<<ejemplo1, fig.cap='Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000', results='hide', cache=FALSE>>=
+  \begin{abstract}
+    \noindent
+    Esta es la plantilla base para la elaboración de informes estadísticos en FISABIO. Todo en ella es editable, bien de forma local (cargando paquetes de \LaTeX \space adicionales, cambiando la configuración de la página, o lo que se te pueda ocurrir para mejorar tu documento), o bien de forma genérica (lo que implica modificar no solo esta plantilla --archivo \texttt{.tex}--, sino también el archivo \texttt{fisabior.cls} asociado y, muy posiblemente, compartir tus sugerencias a través de nuestra cuenta de \href{https://www.github.com/fisabio/fisabior}{GitHub}).
+  \end{abstract}
+
+  \section{Sobre esta plantilla}
+  La elaboración de esta plantilla se asocia al paquete de R \texttt{fisabior}, en el que puedes participar abiertamente como desarrollador de cara a mejorar el producto final. Este paquete empieza con el propósito de homogeneizar la elaboración de proyectos estadísticos en la fundación, así como el facilitar una estructura organizativa común que facilite tanto la búsqueda de información dentro de un proyecto, como la colaboración de otros estadísticos de FISABIO en un proyecto abierto.
+
+  Fruto de esta idea inicial, una de las primeras sugerencias que se recibieron y aceptaron fue la de crear una plantilla uniforme que sirviera de base para la elaboración de informes estadísticos, y como suele decirse \emph{de aquellos polvos estos lodos}. Esta plantilla está pensada para ser trabajada directamente a través de R empleando \texttt{knitr}. Para ello se crea un archivo \texttt{.Rnw} a compilar desde R empleando \texttt{knitr} y se copian y pegan los archivos asociados a la plantilla (logotipo de los estadísticos de FISABIO e imagen de \textit{Creative Commons}, así como el archivo \texttt{fisabior.cls} que define la clase empleada por la plantilla y unas referencias bibliográficas de muestra).
+
+  Pero pongámonos en situación: has realizado un análisis estadístico sobre un banco de datos y estás preparando el informe de resultados. Te pasas varias horas (o días) copiando y pegando tablas y gráficos o, mucho peor, sufriendo la alienación que supone escribir todos los valores a mano. Tras ello, le llega el turno a la maquetación para que todo sea bonito y el informe solo necesite un lacito para ser enviado a quien corresponda, y esto también requiere un gran esfuerzo.
+
+  Sin embargo, es habitual que a alguien se le ocurra algo que pueda mejorar el análisis y el producto final, aunque pensar en pasar una vez más por todo el proceso de \textit{copia-pega} por un cambio mínimo, puede amargarte después de tanta dedicación. Y lo peor es que todo empieza con buenas intenciones y algo parecido a: \textit{y si... recodificamos esta variable}, \textit{y si... en tal modelo probamos a introducir un factor aleatorio y vemos cómo quedan los residuos} o, en el peor de los casos,  \textit{si... repetimos este análisis pero haciendo el pino mientras tocamos tocamos la sintonía de Juego de Tronos con el ukelele}.
+
+  ¿Alguna vez te ha pasado? Pues es precisamente ahí donde los informes dinámicos pueden sacarnos del apuro. La idea es muy simple: integrar trozos de código ligados a un análisis y las salidas que \texttt{R} produce al ejecutarlos (tanto texto como gráficos) dentro del informe que se esté preparando, de una manera natural y bastante fácil. ¿Tras la revisión de los compañeros se plantean cambios en el análisis? No pasa nada: modificando el código integrado el informe, este se genera de nuevo automáticamente con el código y las salidas actualizadas. Esto, que en principio parece poco relevante, implica que solo has de concentrarte en tu investigación: pensar en la mejor forma de análisis y en la interpretación de los resultados.
+
+
+  \section{Acerca de \texttt{knitr}}
+  Para insertar elementos de código y decorarlos para que tengan vistosidad, se usará el paquete \texttt{knitr} junto con \LaTeX. Con \texttt{knitr}, en primer lugar hay que identificar los trozos de código, y para ello escribimos \texttt{<<>>=}, indicando que a partir de esa línea comienza la sección de código qu deseamos introducir, y una última línea con \texttt{@}, indicando el final de la pieza de código. En la \href{http://yihui.name/knitr/}{web del autor de \texttt{knitr}} podrás encontrar un montón de ejemplos y de opciones útiles para obtener la salida deseada: p. ej., imagina que deseas mostrar únicamente un resultado y omitir el código, pues la solución es añadir \texttt{echo = F} en el encabezado (\texttt{<<echo = F>>=}); o que deseas que la figura que se produzca con un \texttt{plot(x)} tenga un tamaño de 10in x 5in, pues \texttt{fig.width = 10, fig.height = 5}. Como ves, la sintaxis es muy sencilla y bastante intuitiva, aunque la mejor forma de asimilarlo es mediante un ejemplo:
+
+<<ejemplo, fig.cap='Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000', results='hide'>>=
 source('configuracion/config.R')
-load('datos/procesados/ejemplo.Rdata')
+load('datos/procesados/ejemplo_aragon.Rdata')
 aragon_datos <- data.frame(ID        = 1:729,
                            O         = O,
                            E         = E,
                            distancia = distancia)
-aragon_shp <- readShapeSpatial('datos/shapefiles/ejemplo_aragon.shp',
+aragon_shp <- readShapeSpatial('datos/cartografia/ejemplo_aragon.shp',
                                IDvar = 'CODMUNI')
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, 'OrRd')
@@ -167,5 +270,175 @@ legend('topleft', c('<0.1', '0.1-0.5', '0.5-1', '1-1.5', '1.5-2', '>=2'),
 par(opar)
 @
 
+  Asimismo, además de figuras (como vimos anteriormente) también podemos crear tablas fácilmente gracias a la función \texttt{knitr::kable()}. De forma adicional, con la función \texttt{xtable::xtable()} se puede obtener un control mucho más fino del resultado.
+
+
+  \section{Estructura del documento}
+  Como puedes ver, el documento inicial se estructura en secciones, así como secciones de 2º y 3\textsuperscript{er} nivel. Por defecto, estas secciones vienen numeradas para poder hacer referencia a ellas de forma más eficaz aunque, como se dijo anteriormente, todo en este documento es editable. Echemos un vistazo a las posibilidades que ofrece la plantilla.
+
+  \subsection{Citas textuales}
+  En el documento se pueden insertar citas textuales de más de unas pocas palabras (normalmente el límite se marca en 80 caracteres, aunque puede variar). P. ej.,:
+
+  Como dijo Jacinto el de mi pueblo
+
+  \begin{quote}
+    \lipsum[1]
+  \end{quote}
+
+  \subsection{Tablas}
+  Seguramente sea necesario añadir tablas, bien sean pequeñitas (p. ej., véase la \Cref{tab:1}, generada con el entorno \textit{table}) o largas (p. ej., véase la \Cref{long:2}, generada con el entorno \textit{longtable}).
+
+  \begin{table}[h!]
+    \centering
+    \caption{Esto es una tabla}
+    \label{tab:1}
+    \scalebox{0.9}{\begin{tabular}{cll}
+        \toprule
+        $i$ & $x_i$         & $y_i = f(x_i)$ \\
+        \midrule
+        1   & $x_0 = 0$     & $0$            \\
+        2   & $x_1 = 0.75$  & $-0.0409838$   \\
+        3   & $x_2 = 1.5$   & $1.31799$      \\
+        \bottomrule
+      \end{tabular}
+    }
+  \end{table}
+
+  \begin{longtable}{lcr}
+    \caption{Esto es una tabla más larga, que coincide con el final de una página. Además, tiene una leyenda bastante larga, que ocupa un mínimo de dos líneas, para ver cómo quedaría una vez compilado \label{long:2}} \\
+
+    \toprule
+    \multicolumn{1}{c}{\textbf{Tiempo}} &
+    \multicolumn{1}{c}{\textbf{Combinación}} &
+    \multicolumn{1}{c}{\textbf{Otros combinaciones}} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{3}{c}{\small {\bfseries \tablename \thetable{}.} Continuación.} \\
+    \toprule
+    \multicolumn{1}{c}{\textbf{Tiempo}} &
+    \multicolumn{1}{c}{\textbf{Combinación}} &
+    \multicolumn{1}{c}{\textbf{Otros combinaciones}} \\
+    \midrule
+    \endhead
+
+    \bottomrule \multicolumn{3}{r}{\small Continúa en la página siguiente.} \\
+    \endfoot
+
+    \bottomrule
+    \multicolumn{3}{l}{\small Aquí iría el pie de tabla definitivo.} \\
+    \endlastfoot
+
+    \centering
+    % Contenido de la tabla.
+    0     & (1, 11, 13725) & (1, 12, 10980), (1, 13, 8235), (2, 2, 0), (3, 1, 0) \\
+    2745  & (1, 12, 10980) & (1, 13, 8235), (2, 2, 0), (2, 3, 0), (3, 1, 0)      \\
+    5490  & (1, 12, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                  \\
+    8235  & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    10980 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    13725 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    16470 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                  \\
+    19215 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    21960 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    24705 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    27450 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    30195 & (2, 2, 2745)   & (2, 3, 0), (3, 1, 0)                                \\
+    0     & (1, 11, 13725) & (1, 12, 10980), (1, 13, 8235), (2, 2, 0), (3, 1, 0) \\
+    2745  & (1, 12, 10980) & (1, 13, 8235), (2, 2, 0), (2, 3, 0), (3, 1, 0)      \\
+    5490  & (1, 12, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                  \\
+    8235  & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    10980 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    13725 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    16470 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                  \\
+    19215 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    21960 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    24705 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    27450 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    30195 & (2, 2, 2745)   & (2, 3, 0), (3, 1, 0)                                \\
+    0     & (1, 11, 13725) & (1, 12, 10980), (1, 13, 8235), (2, 2, 0), (3, 1, 0) \\
+    2745  & (1, 12, 10980) & (1, 13, 8235), (2, 2, 0), (2, 3, 0), (3, 1, 0)      \\
+    5490  & (1, 12, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                  \\
+    8235  & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    10980 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    13725 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    16470 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                  \\
+    19215 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    21960 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    24705 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    27450 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    30195 & (2, 2, 2745)   & (2, 3, 0), (3, 1, 0)                                \\
+    0     & (1, 11, 13725) & (1, 12, 10980), (1, 13, 8235), (2, 2, 0), (3, 1, 0) \\
+    2745  & (1, 12, 10980) & (1, 13, 8235), (2, 2, 0), (2, 3, 0), (3, 1, 0)      \\
+    5490  & (1, 12, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                  \\
+    8235  & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    10980 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    13725 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    16470 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                  \\
+    19215 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    21960 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    24705 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    27450 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)  \\
+    30195 & (2, 2, 2745)   & (2, 3, 0), (3, 1, 0)
+  \end{longtable}
+
+  \subsection{Figuras}
+  También se pueden añadir figuras (p. ej., \Cref{fig:1}). Para las figuras que no se hayan generado a raíz de la compilación del propio análisis estadístico en R, el formato recomendado es PDF (aunque, ciertamente, para una imagen con pocos elementos, un formato PNG o JPEG con una resolución como mínimo de 600x600 píxeles, es más que suficiente). Para aquellos gráficos que provengan directamente desde R, se recomienda marcar como opción de \texttt{knitr} global \texttt{dev = 'tikz'}, lo cual genera las figuras empleando el paquete de \LaTeX \space \texttt{tikz}, obtiéndose un resultado mucho más fino (por ejemplo, se evita una posible divergencia entre las fuentes empleadas desde R --opciones muy limitadas-- y \LaTeX \space --opciones virtualmente infinitas--).
+
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width = 7cm]{../../figuras/fisabior.png}
+    \caption{Un logo molón, y con una leyenda un poco larga (de un mínimo de dos líneas), para ver cómo quedaría una vez compilado. \\ Además, se le ha añadido un segundo párrafo}
+    \label{fig:1}
+  \end{figure}
+
+  \subsection{Referencias cruzadas con el paquete \texttt{cleveref} }
+  Una de las pocas circunstancias en las que nos veremos obligados a emplear un par de comandos \LaTeX \space es a la hora de realizar referencias cruzadas dentro del propio documento. Para efectuar una referencia cruzada, resulta más adecuado usar el comando \texttt{\textbackslash cref} (paquete \texttt{cleveref}) en lugar de \texttt{\textbackslash ref} del paquete \texttt{hyperref}. Las ventajas que incorpora su uso son varias, entre las que se incluyen:
+
+  \begin{itemize}
+    \item se incluye el nombre del entorno en la referencia. P. ej., para obtener un resultado como `Tabla 1', los comandos y resultados al emplear ambos paquetes son:
+    \begin{itemize}
+      \item \texttt{hyperref}: \texttt{Tabla \textbackslash ref\{tab:1\}} produce Tabla \ref{tab:1},
+      \item \texttt{cleveref}: \texttt{\textbackslash Cref\{tab:1\}} produce \Cref{tab:1},
+    \end{itemize}
+  \item permite referenciar una secuencia de elementos del mismo entorno. P. ej., para obtener un resultado del tipo `Tablas 1 y 2', los comandos y resultados al emplear ambos paquetes son:
+    \begin{itemize}
+      \item \texttt{hyperref}: \texttt{Tablas \textbackslash ref\{tab:1\} y \textbackslash ref\{long:2\}} produce Tablas \ref{tab:1} y \ref{long:2},
+      \item \texttt{cleveref}: \texttt{\textbackslash Cref\{tab:1,long:2\}} produce \Cref{tab:1,long:2},
+    \end{itemize}
+  \item es posible combinar referencias a entornos de diferente índole (tablas, figuras, ecuaciones, secciones, \ldots). P. ej., para obtener un resultado del tipo `Tablas 1 a 2 y Figura 1', los comandos y resultados al emplear ambos paquetes son:
+    \begin{itemize}
+      \item \texttt{hyperref}: \texttt{Tablas \textbackslash ref\{tab:1\} y \textbackslash ref\{long:2\} y Figura \textbackslash ref\{fig:1\}} produce Tablas \ref{tab:1} y \ref{long:2} y Figura \ref{fig:1},
+      \item \texttt{cleveref}: \texttt{\textbackslash Cref\{tab:1,long:2,fig:1\}} produce \Cref{tab:1,long:2,fig:1},
+    \end{itemize}
+  \end{itemize}
+
+  \section{Citas y referencias bibliográficas}
+  Las referencias se generan con \texttt{biblatex} y \texttt{biber}, siendo muy fácil introducirlas. P. ej., en cuanto a su número:
+
+  \begin{itemize}
+    \item se pueden meter una \parencite{Congdon2014} a una \parencite{Daniels2008},
+    \item de dos \parencite{Gelman2014, Harrell2015} en dos \parencite{Bivand2013,Blangiardo2015},
+    \item a cascoporro \parencite{Chang2012,Duda2001,Fawcett2006,Greenland2008,Lash2014},
+    \item o a cholón \parencite{Congdon2014,Daniels2008,Gelman2014, Harrell2015,Bivand2013,Blangiardo2015,Chang2012,Duda2001,Fawcett2006,Greenland2008,Lash2014,Lunn2012,Matloff2016,Rothman2008,Wickham2015}.
+  \end{itemize}
+
+  Respecto a su apariencia, se puede obtener una cita entre paréntesis o contextual, en función del comando que se use (\texttt{\textbackslash parencite\{\}} o \texttt{\textbackslash cite\{\}}). P. ej.:
+
+  \begin{itemize}
+    \item \texttt{\textbackslash parencite\{\}}: tal cosa es así, al menos eso dice la literatura específica \parencite{Lunn2012},
+    \item \texttt{\textbackslash cite\{\}}: por otro lado, y siempre según \cite{Daniels2008}, tal cosa no es así (en absoluto).
+  \end{itemize}
+
+  \appendix
+  \section*{\appendixname{} A}
+  En principio los apéndices están reservados para el trabajo directo desde \LaTeX, aunque en todo caso es posible añadir una sección final con este propósito (eso sí, teniendo en cuenta que el tratamiento si se desease construir una tabla de contenidos inicial será diferente).
+
+  % Referencias bibliográficas
+  \defbibheading{myheading}[Referencias bibliográficas]{\section*{#1}}
+  \printbibliography[heading=myheading]
 
 \end{document}
+
+<<biber, cache=FALSE>>=
+system(paste("biber", paste0('informes/pdf-latex/', sub("\\.Rnw$", "", current_input()))))
+@

@@ -1,0 +1,159 @@
+
+%--------------------------------------------------------%
+% La clase fisabior es la empleada en los informes       %
+% estadísticos realizados con el paquete de R fisabior.  %
+% Esta clase se basa en el paquete memoir, y puede       %
+% customizarse para otras salidas                        %
+%--------------------------------------------------------%
+
+\documentclass[$if(fontsize)$$fontsize$,$else$11pt, $endif$a4paper]{fisabior}
+
+
+%--------------------------------------------------------%
+% Carga paquetes opcionales                              %
+%--------------------------------------------------------%
+$if(otherpackages)$
+$for(otherpackages)$
+$if(otherpackages.options)$
+\usepackage[$otherpackages.options$]{$otherpackages.name$}
+$else$
+\usepackage{$otherpackages.name$}
+$endif$
+$endfor$
+$endif$
+
+%--------------------------------------------------------%
+% Definiciones estándar                                  %
+%--------------------------------------------------------%
+\setdefaultlanguage{spanish} % Lenguaje por defecto
+\setotherlanguage{english} % Lenguaje adicional
+\PolyglossiaSetup{spanish}{indentfirst = false} % Primera línea tras título-subtítulo no tiene sangría.
+
+\captionsetup{ % Opciones de leyendas
+  indention       = .75cm,
+  justification   = justified,
+  font            = small,
+  labelfont       = bf,
+  labelsep        = period,
+  width           = .8\textwidth,
+  singlelinecheck = false,
+  skip            = 6pt,
+  parskip         = 6pt,
+  textformat      = period
+}
+\captionsetup[table]{position = top, name = Tabla}
+\captionsetup[figure]{position = bottom, name = Figura}
+
+\hypersetup{ % Opciones de hipervínculos
+    $if(title)$pdftitle={$title$},$endif$
+    pdfpagemode  = {UseOutlines},
+    colorlinks,
+    linkcolor    = {blue},
+    citecolor    = {blue},
+    urlcolor     = {blue},
+    pdfstartview = {FitV},
+    unicode,
+    breaklinks   = true
+}
+
+% Customización de cleveref (con el comando \cref{entorno:nombre_elemento}
+% se crea la palabra que define el entorno antes de la cita:
+% p.ej., habiendo marcado \label{tab:1}, \cref{tab:1} genera 'tabla 1' y \Cref{tab:1} 'Tabla 1').
+% Antes hay que cambiar la etiqueta 'cuadro' por 'tabla', tanto en singular como en plural.
+% Para las figuras me decanto por usar siempre la abreviatura 'fig.-Fig.'.
+\crefformat{table}{tabla~#2#1#3}
+\crefmultiformat{table}{tablas~#2#1#3}{ y~#2#1#3}{, #2#1#3}{ y~#2#1#3}
+\Crefformat{table}{Tabla~#2#1#3}
+\Crefmultiformat{Table}{tablas~#2#1#3}{ y~#2#1#3}{, #2#1#3}{ y~#2#1#3}
+\crefformat{figure}{fig.~#2#1#3}
+\crefmultiformat{figure}{figs.~#2#1#3}{ y~#2#1#3}{, #2#1#3}{ y~#2#1#3}
+\Crefformat{figure}{Fig.~#2#1#3}
+\Crefmultiformat{figure}{Figs.~#2#1#3}{ y~#2#1#3}{, #2#1#3}{ y~#2#1#3}
+
+
+%--------------------------------------------------------%
+% Numeración de secciones                                %
+%--------------------------------------------------------%
+$if(numbersections)$
+\setcounter{secnumdepth}{3}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+
+
+%--------------------------------------------------------%
+% Página de título                                       %
+%--------------------------------------------------------%
+$if(title)$
+\title{$title$}
+$endif$
+
+$if(author)$
+$for(author)$
+$if(author.affilnumber)$
+$if(author.corresmail)$
+\author[$author.affilnumber$*]{$author.name$}
+\corresmail{$author.corresmail$}
+$else$
+\author[$author.affilnumber$]{$author.name$}
+$endif$
+$else$
+\author{$author.name$}
+$endif$
+$endfor$
+$endif$
+
+$if(affil)$
+$for(affil)$
+\affil[$affil.number$]{$affil.name$}
+$endfor$
+$for(author)$
+$if(author.corresmail)$
+\affil[*]{\corresponding}
+$endif$
+$endfor$
+$endif$
+
+$if(version)$
+\version{$version$}
+$endif$
+
+
+%--------------------------------------------------------%
+% Bibliografía                                           %
+%--------------------------------------------------------%
+$if(biblio-files)$
+\DeclareLanguageMapping{spanish}{spanish-apa}
+\DefineBibliographyStrings{spanish}{andothers = {et\addabbrvspace al\adddot}}
+\addbibresource{$biblio-files$}
+$endif$
+
+
+%-------------------------------------------%
+% Inicio del documento                      %
+%-------------------------------------------%
+\begin{document}
+
+\logotitulo{$logo$}
+
+$if(title)$
+\maketitle
+$endif$
+
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+$body$
+
+$if(biblio-files)$
+$if(biblio-title)$
+\printbibliography[title = $biblio-title$]
+$else$
+\printbibliography[title = Referencias Bibliográficas]
+$endif$
+$endif$
+
+\end{document}

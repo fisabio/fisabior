@@ -29,8 +29,9 @@
 #'   \item informes/
 #'   \itemize{
 #'     \item docx/
-#'     \item latex/
-#'     \item markdown/
+#'     \item pdf-markdown/
+#'     \item pdf-latex/
+#'     \item html/
 #'     \item odt/
 #'   }
 #'   \item cache/
@@ -104,7 +105,7 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
   sub_dirs <- paste0(
     proj_dir,
     c(paste0('datos/', c('brutos', 'procesados', 'cartografia')), 'figuras',
-      paste0('informes/', c('markdown', 'docx', 'odt', 'latex')), 'cache',
+      paste0('informes/', c('html', 'docx', 'odt', 'pdf-markdown', 'pdf-latex')), 'cache',
       paste0('src/', c('bugs', 'cpp', 'jags', 'stan')),
       'configuracion', 'r',  paste0('articulo/', c('enviado', 'revision', 'proof')))
   )
@@ -121,6 +122,10 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
   writeLines(readme_out, paste0(proj_dir, 'README.Rmd'))
   knitr::knit(paste0(proj_dir, 'README.Rmd'),
               paste0(proj_dir, 'README.md'), quiet = T)
+  file.copy(system.file('templates/fisabior.png', package = 'fisabior', mustWork = T),
+            paste0(proj_dir, 'figuras/fisabior.png'))
+  file.copy(system.file('templates/logo-ccby.png', package = 'fisabior', mustWork = T),
+            paste0(proj_dir, 'figuras/logo-ccby.png'))
 
   sample_scripts <- paste0('r/', c('importar_datos.R', 'depurar_datos.R',
                            'descriptiva.R', 'analisis.R'))
@@ -143,6 +148,11 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
       warning('Ya exite el repositorio git: no se hace nada.')
     } else {
       repo <- git2r::init(proj_dir)
+      ignore_files <- c(
+        paste0('!*.', c('tex', 'md', 'Rmd', 'Rnw', 'html', 'odt', 'docx', 'cls','bib')),
+        '/datos/', '/cache/', '.Rproj.user','.Rhistory', '*~', '.RData', '.Ruserdata',
+        '/informes/',  '*-concordance.tex')
+      writeLines(ignore_files, paste0(proj_dir, '.gitignore'))
       git2r::add(repo = repo, path = '*')
       invisible(git2r::commit(repo = repo, message = 'Primer commit', all = TRUE))
     }
