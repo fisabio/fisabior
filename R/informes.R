@@ -146,13 +146,17 @@ informe <- function(
               paste0(dirname(report_path), '/template_fisabior.docx'))
   } else if (formato == 'odt') {
     report_path <- paste0('informes/odt/', titulo_doc, '.Rmd')
-    rmd_path <- system.file('templates/template.odt', package = 'fisabior', mustWork = T)
+    rmd_path <- system.file('templates/template_odt.Rmd', package = 'fisabior', mustWork = T)
     rmd_out <- paste(readLines(rmd_path))
     rmd_out[grep('^title:', rmd_out)] <- paste('title:', titulo_proj)
     writeLines(paste(rmd_out), report_path)
     file.copy(system.file('rmarkdown/templates/fisabior/skeleton/referencias.bib',
                           package = 'fisabior', mustWork = T),
               paste0(dirname(report_path), '/referencias.bib'))
+    file.copy(system.file('templates/template_fisabior.odt', package = 'fisabior', mustWork = T),
+              paste0(dirname(report_path), '/template_fisabior.odt'))
+    file.copy(system.file('templates/fisabior_odt.xml', package = 'fisabior', mustWork = T),
+              paste0(dirname(report_path), '/fisabior_odt.xml'))
   } else if (formato == 'html') {
     report_path <- paste0('informes/html/', titulo_doc, '.Rmd')
     rmd_path <- system.file('templates/template.html', package = 'fisabior', mustWork = T)
