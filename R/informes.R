@@ -9,8 +9,8 @@
 #'   Las opciones admitidas son pdf-markdown, latex, html, docx y odt. Por
 #'   defecto se selecciona pdf-markdown.
 #' @param titulo_proj Cadena de caracteres con el título del informe. Por
-#'   defecto se asigna \emph{Informe estadístico del proyecto \code{X}}, donde \code{X} es
-#'   el nombre del directorio principal del proyecto.
+#'   defecto se asigna \emph{Informe estadístico del proyecto \code{X}}, donde
+#'   \code{X} es el nombre del directorio principal del proyecto.
 #' @param titulo_doc Cadena de caracteres con el nombre del archivo sin
 #'   extensión. Por defecto, los archivos recibirán el nombre genérico se asigna
 #'   el nombre \code{informe_form}, donde 'form' (formato) varía en función de
@@ -34,13 +34,13 @@
 #'   \code{rotating}, \code{setspace}, \code{tikz}, \code{xltxtra},
 #'   \code{xunicode}.
 #'
-#'   La opción por defecto es un documento LaTeX compilado con XeLaTeX (en lugar
-#'   de pdfLaTeX, ya que el primero ofrece una mayor compatibilidad de fuentes
-#'   para idiomas con caracteres especiales --caracteres no ASCII, como el
-#'   nuestro--). Del mismo modo, la opción por defecto para gestionar la
-#'   bibliografía es a través de \code{biblatex} empleando el gestor de
-#'   referencias \code{biber}, de modo que este último debe estar instalado en
-#'   el sistema.
+#'   La opción por defecto es un documento rmarkdown que produce un PDF tras ser
+#'   compilado con knitr, pandoc y XeLaTeX (en lugar de pdfLaTeX, ya que el
+#'   primero ofrece una mayor compatibilidad de fuentes para idiomas con
+#'   caracteres especiales --caracteres no ASCII, como el nuestro--). Del mismo
+#'   modo, la opción por defecto para gestionar la bibliografía es a través de
+#'   \code{biblatex} empleando el gestor de referencias \code{biber}, de modo
+#'   que este último debe estar instalado en el sistema.
 #'
 #'   Con todo, en primer lugar la función comprueba que el proyecto tenga
 #'   declaradas todas estas opciones (vienen por defecto al emplear
@@ -59,6 +59,19 @@
 #' informe(formato     = 'pdf-markdown',
 #'         titulo_proj = 'Informe Estadístico en FISABIO',
 #'         titulo_doc  = 'informe_fisabio')
+#' informe(formato     = 'latex',
+#'         titulo_proj = 'Informe Estadístico en FISABIO',
+#'         titulo_doc  = 'informe_fisabio')
+#' informe(formato     = 'odt',
+#'         titulo_proj = 'Informe Estadístico en FISABIO',
+#'         titulo_doc  = 'informe_fisabio')
+#' informe(formato     = 'docx',
+#'         titulo_proj = 'Informe Estadístico en FISABIO',
+#'         titulo_doc  = 'informe_fisabio')
+#' informe(formato     = 'html',
+#'         titulo_proj = 'Informe Estadístico en FISABIO',
+#'         titulo_doc  = 'informe_fisabio')
+#'
 informe <- function(
   formato     = 'pdf-markdown',
   titulo_proj = NULL,
@@ -119,26 +132,56 @@ informe <- function(
       file.copy(system.file('rmarkdown/templates/fisabior/skeleton/referencias.bib',
                             package = 'fisabior', mustWork = T),
                 paste0(dirname(report_path), '/referencias.bib'))
-      file.edit(report_path)
     }
   } else if (formato == 'docx') {
-    stop('Lo siento, pero las plantilla para docx todavía no está finalizada')
+    report_path <- paste0('informes/docx/', titulo_doc, '.Rmd')
+    rmd_path <- system.file('templates/template_docx.Rmd', package = 'fisabior', mustWork = T)
+    rmd_out <- paste(readLines(rmd_path))
+    rmd_out[grep('^title:', rmd_out)] <- paste('title:', titulo_proj)
+    writeLines(paste(rmd_out), report_path)
+    file.copy(system.file('rmarkdown/templates/fisabior/skeleton/referencias.bib',
+                          package = 'fisabior', mustWork = T),
+              paste0(dirname(report_path), '/referencias.bib'))
+    file.copy(system.file('templates/template_fisabior.docx', package = 'fisabior', mustWork = T),
+              paste0(dirname(report_path), '/template_fisabior.docx'))
   } else if (formato == 'odt') {
-    stop('Lo siento, pero la plantilla para dt todavía no está finalizada')
+    report_path <- paste0('informes/odt/', titulo_doc, '.Rmd')
+    rmd_path <- system.file('templates/template.odt', package = 'fisabior', mustWork = T)
+    rmd_out <- paste(readLines(rmd_path))
+    rmd_out[grep('^title:', rmd_out)] <- paste('title:', titulo_proj)
+    writeLines(paste(rmd_out), report_path)
+    file.copy(system.file('rmarkdown/templates/fisabior/skeleton/referencias.bib',
+                          package = 'fisabior', mustWork = T),
+              paste0(dirname(report_path), '/referencias.bib'))
+  } else if (formato == 'html') {
+    report_path <- paste0('informes/html/', titulo_doc, '.Rmd')
+    rmd_path <- system.file('templates/template.html', package = 'fisabior', mustWork = T)
+    rmd_out <- paste(readLines(rmd_path))
+    rmd_out[grep('^title:', rmd_out)] <- paste('title:', titulo_proj)
+    writeLines(paste(rmd_out), report_path)
+    file.copy(system.file('rmarkdown/templates/fisabior/skeleton/referencias.bib',
+                          package = 'fisabior', mustWork = T),
+              paste0(dirname(report_path), '/referencias.bib'))
   }
+  file.edit(report_path)
 }
 
 
-#' Función que devuelve el formato de salida apropiado para generar el informe en PDF.
+#' Función que devuelve el formato de salida apropiado para generar el informe
+#' en PDF.
+#'
+#' Esta función crea una lista con todas las especificaciones necesarias para
+#' crear un PDF fisabior, siguiendo el formato de la plantilla oficial.
 #'
 #' @export
 #' @param keep_tex Lógico: ¿debe guardarse el archivo .tex?
-#' @param md_extensions Cadena de caracteres indicando extensiones a markdown desde pandoc.
+#' @param md_extensions Cadena de caracteres indicando extensiones a markdown
+#'   desde pandoc. Por defecto se elimina la compilación de URL's.
 #'
 #' @return Objeto con clase 'rmarkdown_output_format'.
 #'
 #' @examples
-#' informe_pdf(keep_tex = TRUE,
+#' informe_pdf(keep_tex = FALSE,
 #'             md_extensions = '-autolink_bare_uris')
 informe_pdf <- function(keep_tex = TRUE, md_extensions = '-autolink_bare_uris') {
   template <- system.file('rmarkdown/templates/fisabior/resources/template.tex',

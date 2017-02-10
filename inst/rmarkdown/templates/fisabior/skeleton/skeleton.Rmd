@@ -20,24 +20,22 @@ affil:
 version: '0.0.1'
 abstract:
   Esta es la plantilla base para la elaboración de informes estadísticos en FISABIO. Todo en ella es editable, bien de forma local (cargando paquetes de \LaTeX adicionales, cambiando la configuración de la página, o lo que se te pueda ocurrir para mejorar tu documento), o bien de forma genérica (lo que implica modificar no solo esta plantilla --archivo ``.tex``--, sino también el archivo ``fisabior.cls`` asociado y, muy posiblemente, compartir tus sugerencias a través de nuestra cuenta de [GitHub](https://www.github.com/fisabio/fisabior).
-bibliography:
-  file: referencias.bib
-  title: 'Referencias Bibliográficas'
+bibliography: referencias.bib
 logo: ../../figuras/fisabior.png
 otherpackages:
   - name: lipsum
   - name: setspace
-output: fisabiomd::informe_pdf
+output: fisabior::informe_pdf
 ---
 
-```{r setup, cache = F}
+```{r setup, cache = F, include=FALSE}
 library(knitr)
 if (!dir.exists('../../figuras/markdown')) dir.create('../../figuras/markdown')
 opts_knit$set(root.dir = normalizePath('../../'),
               base.dir = normalizePath('../../figuras/markdown/'))
 options(
   formatR.arrow         = T,
-  width                 = 80,
+  width                 = 105,
   tikzDefaultEngine     = 'xetex',
   tikzMetricsDictionary = paste0(normalizePath('../../'), '/figuras/latex/tikzMetrics')
 )
@@ -53,14 +51,15 @@ opts_chunk$set(tidy       = T,
                cache      = T,
                par        = T,
                comment    = '#',
-               size       = 'tiny',
+               size       = 'scriptsize',
                warning    = F,
                message    = F)
 knit_hooks$set(crop = hook_pdfcrop)
 ```
 
+
 # Sobre esta plantilla
-La elaboración de esta plantilla se asocia al paquete de R _fisabior_, en el que puedes participar abiertamente como desarrollador de cara a mejorar el producto final. Este paquete empieza con el propósito de homogeneizar la elaboración de proyectos estadísticos en la fundación, así como el facilitar una estructura organizativa común que facilite tanto la búsqueda de información dentro de un proyecto, como la colaboración de otros estadísticos de FISABIO en un proyecto abierto.
+La elaboración de esta plantilla se asocia al paquete de R ``fisabior``, en el que puedes participar abiertamente como desarrollador de cara a mejorar el producto final. Este paquete empieza con el propósito de homogeneizar la elaboración de proyectos estadísticos en la fundación, así como el facilitar una estructura organizativa común que facilite tanto la búsqueda de información dentro de un proyecto, como la colaboración de otros estadísticos de FISABIO en un proyecto abierto.
 
 Fruto de esta idea inicial, una de las primeras sugerencias que se recibieron y aceptaron fue la de crear una plantilla uniforme que sirviera de base para la elaboración de informes estadísticos, y como suele decirse _de aquellos polvos estos lodos_. Esta plantilla está pensada para ser trabajada directamente a través de R empleando ``knitr`` o, en caso de querer obviar ligeramente la complejidad de órdenes y comandos de \LaTeX, a través de ``rmarkdown``:
 
@@ -123,15 +122,17 @@ Para crear citas se usa el símbolo `>` al comienzo de cada línea que compone l
 ## Añadir imágenes
 Para cargar imágenes que no procedan del código incrustado en el propio documento lo mejor es utilizar la función `knitr::include_graphics('ruta/a/la/imagen')` en un _chunk_ de código estándar `knitr::include_graphics('fisabior.png')`, cuyo resultado es:
 
-```{r echo = T, out.height='2cm', out.width='2cm', fig.align='center', fig.cap = 'Un logo molón'}
+```{r echo = F, out.height='1.5cm', out.width='4cm', fig.align='center', fig.cap = 'Reconóceme..'}
 root_dir <- getwd()
-knitr::include_graphics(path = paste0(root_dir, 'figuras/fisabior.png'))
+knitr::include_graphics(path = paste0(root_dir, '/figuras/logo-ccby.png'))
 ```
+
 
 # Acerca de `knitr`
 Para insertar elementos de código y decorarlos para que tengan vistosidad, se usará el paquete `knitr` junto con Markdown. Con `knitr`, en primer lugar hay que identificar los trozos de código, y para ello escribimos ```` ```{r} ````, indicando que comienza la sección de código qu deseamos introducir y que el lenguaje de programación empleado es `R`, y ```` ``` ```` para indicar el final de la pieza de código. En la [web del autor de `knitr`](http://yihui.name/knitr/) podrás encontrar un montón de ejemplos y de opciones útiles para obtener la salida deseada: p. ej., imagina que deseas mostrar únicamente un resultado y omitir el código, pues la solución es añadir `echo = F` en el encabezado (```` ```{r echo = F} ````); o que deseas que la figura que se produzca con un `plot(x)` tenga un tamaño de 10cm x 5cm, pues ```` ```{r fig.width = 10, fig.height = 5} ````. Como ves, la sintaxis es muy sencilla y bastante intuitiva, aunque la mejor forma de asimilarlo es mediante un ejemplo:
 
-```{r ejemplo, fig.cap='Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000', cache = T, eval = T}
+
+```{r ejemplo, fig.cap='Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000', results='hide', fig.height=4, fig.width=5}
 source('configuracion/config.R')
 load('datos/procesados/ejemplo_aragon.Rdata')
 aragon_datos <- data.frame(ID        = 1:729,
@@ -148,6 +149,8 @@ legend('topleft', c('<0.1', '0.1-0.5', '0.5-1', '1-1.5', '1.5-2', '>=2'),
        title = 'RME', fill = paleta, bty = 'n')
 par(opar)
 ```
+
+
 
 Asimismo, además de figuras (como vimos anteriormente) también podemos crear tablas fácilmente gracias a la función `knitr::kable()`. De forma adicional, con la función `xtable::xtable()` se puede obtener un control mucho más fino del resultado.
 
@@ -183,7 +186,7 @@ Seguramente sea necesario añadir tablas, bien sean pequeñitas (p. ej., véase 
 \end{table}
 
 \begin{longtable}{lcr}
-  \caption{Esto es una tabla más larga, que coincide con el final de una página. Además, tiene una leyenda bastante larga, que ocupa un mínimo de dos líneas, para ver cómo quedaría una vez compilado \label{long:2}} \\
+  \caption{Esto es una tabla más larga, que coincide con el final de una página. Además, tiene una leyenda bastante larga, que ocupa un mínimo de dos líneas, para ver cómo quedaría una vez compilado\label{long:2}} \\
   \toprule
   \multicolumn{1}{c}{\textbf{Tiempo}} &
     \multicolumn{1}{c}{\textbf{Combinación}} &
@@ -263,10 +266,11 @@ También se pueden añadir figuras (p. ej., \Cref{fig:1}). Para las figuras que 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width = 7cm]{fisabior.png}
-    \caption{Un logo molón, y con una leyenda un poco larga (de un mínimo de dos líneas), para ver cómo quedaría una vez compilado. \\ Además, se le ha añadido un segundo párrafo}
+    \includegraphics[width = 5cm]{fisabior.png}
+    \caption{Un logo molón, y con una leyenda un poco larga (de un mínimo de dos líneas), para ver cómo quedaría una vez compilado. \\ Además, se le ha añadido un segundo párrafo: estamos locos}
     \label{fig:1}
 \end{figure}
+
 
 ## Referencias cruzadas con el paquete ``cleveref``
 Una de las pocas circunstancias en las que nos veremos obligados a emplear un par de comandos \LaTeX \space es a la hora de realizar referencias cruzadas dentro del propio documento. En principio, esto solo implica conocer dos comandos muy sencillos, de forma que no creemos que suponga una gran molestia para los usuarios de ``rmarkdown``.

@@ -122,10 +122,10 @@ $endif$
 %--------------------------------------------------------%
 % Bibliografía                                           %
 %--------------------------------------------------------%
-$if(biblio-files)$
+$if(bibliography)$
 \DeclareLanguageMapping{spanish}{spanish-apa}
 \DefineBibliographyStrings{spanish}{andothers = {et\addabbrvspace al\adddot}}
-\addbibresource{$biblio-files$}
+\addbibresource{$bibliography$}
 $endif$
 
 
@@ -148,12 +148,8 @@ $endif$
 
 $body$
 
-$if(biblio-files)$
-$if(biblio-title)$
-\printbibliography[title = $biblio-title$]
-$else$
+$if(bibliography)$
 \printbibliography[title = Referencias Bibliográficas]
-$endif$
 $endif$
 
 \end{document}

@@ -17,6 +17,7 @@
 \RequirePackage[margin = 2cm, bottom = 2.5cm]{geometry}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{
+    etoolbox,
     fontspec,
     polyglossia,
     xltxtra,
@@ -61,9 +62,9 @@
 \renewcommand{\Affilfont}{\small}
 \renewcommand{\Authands}{ \& }
 \newcommand{\logotitulo}[1]{
-    \begin{figure}
-        \includegraphics[width = 1.5cm]{#1}
-    \end{figure}
+  \begin{figure}
+    \href{https://github.com/fisabio/}{\includegraphics[width = 1.5cm]{#1}}
+  \end{figure}
 }
 \newcommand{\corresmail}[2][Autor para correspondencia (]{%
     \gdef\corresponding{{#1}{\href{mailto:#2}{#2}) } } }
@@ -135,7 +136,7 @@
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
 % Add ',fontsize=\small' for more characters per line
 \definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newenvironment{Shaded}{\scriptsize \begin{snugshade}}{\end{snugshade} \normalsize}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
@@ -167,6 +168,13 @@
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
+
+\makeatletter
+\patchcmd{\@verbatim}
+{\verbatim@font}
+{\verbatim@font\scriptsize}
+{}{}
+\makeatother
 
 
 %--------------------------------------------------------%
