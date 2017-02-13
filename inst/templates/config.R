@@ -34,17 +34,11 @@ if (length(pkgs[!pkgs]) != 0) cat('No he podido cargar los paquetes:',
 
 
 # Configuración de proxy (FISABIO) ----------------------------------------
-cat('¿Quieres asignar el proxy por defecto de FISABIO? Si no lo has hecho por tu\n',
-    'cuenta y estás usando la red de FISABIO, te recomiendo hacerlo.\n 1:si \n 2:no \n')
-acto <- readline()
-if (acto == '1') {
-  set_config(use_proxy(
-    url      = '193.145.201.49',
-    port     = 8080,
-    username = 'invitado',
-    password = 'invitado'
-  ))
-}
+set_config(use_proxy(
+  url      = '193.145.201.49',
+  port     = 8080,
+  username = 'invitado',
+  password = 'invitado'
+))
 
-
-rm(pkgs, acto)
+rm(pkgs)
