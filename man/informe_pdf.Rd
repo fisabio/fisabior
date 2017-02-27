@@ -2,23 +2,24 @@
 % Please edit documentation in R/informes.R
 \name{informe_pdf}
 \alias{informe_pdf}
-\title{Función que devuelve el formato de salida apropiado para generar el informe en PDF.}
+\title{Función que devuelve el formato de salida apropiado para generar el informe
+o la presentación en PDF.}
 \usage{
-informe_pdf(keep_tex = TRUE, md_extensions = "-autolink_bare_uris")
+informe_pdf(beamer = FALSE)
 }
 \arguments{
-\item{keep_tex}{Lógico: ¿debe guardarse el archivo .tex?}
-
-\item{md_extensions}{Cadena de caracteres indicando extensiones a markdown desde pandoc.}
+\item{beamer}{Lógico: ¿el documento es una presentación Beamer? Falso por
+defecto.}
 }
 \value{
-Objeto con clase 'rmarkdown_output_format'.
+Objeto con clase "rmarkdown_output_format".
 }
 \description{
-Función que devuelve el formato de salida apropiado para generar el informe en PDF.
+Esta función crea una lista con todas las especificaciones necesarias para
+crear un PDF siguiendo el formato de la plantilla de fisabior. Solo tiene un
+argumento, el cual especifica si se trata de una presentación o no.
 }
-\examples{
-informe_pdf(keep_tex = TRUE,
-            md_extensions = '-autolink_bare_uris')
+\details{
+La función solo debe utilizarse desde una llamada a rmarkdown::render()
+o dentro de un documento .Rmd
 }
-

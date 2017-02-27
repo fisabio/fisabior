@@ -2,58 +2,93 @@
 % Please edit documentation in R/informes.R
 \name{informe}
 \alias{informe}
-\title{Crea un informe estadístico desde una plantilla}
+\title{Crea un informe estadístico (estático o dinámico) empleando una plantilla}
 \usage{
-informe(formato = "pdf", titulo_proj = NULL, titulo_doc = NULL)
+informe(doc_format = "pdf-markdown", title = NULL, file_name = NULL)
 }
 \arguments{
-\item{formato}{Cadena de caracteres con el formato deseado para el informe.
-Las opciones admitidas son pdf, html, docx y odt. Por defecto se selecciona
-pdf.}
+\item{doc_format}{Cadena de caracteres con el doc_format deseado para el
+informe. Las opciones admitidas son pdf-markdown, latex, html, docx y odt.
+Por defecto se selecciona pdf-markdown.}
 
-\item{titulo_proj}{Cadena de caracteres con el título del informe. Por
-defecto se asigna 'Análisis del proyecto X', donde X es el nombre del
-directorio principal del proyecto.}
+\item{title}{Cadena de caracteres con el título del informe. Por defecto se
+asigna \emph{Informe estadístico del proyecto \code{X}}, donde \code{X} es
+el nombre del directorio principal del proyecto.}
 
-\item{titulo_doc}{Cadena de caracteres con el nombre del archivo sin
-extensión. Por defecto se asigna el nombre 'informe_form.ext', donde 'form'
-(formato) y 'ext' (extensión) varían en función de lo seleccionado en en el
-argumento formato.}
+\item{file_name}{Cadena de caracteres con el nombre del archivo sin
+extensión. Por defecto, los archivos recibirán el nombre genérico se asigna
+el nombre \code{informe_form}, donde "form" (doc_format) varía en función
+de lo seleccionado en el argumento doc_format (.Rmd, .Rnw, .pdf, .html,
+.odt o .docx).}
 }
 \value{
 En función del formato escogido, se crea un documento principal y un
-  conjunto de documentos de respaldo. El comportamiento inicial es abrir el
-  documento principal con el editor.
+  conjunto de documentos de respaldo (algunos directamente en el directorio
+  de informes correspondiente al formato --informes/pdf-markdown/--, otros en
+  los directorios de data/cache o figuras/formato).
 }
 \description{
 Crea automáticamente un informe estadístico empleando una plantilla base con
-detalles del grupo, ofreciendo la posibilidad de que el documento generado
-tenga diversos formatos (PDF, HTML, DOCX u ODT).
+detalles del grupo. El documento generado puede tener diversos doc_formats
+(PDF desde Markdown o desde LaTeX, y HTML, DOCX y ODT desde Markdown).
 }
 \details{
-La función solo funciona si en el directorio de trabajo existe un
-  proyecto de RStudio, es decir, un archivo '.Rproj': si el proyecto se ha
-  creado con fisabior::init_proj(), esto no debería causar molestias, pues se
-  crea un .Rproj por defecto.
+La función solo funciona si el directorio de trabajo se circunscribe
+  a un proyecto de RStudio, es decir, si existe un archivo \emph{*.Rproj} en
+  el directorio de trabajo. Si el proyecto se ha creado con
+  \code{\link{init_proj}}, esto no debería causar molestias, pues se crea un
+  \emph{*.Rproj} por defecto.
 
-  Esta función requiere tener operativo los paquetes knitr y rmarkdown. Si se
-  desea generar informes PDF, también es necesario tener una distribución
-  LaTeX que incorpore (como mínimo) los siguientes paquetes: adjustbox,
-  amsmath, array, authblk, biblatex, booktabs, caption, csquotes, float,
-  fontenc, fontspec, footmisc, graphicx, hyperref, longtable, lscape,
-  mathtools, memoir, multirow, polyglossia, rotating, setspace, tikz,
-  tkz-graph, xltxtra, xunicode. La opción por defecto es un documento LaTeX
-  compilado con XeLaTeX (en lugar de pdfLaTeX, ya que el primero ofrece una
-  mayor compatibilidad de fuentes). Con todo, la función comprueba en primer
-  lugar que el proyecto tenga declaradas estas opciones (vienen por defecto
-  al emplear init_proj). Si no hubiera un acuerdo entre lo esperado y lo
-  declarado en las opciones del proyecto, la función pregunta qué hacer para
-  que, o bien se cambien las opciones del proyecto de forma automática o se
-  detenga la ejecución y se cambien a mano.
+  Esta función requiere tener operativo los paquetes \code{knitr} y
+  \code{rmarkdown}. Si se desea generar informes PDF, también es necesario
+  tener instalada una distribución LaTeX que incorpore (como mínimo) los
+  siguientes paquetes: \code{adjustbox}, \code{amsmath}, \code{array},
+  \code{authblk}, \code{biblatex}, \code{booktabs}, \code{caption},
+  \code{csquotes}, \code{float}, \code{fontenc}, \code{fontspec},
+  \code{footmisc}, \code{graphicx}, \code{hyperref}, \code{longtable},
+  \code{lscape}, \code{mathtools}, \code{multirow}, \code{polyglossia},
+  \code{rotating}, \code{setspace}, \code{tikz}, \code{xltxtra},
+  \code{xunicode}.
+
+  La opción por defecto es un documento rmarkdown que produce un PDF tras ser
+  compilado con knitr, pandoc y XeLaTeX (en lugar de pdfLaTeX, ya que el
+  primero ofrece una mayor compatibilidad de fuentes para idiomas con
+  caracteres especiales --caracteres no ASCII, como el nuestro--). Del mismo
+  modo, la opción por defecto para gestionar la bibliografía es a través de
+  \code{biblatex} empleando el gestor de referencias \code{biber}, de modo
+  que este último debe estar instalado en el sistema.
+
+  Con todo, en primer lugar la función comprueba que el proyecto tenga
+  declaradas todas estas opciones (vienen por defecto al emplear
+  \code{\link{init_proj}}) y que el software apropiado esté instalado. Si no
+  hubiera un acuerdo entre lo esperado y lo declarado en las opciones del
+  proyecto, la función pregunta qué hacer para que, o bien se cambien las
+  opciones del proyecto de forma automática o se detenga la ejecución y se
+  cambien a mano.
 }
 \examples{
-informe(formato     = 'pdf',
-        titulo_proj = 'Informe Estadístico de Prueba',
-        titulo_doc  = 'informe_prueba')
+\dontrun{
+library(fisabior)
+init_proj(proj_nom = "proyecto_europeo_X",
+          proj_dir = "~/proyectos",
+          git      = TRUE)
+informe(doc_format = "pdf-markdown",
+        title      = "Informe Estadístico en FISABIO",
+        file_name  = "informe_fisabio_md")
+informe(doc_format = "latex",
+        title      = "Informe Estadístico en FISABIO",
+        file_name  = "informe_fisabio_tex")
+informe(doc_format = "odt",
+        title      = "Informe Estadístico en FISABIO",
+        file_name  = "informe_fisabio_odt")
+informe(doc_format = "docx",
+        title      = "Informe Estadístico en FISABIO",
+        file_name  = "informe_fisabio_docx")
+informe(doc_format = "html",
+        title      = "Informe Estadístico en FISABIO",
+        file_name  = "informe_fisabio_html")
+informe(doc_format = "beamer",
+        title      = "Presentación Estadística en FISABIO",
+        file_name  = "presentacion_fisabio_beamer")
 }
-
+}
