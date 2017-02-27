@@ -23,8 +23,9 @@ El proyecto generado con su función principal (`init_proj()`) se estructura en 
 -   informes:
     -   docx: documentos MS Office Word producidos por rmarkdown-knitr,
     -   odt: documentos LibreOffice Writer producidos rmarkdown-knitr,
-    -   pdf-markdown: documentos markdown y html producidos por rmarkdown-knitr,
+    -   pdf-markdown: documentos PDF producidos por rmarkdown-knitr-LaTeX,
     -   pdf-latex: documentos TeX y PDF producidos por knitr-LaTeX,
+    -   beamer: presentaciones TeX y PDF producidos por rmarkdown-knitr-LaTeX,
     -   html: documentos HTML producidos por rmarkdown-knitr.
 -   r: directorio principal, el cual contiene todos los scripts de código R necesarios para la ejecución del proyecto. Solo contiene archivos con extensión `*.R`.
 -   src: directorio de código secundario, donde se guardan los archivos con código no-R, eligiendo para ello el subdirectorio más apropiado:

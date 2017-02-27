@@ -4,7 +4,7 @@ output: github_document
 
 # `fisabior`
 ## Acerca de este proyecto
-`fisabior` es un paquete de R cuyo único propósito es estructurar y organizar el entorno de trabajo, facilitando el trabajo en equipo. 
+`fisabior` es un paquete de R cuyo único propósito es estructurar y organizar el entorno de trabajo, facilitando el trabajo en equipo.
 
 El proyecto generado con su función principal (`init_proj()`) se estructura en 8 directorios, lo que permite seguir un criterio unificado a la hora de trabajar en equipo o, sencillamente, retomar un trabajo individual que se aparcase hace algún tiempo. El contenido de cada uno de estos directorios es:
 
@@ -19,11 +19,12 @@ El proyecto generado con su función principal (`init_proj()`) se estructura en 
     - procesados: datos procesados listos para cargar durante el análisis. Preferentemente se utilizará un formato de valores separados por comas, empleando el punto como separador decimal y dándole la extensión apropiada al archivo (`*.csv`), aunque también es posible emplear el formato nativo de R (`*.RData`) o una base de datos SQL.
     - cartografia: directorio para guardar archivos de cartografía asociados al proyecto. Preferentemente se utilizará el formato Shapefile (.shp) y, en caso de emplear una proyección de los datos, se aconseja emplear la EPSG 4326 (datum WGS84).
 + figuras: gráficos en diversos formatos generados tanto en el análisis como en la redacción de informes.
-+ informes: 
++ informes:
     - docx: documentos MS Office Word producidos por rmarkdown-knitr,
     - odt: documentos LibreOffice Writer producidos rmarkdown-knitr,
-    - pdf-markdown: documentos markdown y html producidos por rmarkdown-knitr,
+    - pdf-markdown: documentos PDF producidos por rmarkdown-knitr-LaTeX,
     - pdf-latex: documentos TeX y PDF producidos por knitr-LaTeX,
+    - beamer: presentaciones TeX y PDF producidos por rmarkdown-knitr-LaTeX,
     - html: documentos HTML producidos por rmarkdown-knitr.
 + r: directorio principal, el cual contiene todos los scripts de código R necesarios para la ejecución del proyecto. Solo contiene archivos con extensión `*.R`.
 + src: directorio de código secundario, donde se guardan los archivos con código no-R, eligiendo para ello el subdirectorio más apropiado:
