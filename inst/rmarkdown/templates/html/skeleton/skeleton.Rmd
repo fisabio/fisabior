@@ -1,0 +1,95 @@
+---
+title: Plantilla de Informe estadístico
+subtitle: "Una plantilla genérica en HTML"
+author:
+  - name: "Aitor Tilla-Fresca"
+    email: "Aitor.Tilla@Fresca.com"
+    affiliation: "Área de Desigualdades en Salud, FISABIO-CSISP"
+  - name: "Armando Bronca-Segura"
+    email: "Armando.Bronca@Segura.com"
+    affiliation: "Área de Desigualdades en Salud, FISABIO-CSISP"
+  - name: "Belén Tejas-Conhierro"
+    email: "Belen.Tejas@Conhierro.com"
+    affiliation: "Servicio de Estudios Epidemiológicos y Estadísticas Sanitarias, CSISP-DGSP"
+  - name: "Paco Jerte-Dell'Ombro"
+    email: "Paco.Jerte@Dellombro.com"
+    affiliation: "Servicio de Estudios Epidemiológicos y Estadísticas Sanitarias, CSISP-DGSP"
+  - name: "Omar Ciano-Dafuera"
+    email: "Omar.Ciano@Dafuera.com"
+    affiliation: "Servicio de Estudios Epidemiológicos y Estadísticas Sanitarias, CSISP-DGSP"
+date: ""
+abstract:
+  Esta es la plantilla base para la elaboración de informes estadísticos en FISABIO. Todo en ella es editable, bien de forma local (cargando archivos CSL adicionales, cambiando la configuración de la página, o lo que se te pueda ocurrir para mejorar tu documento), o bien de forma genérica (lo que implica modificar no solo esta plantilla, sino también los archivos asociados y, muy posiblemente, compartir tus sugerencias a través de nuestra cuenta de [GitHub](https://www.github.com/fisabio/fisabior/issues).
+output:
+  tufte::tufte_html:
+    css: fisabior.css
+    highlight: pygments
+    tufte_features: ["fonts", "italics"]
+bibliography: referencias.bib
+link-citations: no
+lang: es-ES
+csl: apa6.csl
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+library(knitr)
+if (!dir.exists("../../figuras/html")) dir.create("../../figuras/html")
+opts_knit$set(root.dir = normalizePath("../../"))
+options(
+  formatR.arrow         = T,
+  width                 = 70,
+  htmltools.dir.version = FALSE
+)
+opts_chunk$set(tidy        = T,
+               cache.extra = packageVersion("tufte"),
+               dev         = "png",
+               dpi         = 600,
+               prompt      = F,
+               fig.path    = "../../figuras/html/fig_",
+               cache.path  = "../../cache/html/chunk_",
+               cache       = T,
+               par         = T,
+               comment     = "#",
+               warning     = F,
+               message     = F)
+
+```
+
+La elaboración de esta plantilla se asocia al paquete de R ``fisabior``, en el que puedes participar abiertamente como desarrollador de cara a mejorar el producto final. Este paquete empieza con el propósito de homogeneizar la elaboración de proyectos estadísticos en la fundación, así como el facilitar una estructura organizativa común que facilite tanto la búsqueda de información dentro de un proyecto, como la colaboración de otros estadísticos de FISABIO en un proyecto abierto.
+
+
+Fruto de esta idea inicial, una de las primeras sugerencias que se recibieron y aceptaron fue la de crear una plantilla uniforme que sirviera de base para la elaboración de informes estadísticos, y como suele decirse _de aquellos polvos estos lodos_. Esta plantilla está pensada para ser trabajada directamente a través de R empleando ``knitr`` y ``rmarkdown``.
+
+
+
+
+## Añadir imágenes
+Para cargar imágenes que no procedan del código incrustado en el propio documento lo mejor es utilizar la función `knitr::include_graphics("ruta/a/la/imagen")` en un _chunk_ de código estándar `knitr::include_graphics("fisabior.png")`. P. ej.,:
+
+```{r ccby, echo = T,fig.cap = "Un logo chulo."}
+root_dir <- getwd()
+
+knitr::include_graphics(path = paste0(root_dir, "/figuras/fisabior.png"), dpi = 600)
+
+```
+
+<img src="../../figuras/fisabior.png" style="width:128px;height:128px;">
+
+
+## Citas y referencias bibliográficas
+Las referencias se generan directamente con Pandoc, siendo muy fácil introducirlas. P. ej., en cuanto a su número:
+
+- se pueden meter una [@Congdon2014] a una [@Daniels2008],
+- de dos [@Gelman2014; @Harrell2015] en dos [@Bivand2013; @Blangiardo2015],
+- a cascoporro [@Chang2012; @Duda2001; @Fawcett2006; @Greenland2008; @Lash2014],
+- o a cholón [@Congdon2014; @Daniels2008; @Gelman2014;  @Harrell2015; @Bivand2013; @Blangiardo2015; @Chang2012; @Duda2001; @Fawcett2006; @Greenland2008; @Lash2014; @Lunn2012; @Matloff2016; @Rothman2008; @Wickham2015].
+
+Respecto a su apariencia, se puede obtener una cita entre paréntesis o contextual, en función del comando que se use. P. ej.:
+
+- ``[@documento\_a\_citar]``: tal cosa es así, al menos eso dice la literatura específica [@Fawcett2006],
+- ``[-@documento\_a\_citar]``: Fawcett ya lo dijo en su momento [-@Fawcett2006],
+- ``@documento\_a\_citar``: por otro lado, y siempre según [-@Fawcett2006], tal cosa no es así (en absoluto),
+
+# Referencias bibliográficas
