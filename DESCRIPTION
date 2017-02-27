@@ -1,13 +1,12 @@
 Package: fisabior
 Type: Package
-Title: Funciones del Área de Desigualdades de FISABIO.
+Title: Funciones del Área de Desigualdades de FISABIO
 Version: 0.2.0
 Authors@R: c(
     person("Miguel Ángel", "Martínez-Beneito", 	email = "martinez_mig@gva.es", 	role = c("aut", "cre")),
     person("Gonzalo", "García-Donato", 		    email = "garcia_gon@gva.es", 	role = c("aut")),
     person("Paloma", "Botella-Rocamora", 	    email = "botella_pal@gva.es", 	role = c("aut")),
     person("Jordi", "Pérez-Panadés", 		    email = "perez_jorpan@gva.es", 	role = c("aut")),
-    person("David", "Martín-Baena", 		    email = "martin_dav@gva.es", 	role = c("aut")),
     person("Francisca", "Corpas-Burgos", 	    email = "corpas_fra@gva.es", 	role = c("aut")),
     person("Héctor", "Perpiñán-Fabuel", 	    email = "perpinan_hec@gva.es", 	role = c("aut")),
     person("Carlos", "Vergara-Hernández",	    email = "carlos.vergara@uv.es", role = c("aut"))
@@ -22,28 +21,20 @@ LazyData: TRUE
 URL: https://github.com/carlosvergara/fisabioR
 BugReports: ttps://github.com/carlosvergara/fisabioR/issues
 Imports:
-    data.table (>= 1.10.0),
     devtools (>= 1.12.0),
     git2r (>= 0.18.0),
     knitr (>= 1.15.1),
-    latex2exp (>= 0.4.0),
-    parallel (>= 3.3.2),
-    R2WinBUGS (>= 2.1-21),
-    Rcpp (>= 0.12.8),
-    rmarkdown (>= 0.7.7),
-    rstan (>= 2.14.1),
-    rstudioapi (>= 0.6),
-    runjags (>= 2.0.4-2),
-    sp (>= 1.2-4),
-    tidyverse (>= 1.0.0)
-Depends:
-    R (>= 3.2.0)
-Suggest:
-    lme4 (>= 1.1-12),
     mapproj (>= 1.2-4),
     maptools (>= 0.8-40),
+    R2WinBUGS (>= 2.1-21),
     rgdal (>= 1.2-5),
-    tableone (>= 0.7.3),
+    rgeos (>= 0.3-22),
+    rmarkdown (>= 0.7.7),
+    sp (>= 1.2-4),
+    tidyverse (>= 1.0.0),
+    tufte (>= 0.2),
     xtable (>= 1.8-2)
+Depends:
+    R (>= 3.2.0)
 SystemRequirements: git
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
