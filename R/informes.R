@@ -184,7 +184,7 @@ informe <- function(
     copy_fisabior(from_ = "rmarkdown/templates/pdf-markdown/skeleton/referencias.bib",
                   to_   = paste0(dirname(report_path), "/referencias.bib"))
   }
-  if (format != c("latex", "beamer"))
+  if (doc_format != c("latex", "beamer"))
     copy_fisabior(from_ = "templates/chuleta_rmarkdown.pdf",
                   to_   = paste0(dirname(report_path), "/chuleta_rmarkdown.pdf"))
   utils::file.edit(report_path)
