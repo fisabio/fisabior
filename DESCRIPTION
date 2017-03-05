@@ -25,6 +25,7 @@ Imports:
     git2r (>= 0.18.0),
     knitr (>= 1.15.1),
     rmarkdown (>= 0.7.7),
+    tikzDevice (>= 0.10-1),
     tufte (>= 0.2)
 Depends:
     R (>= 3.2.0)
