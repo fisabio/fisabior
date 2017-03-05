@@ -14,26 +14,18 @@ Authors@R: c(
 Maintainer: Miguel Ángel Martínez-Beneito <martinez_mig@gva.es>
 Description: Colección de funciones de uso común en el Área de Desigualdades de
     FISABIO. Incluye la función 'init_proj()' para crear una estructura unificada de
-    directorios, archivos y funciones comunes.
+    directorios, archivos y funciones comunes, así como la función 'informe()' para
+    generar un informe estadístico en varios formatos empleando Markdown o LaTeX.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 URL: https://github.com/carlosvergara/fisabioR
 BugReports: ttps://github.com/carlosvergara/fisabioR/issues
 Imports:
-    devtools (>= 1.12.0),
     git2r (>= 0.18.0),
     knitr (>= 1.15.1),
-    mapproj (>= 1.2-4),
-    maptools (>= 0.8-40),
-    R2WinBUGS (>= 2.1-21),
-    rgdal (>= 1.2-5),
-    rgeos (>= 0.3-22),
     rmarkdown (>= 0.7.7),
-    sp (>= 1.2-4),
-    tidyverse (>= 1.0.0),
-    tufte (>= 0.2),
-    xtable (>= 1.8-2)
+    tufte (>= 0.2)
 Depends:
     R (>= 3.2.0)
 SystemRequirements: git
