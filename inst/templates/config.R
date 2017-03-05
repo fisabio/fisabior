@@ -6,6 +6,7 @@ pkgs <- c(
   "maptools",
   "mlr",
   "R2WinBUGS",
+  "RColorBrewer",
   "rgdal",
   "rmarkdown",
   "rms",
