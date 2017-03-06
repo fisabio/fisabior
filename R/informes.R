@@ -5,6 +5,7 @@
 #' (PDF desde Markdown o desde LaTeX, y HTML, DOCX y ODT desde Markdown).
 #'
 #' @export
+#' @importFrom utils file.edit
 #' @param doc_format Cadena de caracteres con el doc_format deseado para el
 #'   informe. Las opciones admitidas son pdf-markdown, latex, html, docx y odt.
 #'   Por defecto se selecciona pdf-markdown.
@@ -184,10 +185,10 @@ informe <- function(
     copy_fisabior(from_ = "rmarkdown/templates/pdf-markdown/skeleton/referencias.bib",
                   to_   = paste0(dirname(report_path), "/referencias.bib"))
   }
-  if (doc_format %in% c("latex", "beamer"))
+  if (!doc_format %in% c("latex", "beamer"))
     copy_fisabior(from_ = "templates/chuleta_rmarkdown.pdf",
                   to_   = paste0(dirname(report_path), "/chuleta_rmarkdown.pdf"))
-  utils::file.edit(report_path)
+  file.edit(report_path)
 }
 
 
