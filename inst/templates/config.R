@@ -19,10 +19,8 @@ pkgs <- c(
 invisible(sapply(pkgs, function(x) {
   if (!x %in% rownames(installed.packages()))
     install.packages(x)
-}))
-invisible(sapply(pkgs, function(x)
   suppressPackageStartupMessages(require(x, character.only = TRUE))
-))
+}))
 rm(pkgs)
 
 
