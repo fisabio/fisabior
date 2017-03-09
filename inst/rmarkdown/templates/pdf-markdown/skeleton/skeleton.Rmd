@@ -138,7 +138,7 @@ Seguramente sea necesario añadir tablas, bien sean pequeñitas (p. ej., véase 
   \midrule
   \endfirsthead
 
-  \multicolumn{3}{c}{\small {\bfseries \tablename \thetable{}.} Continuación.} \\
+  \multicolumn{3}{c}{\small {\bfseries \tablename \space \thetable{}.} Continuación.} \\
   \toprule
   \multicolumn{1}{c}{\textbf{Tiempo}} &
     \multicolumn{1}{c}{\textbf{Combinación}} &

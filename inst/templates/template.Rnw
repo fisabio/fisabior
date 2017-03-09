@@ -193,6 +193,10 @@
 \version{0.0.1}
 
 
+\addto\captionsspanish{%
+  \renewcommand\tablename{Tabla}
+}
+
 \usepackage{lipsum} % Texto ciego.
 
 \begin{document}
@@ -295,7 +299,8 @@ par(opar)
   \end{table}
 
   \begin{longtable}{lcr}
-    \caption{Esto es una tabla más larga, que coincide con el final de una página. Además, tiene una leyenda bastante larga, que ocupa un mínimo de dos líneas, para ver cómo quedaría una vez compilado \label{long:2}} \\
+    \caption{Esto es una tabla más larga, que coincide con el final de una página. Además, tiene una leyenda bastante larga, que ocupa un mínimo de dos líneas, para ver cómo quedaría una vez compilado}
+    \label{long:2} \\
 
     \toprule
     \multicolumn{1}{c}{\textbf{Tiempo}} &
@@ -304,7 +309,7 @@ par(opar)
     \midrule
     \endfirsthead
 
-    \multicolumn{3}{c}{\small {\bfseries \tablename \thetable{}.} Continuación.} \\
+    \multicolumn{3}{c}{\small {\bfseries \tablename \space \thetable{}.} Continuación.} \\
     \toprule
     \multicolumn{1}{c}{\textbf{Tiempo}} &
     \multicolumn{1}{c}{\textbf{Combinación}} &
