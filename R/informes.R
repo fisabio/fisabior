@@ -7,8 +7,8 @@
 #' @export
 #' @importFrom utils file.edit
 #' @param doc_format Cadena de caracteres con el doc_format deseado para el
-#'   informe. Las opciones admitidas son pdf-markdown, latex, html, docx y odt.
-#'   Por defecto se selecciona pdf-markdown.
+#'   informe. Las opciones admitidas son pdf_markdown, latex, html, docx y odt.
+#'   Por defecto se selecciona pdf_markdown.
 #' @param title Cadena de caracteres con el título del informe. Por defecto se
 #'   asigna \emph{Informe estadístico del proyecto \code{X}}, donde \code{X} es
 #'   el nombre del directorio principal del proyecto.
@@ -62,7 +62,7 @@
 #' init_proj(proj_nom = "proyecto_europeo_X",
 #'           proj_dir = "~/proyectos",
 #'           git      = TRUE)
-#' informe(doc_format = "pdf-markdown",
+#' informe(doc_format = "pdf_markdown",
 #'         title      = "Informe Estadístico en FISABIO",
 #'         file_name  = "informe_fisabio_md")
 #' informe(doc_format = "latex",
@@ -82,7 +82,7 @@
 #'         file_name  = "presentacion_fisabio_beamer")
 #' }
 informe <- function(
-  doc_format = "pdf-markdown",
+  doc_format = "pdf_markdown",
   title      = NULL,
   file_name  = NULL) {
 
@@ -95,21 +95,21 @@ informe <- function(
     stop("\nEl directorio de trabajo no contiene ningún proyecto de RStudio.",
          "\nCambia al directorio principal creado con la función fisabior::init_proj()")
   if (is.null(title))
-    title <- paste("Informe estadístico del proyecto", basename(getwd()))
+    title <- paste("Informe Estadístico del Proyecto", basename(getwd()))
   if (is.null(file_name))
     file_name <- paste0("informe_", doc_format)
   if (!grepl("/$", proj_dir))
     proj_dir <- paste0(proj_dir, "/")
   proj_opt <- readLines(proj_files[grep(".Rproj", proj_files)])
   doc_format <- tolower(doc_format)
-  if (!any(grepl(doc_format, c("pdf-markdown", "latex", "html", "docx", "odt", "beamer"))))
+  if (!any(grepl(doc_format, c("pdf_markdown", "latex", "html", "docx", "odt", "beamer"))))
     stop("\nEl formato que has escogido no está disponible o es erróneo.",
-         "\nLos posibles formatos son: pdf-markdown, latex, html, docx, odt o beamer.")
+         "\nLos posibles formatos son: pdf_markdown, latex, html, docx, odt o beamer.")
 
   ######################################
   # Documentos en PDF                  #
   ######################################
-  if (doc_format %in% c("pdf-markdown", "latex", "beamer")) {
+  if (doc_format %in% c("pdf_markdown", "latex", "beamer")) {
     if (!any(grepl("knitr", proj_opt, ignore.case = TRUE))) {
       stop("\nknitr no es la opción por defecto para compilar archivos LaTeX",
            "\nVuelve a ejecutar la función cuando lo hayas cambiado en:\n",
@@ -119,9 +119,9 @@ informe <- function(
            "\nVuelve a ejecutar la función cuando lo hayas cambiado en:\n",
            "Tools/Project Options/Sweave/Program Defaults")
     }
-    if (doc_format == "pdf-markdown") {
+    if (doc_format == "pdf_markdown") {
       report_path <- paste0("informes/pdf-markdown/", file_name, ".Rmd")
-      rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pdf-markdown",
+      rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pdf_markdown",
                        package = "fisabior", edit = FALSE)
       pdf_draft <- readLines(report_path)
       pdf_draft[grep("^title:", pdf_draft)] <- paste("title:", title)
@@ -132,7 +132,7 @@ informe <- function(
       rnw_out <- paste(readLines(rnw_path))
       rnw_out[grep("^\\\\title\\{", rnw_out)] <- paste0("\\title{", title, "}")
       writeLines(paste(rnw_out), report_path)
-      copy_fisabior(from_ = "rmarkdown/templates/pdf-markdown/skeleton/referencias.bib",
+      copy_fisabior(from_ = "rmarkdown/templates/pdf_markdown/skeleton/referencias.bib",
                     to_   = paste0(dirname(report_path), "/referencias.bib"))
     } else if (doc_format == "beamer") {
       report_path <- paste0("informes/beamer/", file_name, ".Rmd")
@@ -152,7 +152,7 @@ informe <- function(
     rmd_out <- paste(readLines(rmd_path))
     rmd_out[grep("^title:", rmd_out)] <- paste("title:", title)
     writeLines(paste(rmd_out), report_path)
-    copy_fisabior(from_ = "rmarkdown/templates/pdf-markdown/skeleton/referencias.bib",
+    copy_fisabior(from_ = "rmarkdown/templates/pdf_markdown/skeleton/referencias.bib",
                   to_   = paste0(dirname(report_path), "/referencias.bib"))
     copy_fisabior(from_ = "templates/template_fisabior.docx",
                   to_   = paste0(dirname(report_path), "/template_fisabior.docx"))
@@ -166,7 +166,7 @@ informe <- function(
     rmd_out <- paste(readLines(rmd_path))
     rmd_out[grep("^title:", rmd_out)] <- paste("title:", title)
     writeLines(paste(rmd_out), report_path)
-    copy_fisabior(from_ = "rmarkdown/templates/pdf-markdown/skeleton/referencias.bib",
+    copy_fisabior(from_ = "rmarkdown/templates/pdf_markdown/skeleton/referencias.bib",
                   to_   = paste0(dirname(report_path), "/referencias.bib"))
     copy_fisabior(from_ = "templates/template_fisabior.odt",
                   to_   = paste0(dirname(report_path), "/template_fisabior.odt"))
@@ -182,7 +182,7 @@ informe <- function(
     rmd_out <- paste(readLines(rmd_path))
     rmd_out[grep("^title:", rmd_out)] <- paste("title:", title)
     writeLines(paste(rmd_out), report_path)
-    copy_fisabior(from_ = "rmarkdown/templates/pdf-markdown/skeleton/referencias.bib",
+    copy_fisabior(from_ = "rmarkdown/templates/pdf_markdown/skeleton/referencias.bib",
                   to_   = paste0(dirname(report_path), "/referencias.bib"))
   }
   if (!doc_format %in% c("latex", "beamer"))
@@ -211,7 +211,7 @@ informe <- function(
 #'
 informe_pdf <- function(beamer = FALSE) {
   if (!beamer) {
-    template <- system.file("rmarkdown/templates/pdf-markdown/resources/template.tex",
+    template <- system.file("rmarkdown/templates/pdf_markdown/resources/template.tex",
                             package = "fisabior")
     doc_format <- rmarkdown::pdf_document(
       template         = template,

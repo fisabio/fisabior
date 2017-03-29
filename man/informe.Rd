@@ -4,12 +4,12 @@
 \alias{informe}
 \title{Crea un informe estadístico (estático o dinámico) empleando una plantilla}
 \usage{
-informe(doc_format = "pdf-markdown", title = NULL, file_name = NULL)
+informe(doc_format = "pdf_markdown", title = NULL, file_name = NULL)
 }
 \arguments{
 \item{doc_format}{Cadena de caracteres con el doc_format deseado para el
-informe. Las opciones admitidas son pdf-markdown, latex, html, docx y odt.
-Por defecto se selecciona pdf-markdown.}
+informe. Las opciones admitidas son pdf_markdown, latex, html, docx y odt.
+Por defecto se selecciona pdf_markdown.}
 
 \item{title}{Cadena de caracteres con el título del informe. Por defecto se
 asigna \emph{Informe estadístico del proyecto \code{X}}, donde \code{X} es
@@ -72,7 +72,7 @@ library(fisabior)
 init_proj(proj_nom = "proyecto_europeo_X",
           proj_dir = "~/proyectos",
           git      = TRUE)
-informe(doc_format = "pdf-markdown",
+informe(doc_format = "pdf_markdown",
         title      = "Informe Estadístico en FISABIO",
         file_name  = "informe_fisabio_md")
 informe(doc_format = "latex",
