@@ -1,0 +1,173 @@
+---
+title: "Plantilla de Informe Estadístico"
+subtitle: "Ejemplo e instrucciones de la plantilla en HTML"
+author:
+  - name: "Aitor Tilla-Fresca"
+    email: "Aitor.Tilla@Fresca.com"
+    affiliation: "Área de Desigualdades en Salud, FISABIO-CSISP"
+  - name: "Armando Bronca-Segura"
+    email: "Armando.Bronca@Segura.com"
+    affiliation: "Área de Desigualdades en Salud, FISABIO-CSISP"
+  - name: "Belén Tejas-Conhierro"
+    email: "Belen.Tejas@Conhierro.com"
+    affiliation: "Servicio de Estudios Epidemiológicos y Estadísticas Sanitarias, CSISP-DGSP"
+  - name: "Paco Jerte-Dell'Ombro"
+    email: "Paco.Jerte@DellOmbro.com"
+    affiliation: "Servicio de Estudios Epidemiológicos y Estadísticas Sanitarias, CSISP-DGSP"
+  - name: "Omar Ciano-Dafuera"
+    email: "Omar.Ciano@Dafuera.com"
+    affiliation: "Servicio de Estudios Epidemiológicos y Estadísticas Sanitarias, CSISP-DGSP"
+date: "`r Sys.Date()`"
+abstract:
+  Esta es la plantilla base para la elaboración de informes estadísticos en FISABIO. Todo en ella es editable, bien de forma local (cargando paquetes de adicionales, cambiando la configuración de la página, o lo que se te pueda ocurrir para mejorar tu documento), o bien de forma genérica (lo que implica modificar no solo esta plantilla, sino muy posiblemente compartir tus sugerencias a través de nuestra cuenta de [GitHub](https://www.github.com/fisabio/fisabior).
+output:
+  tufte::tufte_html:
+    css: fisabior.css
+    highlight: pygments
+bibliography: referencias.bib
+link-citations: no
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+library(knitr)
+if (!dir.exists("../../figuras/html")) dir.create("../../figuras/html")
+opts_knit$set(root.dir = normalizePath("../../"))
+options(
+  width                 = 80,
+  htmltools.dir.version = FALSE
+)
+opts_chunk$set(tidy        = F,
+               prompt      = F,
+               cache.extra = packageVersion('tufte'),
+               dev         = "png",
+               dpi         = 600,
+               fig.path    = "../../figuras/html/fig_",
+               cache.path  = "../../cache/html/chunk_",
+               cache       = T,
+               par         = T,
+               comment     = "#",
+               warning     = F,
+               message     = F)
+```
+
+
+# Sobre esta plantilla
+La elaboración de esta plantilla se asocia al paquete de R ``fisabior``, en el que puedes participar abiertamente como desarrollador de cara a mejorar el producto final. Este paquete empieza con el propósito de homogeneizar la elaboración de proyectos estadísticos en la fundación, así como el facilitar una estructura organizativa común que facilite tanto la búsqueda de información dentro de un proyecto, como la colaboración de otros estadísticos de FISABIO en un proyecto abierto.
+
+
+Fruto de esta idea inicial, una de las primeras sugerencias que se recibieron y aceptaron fue la de crear una plantilla uniforme que sirviera de base para la elaboración de informes estadísticos, y como suele decirse _de aquellos polvos estos lodos_. Esta plantilla está pensada para ser trabajada directamente a través de R empleando ``knitr`` y ``rmarkdown``.
+
+Pongámonos en situación: has realizado un análisis estadístico sobre un banco de datos y estás preparando el informe de resultados. Te pasas varias horas (o días) copiando y pegando tablas y gráficos o, mucho peor, sufriendo la alienación que supone escribir todos los valores a mano. Tras ello, le llega el turno a la maquetación para que todo sea bonito y el informe solo necesite un lacito para ser enviado a quien corresponda, y esto también requiere un gran esfuerzo.
+
+Sin embargo, es habitual que a alguien se le ocurra algo que pueda mejorar el análisis y el producto final, aunque pensar en pasar una vez más por todo el proceso de _copia-pega_ por un cambio mínimo, puede amargarte después de tanta dedicación. Y lo peor es que todo empieza con buenas intenciones y algo parecido a: _y si... recodificamos esta variable_, _y si... en tal modelo probamos a introducir un factor aleatorio y vemos cómo quedan los residuos_ o, en el peor de los casos,  _si... repetimos este análisis pero haciendo el pino mientras tocamos tocamos la sintonía de Juego de Tronos con el ukelele_.
+
+¿Alguna vez te ha pasado? Pues es precisamente ahí donde los informes dinámicos pueden sacarnos del apuro. La idea es muy simple: integrar trozos de código ligados a un análisis y las salidas que `R` produce al ejecutarlos (tanto texto como gráficos) dentro del informe que se esté preparando, de una manera natural y bastante fácil. ¿Tras la revisión de los compañeros se plantean cambios en el análisis? No pasa nada: modificando el código integrado el informe, este se genera de nuevo automáticamente con el código y las salidas actualizadas. Esto, que en principio parece poco relevante, implica que solo has de concentrarte en tu investigación: pensar en la mejor forma de análisis y en la interpretación de los resultados.
+
+# Acerca de Markdown
+Este documento ofrece una base sobre la que trabajar a la hora de redactar informes empleando una sintaxis Markdown y código en `R` gracias al paquete `knitr`.
+
+A estas alturas seguro que conoces los entresijos de `R`, pero es probable que aún no le hayas tomado la medida a Markdown: se trata de un lenguaje muy sencillo que permite escribir textos de una manera fácil y dinámica (de hecho, es tan sencillo que en primera instancia solo deberías conocer un par de aspectos para poder comenzar a trabajar).
+
+
+## Itálica y negrita
+`*Esto es itálica* y esto _también_`: *Esto es itálica* y esto _también_.
+`**Esto es negrita** y esto __también__`: **Esto es negrita** y esto __también__
+`También puedes usar ***itálica y negrita*** si lo ___deseas___`: También puedes usar ***itálica y negrita*** si lo ___deseas___
+
+
+## Vínculos
+`Aquí tienes un hipervínculo a [Google](http://www.google.com/)`: Aquí tienes un hipervínculo a [Google](http://www.google.com/).
+
+
+## Encabezados
+Se crean empleando el caracter `#`, siendo su número el que indica el nivel del encabezado. Por ejemplo, para crear un encabezado de nivel 3 se usaría `### Título del encabezado`, y el resultado sería:
+
+### Encabezado de nivel 3
+
+## Listas
+Puedes crear listas muy sencillas, numeradas o no, empleando los caracteres `-`, `+`, `*`; o una secuenia de números seguidos por un punto, como `1.`, `2.` o `3.`. Por ejemplo, para crear una lista no numerada, se emplea el código:
+
+```
+- primer elemento, primer nivel,
+- segundo elemento, primer nivel,
+  * primer elemento, segundo nivel,
+- tercer elemento, primer nivel.
+```
+
+lo cual produce el siguiente resultado:
+
+- primer elemento, primer nivel,
+- segundo elemento, primer nivel,
+  * primer elemento, segundo nivel,
+- tercer elemento, primer nivel.
+
+
+## Citas textuales
+Para crear citas se usa el símbolo `>` al comienzo de cada línea que compone la cita. Por ejemplo, la instrucción `> Esto es una cita muy importante.` genera el siguiente resultado:
+
+> Esto es una cita muy importante.
+>
+> `r tufte::quote_footer('--- Jacinto el de mi pueblo')`
+
+
+# Acerca de `knitr`
+Para insertar elementos de código y decorarlos para que tengan vistosidad, se usará el paquete `knitr` junto con Markdown. Con `knitr`, en primer lugar hay que identificar los trozos de código, y para ello escribimos ```` ```{r} ````, indicando que comienza la sección de código qu deseamos introducir y que el lenguaje de programación empleado es `R`, y ```` ``` ```` para indicar el final de la pieza de código. En la [web del autor de `knitr`](http://yihui.name/knitr/) podrás encontrar un montón de ejemplos y de opciones útiles para obtener la salida deseada: p. ej., imagina que deseas mostrar únicamente un resultado y omitir el código, pues la solución es añadir `echo = F` en el encabezado (```` ```{r echo = F} ````); o que deseas que la figura que se produzca con un `plot(x)` tenga un tamaño de 10cm x 5cm, pues ```` ```{r fig.width = 10, fig.height = 5} ````. Como ves, la sintaxis es muy sencilla y bastante intuitiva.
+
+## Figuras
+Las opciones para representar figuras son variadas:
+
+- se puede crear una figura al margen marcando la opción `fig.margin = TRUE`,
+
+
+```{r ejemplo_marg, fig.margin = TRUE, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000.", fig.height=4, fig.width=5}
+source("configuracion/config.R")
+library(fisabior)
+data("aragon_iam")
+opar <- par(mar = c(1, 1, 1, 1))
+paleta <- brewer.pal(6, "OrRd")
+paleta_col <- paleta[findInterval(with(aragon_iam@data, observada / esperada),
+                                  c(0, 0.1, 0.5, 1, 1.5, 2, 10))]
+plot(aragon_iam, col = paleta_col)
+legend("topleft", c("<0.1", "0.1-0.5", "0.5-1", "1-1.5", "1.5-2", ">=2"),
+       title = "RME", fill = paleta, bty = "n")
+par(opar)
+```
+
+- se puede requerir que se emplee la amplitud de la página al completo,
+
+```{r ejemplo_comp, fig.fullwidth = TRUE, fig.cap="Mortalidad observada vs. esperada en hombres en función del área del municipio. Región de Aragón, 1991-2000.", fig.width = 10, fig.height = 4}
+ggplot(aragon_iam@data, aes(x = observada, y = esperada, color = area)) +
+  geom_point() +
+  xlim(0, 75) + 
+  ylim(0, 75) + 
+  geom_smooth(method = "lm", se = F)
+```
+
+
+## Tablas
+También podemos crear tablas fácilmente gracias a la función `knitr::kable()`.
+
+```{r tabla}
+kable(head(aragon_iam@data), digits = 2, align = rep("c", 7), caption = "Esto es la leyenda de la Tabla.")
+```
+
+
+## Añadir imágenes existentes
+Para cargar imágenes que no procedan del código incrustado en el propio documento lo mejor es utilizar la función `knitr::include_graphics("ruta/a/la/imagen")` en un _chunk_ de código estándar:
+
+```{r logo, fig.align="center", fig.cap = "Un logo molón."}
+root_dir <- getwd()
+knitr::include_graphics(path = paste0(root_dir, "/figuras/fisabior.png"), dpi = 200)
+```
+
+
+## Arbitrary Margin Content
+
+In fact, you can include anything in the margin using the **knitr** engine named `marginfigure`. Unlike R code chunks ```` ```{r} ````, you write a chunk starting with ```` ```{marginfigure} ```` instead, then put the content in the chunk. See an example on the right about the first fundamental theorem of calculus.
+
+```{marginfigure}
+We know from _the first fundamental theorem of calculus_ that for $x$ in $[a, b]$:
+$$\frac{d}{dx}\left( \int_{a}^{x} f(u)\,du\right)=f(x).$$
+```
+

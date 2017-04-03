@@ -1,0 +1,4 @@
+name: tufte_fisabio
+description: >
+  Plantilla para crear un informe estadístico en FISABIO en formato HTML
+create_dir: false

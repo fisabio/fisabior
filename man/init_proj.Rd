@@ -8,7 +8,7 @@ init_proj(proj_nom = NULL, proj_dir = NULL, git = TRUE)
 }
 \arguments{
 \item{proj_nom}{Cadena de caracteres con el nombre a asignar al proyecto. Por
-defecto se asigna el nombre 'proyecto-yyy-mm-dd'.}
+defecto se asigna el nombre "proyecto-yyy-mm-dd".}
 
 \item{proj_dir}{Cadena de caracteres indicando la ruta al directorio
 principal donde se creará el proyecto. Por defecto se escoge el directorio
@@ -25,14 +25,17 @@ La función crea la siguiente estructura de directorios en
     \itemize{
       \item brutos/
       \item procesados/
+      \item cartografia/
   }
   \item figuras/
   \item informes/
   \itemize{
     \item docx/
-    \item latex/
-    \item markdown/
+    \item pdf-markdown/
+    \item pdf-latex/
+    \item html/
     \item odt/
+    \item beamer/
   }
   \item cache/
   \item src/
@@ -57,8 +60,15 @@ Crea automáticamente un proyecto siguiendo la plantilla fisabior, empleando
 una jerarquía de directorios unificada, cargando archivos y funciones comunes
 del grupo de colaboradores. Opcionalmente, genera un repositorio git.
 }
-\examples{
-init_proj()
-init_proj(proj_nom = 'proyecto_europeo_X', proj_dir = '~/Proyectos')
+\details{
+La función crea la estructura de directorios a partir del nombre del
+  proyecto empleando minúsculas, con independencia de si el usuario ha
+  introducido el argumento con mayúsculas: P. ej., proj_name = "Proyecto_X"
+  siempre será reconocido por la función como proj_name = "proyecto_x".
 }
-
+\examples{
+\dontrun{
+library(fisabior)
+init_proj(proj_nom = "proyecto_europeo_X", proj_dir = "~/proyectos")
+}
+}
