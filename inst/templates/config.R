@@ -1,19 +1,15 @@
 
 # Carga de paquetes -------------------------------------------------------
 pkgs <- c(
-  "data.table",
   "knitr",
   "maptools",
-  "mlr",
   "R2WinBUGS",
   "RColorBrewer",
   "rgdal",
   "rmarkdown",
-  "rms",
   "sp",
   "tidyverse",
   "tufte",
-  "xtable",
   "fisabior"
 )
 invisible(sapply(pkgs, function(x) {
