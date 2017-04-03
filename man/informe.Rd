@@ -24,7 +24,7 @@ de lo seleccionado en el argumento doc_format (.Rmd, .Rnw, .pdf, .html,
 \value{
 En función del formato escogido, se crea un documento principal y un
   conjunto de documentos de respaldo (algunos directamente en el directorio
-  de informes correspondiente al formato --informes/pdf-markdown/--, otros en
+  de informes correspondiente al formato --informes/pdf_markdown/--, otros en
   los directorios de data/cache o figuras/formato).
 }
 \description{

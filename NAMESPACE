@@ -3,5 +3,4 @@
 export(informe)
 export(informe_pdf)
 export(init_proj)
-export(xx)
 importFrom(utils,file.edit)
