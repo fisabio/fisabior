@@ -120,7 +120,7 @@ informe <- function(
            "Tools/Project Options/Sweave/Program Defaults")
     }
     if (doc_format == "pdf_markdown") {
-      report_path <- paste0("informes/pdf-markdown/", file_name, ".Rmd")
+      report_path <- paste0("informes/pdf_markdown/", file_name, ".Rmd")
       rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pdf_markdown",
                        package = "fisabior", edit = FALSE)
       pdf_draft <- readLines(report_path)
