@@ -53,7 +53,7 @@
 #'
 #' @return En función del formato escogido, se crea un documento principal y un
 #'   conjunto de documentos de respaldo (algunos directamente en el directorio
-#'   de informes correspondiente al formato --informes/pdf-markdown/--, otros en
+#'   de informes correspondiente al formato --informes/pdf_markdown/--, otros en
 #'   los directorios de data/cache o figuras/formato).
 #'
 #' @examples
@@ -120,6 +120,7 @@ informe <- function(
            "Tools/Project Options/Sweave/Program Defaults")
     }
     if (doc_format == "pdf_markdown") {
+      dir.create("informes/pdf_markdown", recursive = T)
       report_path <- paste0("informes/pdf_markdown/", file_name, ".Rmd")
       rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pdf_markdown",
                        package = "fisabior", edit = FALSE)
@@ -127,7 +128,8 @@ informe <- function(
       pdf_draft[grep("^title:", pdf_draft)] <- paste("title:", title)
       writeLines(paste(pdf_draft, collapse = "\n"), report_path)
     } else if (doc_format == "latex") {
-      report_path <- paste0("informes/pdf-latex/", file_name, ".Rnw")
+      dir.create("informes/latex", recursive = T)
+      report_path <- paste0("informes/latex/", file_name, ".Rnw")
       rnw_path <- system.file("templates/template.Rnw", package = "fisabior", mustWork = TRUE)
       rnw_out <- paste(readLines(rnw_path))
       rnw_out[grep("^\\\\title\\{", rnw_out)] <- paste0("\\title{", title, "}")
@@ -135,6 +137,7 @@ informe <- function(
       copy_fisabior(from_ = "rmarkdown/templates/pdf_markdown/skeleton/referencias.bib",
                     to_   = paste0(dirname(report_path), "/referencias.bib"))
     } else if (doc_format == "beamer") {
+      dir.create("informes/beamer", recursive = T)
       report_path <- paste0("informes/beamer/", file_name, ".Rmd")
       rmarkdown::draft(file = report_path, create_dir = FALSE, template = "beamer",
                        package = "fisabior", edit = FALSE)
@@ -147,6 +150,7 @@ informe <- function(
     ######################################
     # Documentos en DOCX                 #
     ######################################
+    dir.create("informes/docx", recursive = T)
     report_path <- paste0("informes/docx/", file_name, ".Rmd")
     rmd_path <- system.file("templates/template_docx.Rmd", package = "fisabior", mustWork = TRUE)
     rmd_out <- paste(readLines(rmd_path))
@@ -161,6 +165,7 @@ informe <- function(
     ######################################
     # Documentos en ODT                  #
     ######################################
+    dir.create("informes/odt", recursive = T)
     report_path <- paste0("informes/odt/", file_name, ".Rmd")
     rmd_path <- system.file("templates/template_odt.Rmd", package = "fisabior", mustWork = TRUE)
     rmd_out <- paste(readLines(rmd_path))
@@ -177,6 +182,7 @@ informe <- function(
     ######################################
     # Documentos en HTML                 #
     ######################################
+    dir.create("informes/html", recursive = T)
     report_path <- paste0("informes/html/", file_name, ".Rmd")
     rmd_path <- system.file("templates/template.html", package = "fisabior", mustWork = TRUE)
     rmd_out <- paste(readLines(rmd_path))
