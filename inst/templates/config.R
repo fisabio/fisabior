@@ -23,7 +23,7 @@ pkgs <- c(
 )
 invisible(sapply(pkgs, function(x) {
   if (!x %in% rownames(installed.packages()))
-    install.packages(x)
+    install.packages(x, repos = "https://cloud.r-project.org/")
   suppressPackageStartupMessages(require(x, character.only = TRUE))
 }))
 rm(pkgs)
