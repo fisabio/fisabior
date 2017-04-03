@@ -117,8 +117,7 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
 
   sub_dirs <- paste0(
     proj_dir,
-    c(paste0("datos/", c("brutos", "procesados", "cartografia")), "figuras",
-      paste0("informes/", c("html", "docx", "odt", "pdf-markdown", "pdf-latex", "beamer")),
+    c(paste0("datos/", c("brutos", "procesados", "cartografia")), "figuras", "informes",
       "cache", paste0("src/", c("bugs", "cpp", "jags", "stan")), "configuracion",
       "r",  paste0("articulo/", c("enviado", "revision", "proof")))
   )
@@ -151,7 +150,18 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
   #                                                                          #
   ############################################################################
 
-  if (!file.exists(Sys.which("git")) && git == TRUE) {
+  if (.Platform$OS.type == "windows") {
+    git_exist <- list.files(
+      path        = paste0("c:/program files", c("", " (x86)"), "/Git/bin"),
+      pattern     = "git",
+      recursive   = TRUE,
+      ignore.case = TRUE,
+      full.names  = TRUE
+    )
+  } else {
+    git_exist <- file.exists(Sys.which("git"))
+  }
+  if (!git_exist && git == TRUE) {
     warning("No tienes instalado git, así que no puedo crear el repositorio.")
   } else if (git == TRUE) {
     if (git2r::in_repository(proj_dir)) {
