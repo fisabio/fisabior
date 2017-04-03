@@ -151,12 +151,14 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
   ############################################################################
 
   if (.Platform$OS.type == "windows") {
-    git_exist <- list.files(
-      path        = paste0("c:/program files", c("", " (x86)"), "/Git/bin"),
-      pattern     = "git",
-      recursive   = TRUE,
-      ignore.case = TRUE,
-      full.names  = TRUE
+    git_exist <- file.exists(
+      list.files(
+        path        = paste0("c:/program files", c("", " (x86)"), "/Git/bin"),
+        pattern     = "git",
+        recursive   = TRUE,
+        ignore.case = TRUE,
+        full.names  = TRUE
+      )
     )
   } else {
     git_exist <- file.exists(Sys.which("git"))
