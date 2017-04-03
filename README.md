@@ -34,6 +34,31 @@ El proyecto generado con su función principal (`init_proj()`) se estructura en 
     -   jags: modelos escritos con código en lenguaje JAGS (aunque es similar a BUGS, tiene sus peculiaridades),
     -   stan: modelos escritos con código en lenguaje Stan.
 
+
+Instalación
+-----------
+
+Puedes instalar este paquete empleando la función `install_github()` del paquete `devtools`, para lo cual debes ejecutar el siguiente código (**¡¡OJO!!** Si usas [Windows](https://ichef.bbci.co.uk/news/660/cpsprodpb/025B/production/_85730600_monkey2.jpg) debes tener instalado el software [Rtools](http://cran.r-project.org/bin/windows/Rtools/), de modo que necesitar tener permisos de administración en tu equipo ---hay un problema con las versiones más recientes de `devtools` para Windows y es preciso instalar una versión previa---):
+
+```
+if(.Platform$OS.type == "windows") {
+  download.file("https://cran.r-project.org/bin/windows/Rtools/Rtools34.exe",
+    destfile = paste0(tempdir(), "/Rtools34.exe"), mode = "wb")
+  system(paste0(tempdir(), "/Rtools34.exe"))
+  install.packages("devtools")
+  download.file("https://cran.r-project.org/src/contrib/Archive/devtools/devtools_1.11.1.tar.gz",
+                destfile = paste0(tempdir(), "/devtools.tar.gz"))
+  install.packages(paste0(tempdir(), "/devtools.tar.gz"), repos = NULL, type = "source")
+  makeActiveBinding("refresh", function() { system("R --vanilla"); q("no") }, .GlobalEnv)
+  refresh()
+  devtools::install_github("fisabio/fisabior")
+} else {
+  install.packages("devtools")
+  devtools::install_github("fisabio/fisabior")
+}
+```
+
+
 Acerca de `fisabior`
 --------------------
 
