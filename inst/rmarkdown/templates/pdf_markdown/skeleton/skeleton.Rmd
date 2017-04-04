@@ -210,7 +210,7 @@ También se pueden añadir figuras (p. ej., \Cref{fig:1}). Para las figuras que 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width = 5cm]{fisabior.png}
+    \includegraphics[width = 5cm]{../../figuras/fisabior.png}
     \caption{Un logo molón, y con una leyenda un poco larga (de un mínimo de dos líneas), para ver cómo quedaría una vez compilado. \\ Además, se le ha añadido un segundo párrafo: estamos locos}
     \label{fig:1}
 \end{figure}
