@@ -4,12 +4,12 @@ Title: Funciones del Área de Desigualdades de FISABIO
 Version: 0.2.1
 Authors@R: c(
     person("Miguel Ángel", "Martínez-Beneito", email = "martinez_mig@gva.es",  role = c("aut", "cre")),
-    person("Gonzalo", "García-Donato", 		     email = "garcia_gon@gva.es", 	 role = c("aut")),
-    person("Paloma", "Botella-Rocamora", 	     email = "botella_pal@gva.es", 	 role = c("aut")),
-    person("Jordi", "Pérez-Panadés", 		       email = "perez_jorpan@gva.es",  role = c("aut")),
-    person("Francisca", "Corpas-Burgos", 	     email = "corpas_fra@gva.es", 	 role = c("aut")),
-    person("Héctor", "Perpiñán-Fabuel", 	     email = "perpinan_hec@gva.es",  role = c("aut")),
-    person("Carlos", "Vergara-Hernández",	     email = "carlos.vergara@uv.es", role = c("aut"))
+    person("Gonzalo", "García-Donato", 		   email = "garcia_gon@gva.es",    role = c("aut")),
+    person("Paloma", "Botella-Rocamora", 	   email = "botella_pal@gva.es",   role = c("aut")),
+    person("Jordi", "Pérez-Panadés", 		   email = "perez_jorpan@gva.es",  role = c("aut")),
+    person("Francisca", "Corpas-Burgos", 	   email = "corpas_fra@gva.es",    role = c("aut")),
+    person("Héctor", "Perpiñán-Fabuel", 	   email = "perpinan_hec@gva.es",  role = c("aut")),
+    person("Carlos", "Vergara-Hernández",	   email = "carlos.vergara@uv.es", role = c("aut"))
     )
 Maintainer: Miguel Ángel Martínez-Beneito <martinez_mig@gva.es>
 Description: Colección de funciones de uso común en el Área de Desigualdades de
