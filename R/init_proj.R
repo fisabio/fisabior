@@ -134,9 +134,9 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
   copy_fisabior(from_ = "templates/README.Rmd", to_ = paste0(proj_dir, "README.Rmd"))
   knitr::knit(paste0(proj_dir, "README.Rmd"),
               paste0(proj_dir, "README.md"), quiet = T)
-  copy_fisabior(from_ = "rmarkdown/templates/beamer/skeleton/fisabior.png",
+  copy_fisabior(from_ = "templates/fisabior.png",
                 to_   = paste0(proj_dir, "figuras/fisabior.png"))
-  copy_fisabior(from_ = "rmarkdown/templates/beamer/skeleton/logo-ccby.png",
+  copy_fisabior(from_ = "templates/logo-ccby.png",
                 to_   = paste0(proj_dir, "figuras/logo-ccby.png"))
   sample_scripts <- paste0("r/", c("importar_datos.R", "depurar_datos.R",
                            "descriptiva.R", "analisis.R"))
@@ -170,11 +170,8 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
       warning("Ya exite el repositorio git: no se hace nada.")
     } else {
       repo <- git2r::init(proj_dir)
-      ignore_files <- c(
-        paste0("!*.", c("tex", "md", "Rmd", "Rnw", "html", "odt", "docx", "cls", "bib")),
-        "/datos/", "/cache/", ".Rproj.user", ".Rhistory", "*~", ".RData", ".Ruserdata",
-        "/informes/",  "*-concordance.tex")
-      writeLines(ignore_files, paste0(proj_dir, ".gitignore"))
+      copy_fisabior(from_ = "templates/ignore_latex_r.txt",
+                    to_   = paste0(proj_dir, ".gitignore"))
       git2r::add(repo = repo, path = "*")
       invisible(git2r::commit(repo = repo, message = "Primer commit: creo proyecto", all = TRUE))
     }

@@ -127,6 +127,8 @@ informe <- function(
       pdf_draft <- readLines(report_path)
       pdf_draft[grep("^title:", pdf_draft)] <- paste("title:", title)
       writeLines(paste(pdf_draft, collapse = "\n"), report_path)
+      copy_fisabior(from_ = "templates/referencias_prueba.bib",
+                    to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
     } else if (doc_format == "latex") {
       if (!dir.exists("informes/latex")) dir.create("informes/latex", recursive = T)
       report_path <- paste0("informes/latex/", file_name, ".Rnw")
@@ -134,8 +136,8 @@ informe <- function(
       rnw_out <- paste(readLines(rnw_path))
       rnw_out[grep("^\\\\title\\{", rnw_out)] <- paste0("\\title{", title, "}")
       writeLines(paste(rnw_out), report_path)
-      copy_fisabior(from_ = "rmarkdown/templates/pdf_markdown/skeleton/referencias.bib",
-                    to_   = paste0(dirname(report_path), "/referencias.bib"))
+      copy_fisabior(from_ = "templates/referencias_prueba.bib",
+                    to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
     } else if (doc_format == "beamer") {
       if (!dir.exists("informes/beamer")) dir.create("informes/beamer", recursive = T)
       report_path <- paste0("informes/beamer/", file_name, ".Rmd")
@@ -144,6 +146,8 @@ informe <- function(
       pdf_draft <- readLines(report_path)
       pdf_draft[grep("^title:", pdf_draft)] <- paste("title:", title)
       writeLines(paste(pdf_draft, collapse = "\n"), report_path)
+      copy_fisabior(from_ = "templates/referencias_prueba.bib",
+                    to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
     }
   } else if (doc_format == "docx") {
 
@@ -157,6 +161,8 @@ informe <- function(
     docx_draft <- readLines(report_path)
     docx_draft[grep("^title:", docx_draft)] <- paste("title:", title)
     writeLines(paste(docx_draft, collapse = "\n"), report_path)
+    copy_fisabior(from_ = "templates/referencias_prueba.bib",
+                  to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
   } else if (doc_format == "odt") {
 
     ######################################
@@ -169,6 +175,8 @@ informe <- function(
     odt_draft <- readLines(report_path)
     odt_draft[grep("^title:", odt_draft)] <- paste("title:", title)
     writeLines(paste(odt_draft, collapse = "\n"), report_path)
+    copy_fisabior(from_ = "templates/referencias_prueba.bib",
+                  to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
   } else if (doc_format == "html") {
 
     ######################################
@@ -181,10 +189,9 @@ informe <- function(
     html_draft <- readLines(report_path)
     html_draft[grep("^title:", html_draft)] <- paste("title:", title)
     writeLines(paste(html_draft, collapse = "\n"), report_path)
+    copy_fisabior(from_ = "templates/referencias_prueba.bib",
+                  to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
   }
-  if (!doc_format %in% c("latex", "beamer"))
-    copy_fisabior(from_ = "templates/chuleta_rmarkdown.pdf",
-                  to_   = paste0(dirname(report_path), "/chuleta_rmarkdown.pdf"))
   file.edit(report_path)
 }
 

@@ -24,7 +24,7 @@ output:
   tufte::tufte_html:
     css: fisabior.css
     highlight: pygments
-bibliography: referencias.bib
+bibliography: referencias_prueba.bib
 link-citations: no
 ---
 

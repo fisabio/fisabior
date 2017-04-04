@@ -16,7 +16,7 @@ output:
   odt_document:
     reference_odt: template_fisabior.odt
     template: fisabior_odt.xml
-bibliography: referencias.bib
+bibliography: referencias_prueba.bib
 ---
 
 ```{r setup, cache = F, include=FALSE}

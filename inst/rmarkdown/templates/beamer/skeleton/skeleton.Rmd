@@ -6,7 +6,7 @@ institute: "Área de Desigualdades en Salud, FISABIO-CSISP"
 output:
   fisabior::informe_pdf:
     beamer: true
-bibliography: referencias.bib
+bibliography: referencias_prueba.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -75,7 +75,6 @@ Las figuras pueden proceder de la ejecución de código incrustado en el documen
  
 ```{r ejemplo_ev, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=2.5, fig.width=4, echo = F}
 source("configuracion/config.R")
-library(fisabior)
 data("aragon_iam")
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, "OrRd")
@@ -116,6 +115,7 @@ kable(aragon_iam@data[1:3, 3:7], digits = 2, align = rep("c", 7),
 Si buscas un arreglo más fino de la tabla, puedes emplear el paquete `xtable`.
 
 ```{r xtable, results='asis'}
+library(xtable)
 mi_tab <- xtable(aragon_iam@data[1:3, 3:7], caption = "Esto es una Tabla...",
                  label = "tab:xtable", auto = TRUE)
 print(mi_tab, include.rownames = F, table.placement = "H", booktabs = TRUE,
