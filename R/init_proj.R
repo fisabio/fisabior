@@ -179,4 +179,5 @@ init_proj <- function(proj_nom = NULL, proj_dir = NULL, git = TRUE) {
       invisible(git2r::commit(repo = repo, message = "Primer commit: creo proyecto", all = TRUE))
     }
   } else message("Proyecto configurado sin git: puedes emplearlo más adelante.")
+  message("No olvides editar el archivo README para describir el proyecto.")
 }
