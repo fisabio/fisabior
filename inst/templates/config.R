@@ -11,19 +11,7 @@ httr::set_config(httr::use_proxy(
 # Carga de paquetes -------------------------------------------------------
 pkgs <- c(
   "knitr",
-  "maptools",
-  "R2WinBUGS",
-  "RColorBrewer",
-  "rgdal",
   "rmarkdown",
-  "sp",
-  "tidyverse",
   "tufte",
   "fisabior"
 )
-invisible(sapply(pkgs, function(x) {
-  if (!x %in% rownames(installed.packages()))
-    install.packages(x, repos = "https://cloud.r-project.org/")
-  suppressPackageStartupMessages(require(x, character.only = TRUE))
-}))
-rm(pkgs)
