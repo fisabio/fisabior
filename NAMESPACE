@@ -3,4 +3,3 @@
 export(informe)
 export(informe_pdf)
 export(init_proj)
-importFrom(utils,file.edit)
