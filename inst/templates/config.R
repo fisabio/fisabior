@@ -15,3 +15,6 @@ pkgs <- c(
   "tufte",
   "fisabior"
 )
+pkgs <- sapply(pkgs, function(x)
+  suppressPackageStartupMessages(require(x, character.only = T))
+)

@@ -52,7 +52,8 @@ Para insertar elementos de código y decorarlos para que tengan vistosidad, se u
 
 ```{r ejemplo, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=4, fig.width=5}
 source("configuracion/config.R")
-library(fisabior)
+library(sp)
+library(RColorBrewer)
 data("aragon_iam")
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, "OrRd")

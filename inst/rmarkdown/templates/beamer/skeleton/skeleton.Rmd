@@ -57,7 +57,8 @@ Como siempre, la plantilla está en formato `.Rmd`, de forma que resulta extrema
 
 ```{r ejemplo_noev, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=3, fig.width=4, eval = F}
 source("configuracion/config.R")
-library(fisabior)
+library(sp)
+library(RColorBrewer)
 data("aragon_iam")
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, "OrRd")
@@ -75,6 +76,8 @@ Las figuras pueden proceder de la ejecución de código incrustado en el documen
  
 ```{r ejemplo_ev, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=2.5, fig.width=4, echo = F}
 source("configuracion/config.R")
+library(sp)
+library(RColorBrewer)
 data("aragon_iam")
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, "OrRd")
