@@ -26,13 +26,16 @@
 #'   Esta función requiere tener operativo los paquetes \code{knitr} y
 #'   \code{rmarkdown}. Si se desea generar informes PDF, también es necesario
 #'   tener instalada una distribución LaTeX que incorpore (como mínimo) los
-#'   siguientes paquetes: \code{adjustbox}, \code{amsmath}, \code{array},
-#'   \code{authblk}, \code{biblatex}, \code{booktabs}, \code{caption},
-#'   \code{csquotes}, \code{float}, \code{fontenc}, \code{fontspec},
-#'   \code{footmisc}, \code{graphicx}, \code{hyperref}, \code{longtable},
-#'   \code{lscape}, \code{mathtools}, \code{multirow}, \code{polyglossia},
-#'   \code{rotating}, \code{setspace}, \code{tikz}, \code{xltxtra},
-#'   \code{xunicode}.
+#'   siguientes paquetes: \code{adjustbox}, \code{amsmath}, \code{amssymb},
+#'   \code{array}, \code{authblk}, \code{biblatex}, \code{booktabs},
+#'   \code{cleveref}, \code{caption}, \code{csquotes},\code{fancyhdr},
+#'   \code{float}, \code{fontenc}, \code{fontspec}, \code{footmisc},
+#'   \code{geometry}, \code{graphicx}, \code{hyperref}, \code{lastpage},
+#'   \code{letltxmacro}, \code{lmodern}, \code{longtable}, \code{lscape},
+#'   \code{mathtools}, \code{microtype}, \code{multirow}, \code{nag},
+#'   \code{parskip}, \code{polyglossia}, \code{rotating}, \code{setspace},
+#'   \code{stackengine}, \code{tabularx}, \code{tikz}, \code{titling},
+#'   \code{xltxtra}, \code{xunicode}.
 #'
 #'   La opción por defecto es un documento rmarkdown que produce un PDF tras ser
 #'   compilado con knitr, pandoc y XeLaTeX (en lugar de pdfLaTeX, ya que el
