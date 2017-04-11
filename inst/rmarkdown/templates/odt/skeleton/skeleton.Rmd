@@ -40,6 +40,7 @@ opts_chunk$set(tidy       = T,
                comment    = "#",
                warning    = F,
                message    = F)
+source("configuracion/config.R")
 ```
 
 # Sobre esta plantilla

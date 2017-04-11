@@ -49,6 +49,7 @@ opts_chunk$set(tidy        = F,
                comment     = "#",
                warning     = F,
                message     = F)
+source("configuracion/config.R")
 ```
 
 
