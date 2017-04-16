@@ -39,6 +39,7 @@ opts_chunk$set(tidy       = F,
                warning    = F,
                message    = F)
 knit_hooks$set(crop = hook_pdfcrop)
+source("configuracion/config.R")
 ###########################################################
 ##              DESDE AQUÍ YA PUEDES BORRAR              ##
 ###########################################################
@@ -62,7 +63,8 @@ Esta es la plantilla base para la elaboración de presentaciones estadísticas e
 Como siempre, la plantilla está en formato `.Rmd`, de forma que resulta extremadamente fácil generar una presentación con tablas, figuras o código de `R`. Por ejemplo:
 
 ```{r ejemplo_noev, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=3, fig.width=4, eval = F}
-source("configuracion/config.R")
+library(sp)
+library(RColorBrewer)
 data("aragon_iam")
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, "OrRd")
@@ -79,7 +81,8 @@ par(opar)
 Las figuras pueden proceder de la ejecución de código incrustado en el documento, como en el caso de la diapo anterior:
  
 ```{r ejemplo_ev, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=2.5, fig.width=4, echo = F}
-source("configuracion/config.R")
+library(sp)
+library(RColorBrewer)
 data("aragon_iam")
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, "OrRd")
