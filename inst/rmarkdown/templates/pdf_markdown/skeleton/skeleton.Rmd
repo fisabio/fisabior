@@ -30,6 +30,9 @@ output: fisabior::informe_pdf
 ---
 
 ```{r setup, cache = F, include=FALSE}
+###########################################################
+##                 NO BORRAR ESTA SECCIÓN                ##
+###########################################################
 library(knitr)
 if (!dir.exists("../../figuras/markdown")) dir.create("../../figuras/markdown")
 opts_knit$set(root.dir = normalizePath("../../"),
@@ -56,6 +59,9 @@ opts_chunk$set(tidy       = T,
                warning    = F,
                message    = F)
 knit_hooks$set(crop = hook_pdfcrop)
+###########################################################
+##              DESDE AQUÍ YA PUEDES BORRAR              ##
+###########################################################
 ```
 
 
@@ -74,7 +80,6 @@ Ambas opciones son igualmente válidas, aunque muy posiblemente la primera alter
 
 ```{r ejemplo, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=4, fig.width=5}
 source("configuracion/config.R")
-library(fisabior)
 data("aragon_iam")
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, "OrRd")
@@ -231,7 +236,7 @@ Para efectuar una referencia cruzada, resulta más adecuado usar el comando ``\c
   - ``hyperref``:  ``Tablas \ref{tab:1} y \ref{long:2} y Figura \ref{fig:1}`` produce Tablas \ref{tab:1} y \ref{long:2} y Figura \ref{fig:1},
   - ``cleveref``: ``\Cref{tab:1,long:2,fig:1}`` produce \Cref{tab:1,long:2,fig:1}.
 
-## Citas y referencias bibliográficas}
+## Citas y referencias bibliográficas
 Las referencias se generan con ``biblatex`` y ``biber``, siendo muy fácil introducirlas. P. ej., en cuanto a su número:
 
 - se pueden meter una [@Congdon2014] a una [@Daniels2008],

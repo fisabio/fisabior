@@ -1,0 +1,229 @@
+---
+title: "Presentación de Informe Estadístico"
+date: "`r format(Sys.time(), '%-d de %B, %Y')`"
+author:  
+  - name: "Aitor Tilla-Fresca"
+    company: "Área de Desigualdades en Salud, FISABIO"
+  - name: "Paco Jerte-Dell'Ombro"
+    company: "Servicio de Estudios Epidemiológicos y Estadísticas Sanitarias, CSISP-DGSP"
+output:
+  ioslides_presentation:
+    css: pres_html.css
+    incremental: true
+    logo: ../../figuras/fisabior.png
+    self_contained: true
+    includes:
+      in_header: header.html
+bibliography: referencias_prueba.bib
+---
+
+```{r setup, include=FALSE}
+###########################################################
+##                 NO BORRAR ESTA SECCIÓN                ##
+###########################################################
+library(knitr)
+if (!dir.exists("../../figuras/presentacion")) 
+  dir.create("../../figuras/presentacion")
+opts_knit$set(root.dir = normalizePath("../../"),
+              base.dir = normalizePath("../../figuras/presentacion/"))
+options(formatR.arrow = T, width = 70)
+opts_chunk$set(tidy       = F,
+               prompt     = F,
+               dev        = "svg",
+               dpi        = 100,
+               fig.path   = "../../figuras/presentacion/fig_",
+               cache.path = "../../cache/presentacion/chunk_",
+               fig.align  = "center",
+               fig.show   = "hold",
+               fig.width  = 10,
+               fig.height = 5,
+               cache      = T,
+               par        = T,
+               comment    = "#",
+               warning    = F,
+               message    = F)
+###########################################################
+##              DESDE AQUÍ YA PUEDES BORRAR              ##
+###########################################################
+```
+
+
+# Empezamos
+
+## Sobre esta plantilla
+Esta es la plantilla base para la elaboración de presentaciones estadísticas en FISABIO. Todo lo que ves aquí es editable:
+
+- bien sea de forma local (cambiando la configuración de la página o haciendo lo que se te pueda ocurrir para mejorar tu documento),
+- o bien de forma genérica (lo que implica modificar no solo esta plantilla, sino también compartir tus sugerencias a través de nuestra cuenta de [GitHub](https://www.github.com/fisabio/fisabior).
+
+# Manejo de la plantilla
+
+## Trabajando con R Markdown
+
+Como siempre, la plantilla está en formato `.Rmd`, de forma que resulta extremadamente fácil generar una presentación con tablas, figuras o código de `R`. Por ejemplo, un *chunk* de código se vería tal que así:
+
+
+```{r ejemplo_noev, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=3, fig.width=4, eval = F}
+source("configuracion/config.R")
+data("aragon_iam")
+opar <- par(mar = c(1, 1, 1, 1))
+paleta <- brewer.pal(6, "OrRd")
+plot(aragon_iam,
+  col = paleta[findInterval(with(aragon_iam@data, observada / esperada),
+               c(0, 0.1, 0.5, 1, 1.5, 2, 10))])
+legend("topleft", c("<0.1", "0.1-0.5", "0.5-1", "1-1.5", "1.5-2", ">=2"),
+       title = "RME", fill = paleta, bty = "n")
+par(opar)
+```
+
+
+# Imágenes
+
+## Imágenes nativas
+
+Gracias a R Markdown, las figuras generadas desde el documento se pueden incluir de una forma sencilla. Esta figura procede de la ejecución del anterior código:
+ 
+```{r ejemplo_ev, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=3, fig.width=4, echo = F, dev.args = list(bg = 'transparent')}
+source("configuracion/config.R")
+library(sp)
+library(RColorBrewer)
+data("aragon_iam")
+opar <- par(mar = c(1, 1, 1, 1))
+paleta <- brewer.pal(6, "OrRd")
+plot(aragon_iam,
+  col = paleta[
+    findInterval(
+    with(aragon_iam@data, observada / esperada),
+    c(0, 0.1, 0.5, 1, 1.5, 2, 10)
+    )
+    ])
+legend("topleft", c("<0.1", "0.1-0.5", "0.5-1", "1-1.5", "1.5-2", ">=2"),
+       title = "RME cruda", fill = paleta, bty = "n")
+par(opar)
+```
+
+
+## Imágenes foráneas
+Para cargar imágenes que no procedan del código incrustado en el propio documento lo mejor es utilizar la función `knitr::include_graphics("ruta/a/la/imagen")` en un _chunk_ de código estándar:
+
+```{r fig_foranea, echo = T, fig.align="center", fig.cap = "Reconóceme..."}
+root_dir <- getwd()
+knitr::include_graphics(path = paste0(root_dir, "/figuras/logo-ccby.png"))
+```
+
+
+# Tablas
+
+## Tablas con `kable`
+
+Si buscas un arreglo rápido de tabla, prueba a utilizar la función `knitr::kable()`. No obstante, presenta algunos inconvenientes, en el sentido de una personalización limitada:
+
+```{r kable}
+kable(aragon_iam@data[1:3, 3:7], digits = 2, align = c(rep("l", 3), rep("r", 2)), 
+      caption = "Esto es una Tabla...", format = "html", row.names = F,
+      adding = 2)
+```
+
+
+## Tablas con `huxtable`
+
+Si buscas un arreglo más fino de la tabla, puedes emplear el paquete `huxtable`.
+
+```{r huxtable_n_eval, results='asis', eval=FALSE}
+if (!require(huxtable)) install.packages("huxtable")
+library(huxtable)
+tabla <- as_hux(aragon_iam@data[1:3, 3:7], add_colnames = T)
+bold(tabla)[1,]                <- TRUE
+bottom_border(tabla)[c(1, 4),] <- TRUE
+align(tabla)[,2]               <- 'right'
+right_padding(tabla)           <- 10
+left_padding(tabla)            <- 10
+number_format(tabla)           <- 2
+caption(tabla)                 <- "Esto es una Tabla..."
+tabla
+```
+
+El resultado lo puedes consultar en la siguiente diapositiva.
+
+
+## Tablas con `huxtable`
+Aquí va el ejemplo...
+
+```{r huxtable_eval, echo=FALSE}
+if (!require(huxtable)) install.packages("huxtable")
+library(huxtable)
+tabla <- as_hux(aragon_iam@data[1:3, 3:7], add_colnames = T)
+bold(tabla)[1,]                <- TRUE
+bottom_border(tabla)[c(1, 4),] <- TRUE
+align(tabla)[,2]               <- 'right'
+right_padding(tabla)           <- 10
+left_padding(tabla)            <- 10
+number_format(tabla)           <- 2
+caption(tabla)                 <- "Esto es una Tabla..."
+tabla
+```
+
+
+# Otros elementos interesantes
+
+## Bloques de resaltado {.build}
+Cuando se desee añadir un bloque de resaltado hay que abrir un *chunk* de código en R e introducir el texto a resaltar dentro de la función `bloque()`. Por ejemplo:
+
+```{r bloque_nev, eval=FALSE}
+bloque("Bloque con texto de peligro", tipo = "alerta") 
+bloque("Bloque con texto de un logro", tipo = "exito")
+bloque("Bloque con texto informativo", tipo = "info")
+```
+
+```{r bloque_ev, results='asis', echo = FALSE, cache=FALSE}
+bloque("Bloque con texto de peligro", tipo = "alerta")
+bloque("Bloque con texto de un logro", tipo = "exito")
+bloque("Bloque con texto informativo", tipo = "info")
+```
+
+
+## Presentación a dos columnas
+Para lograr una presentación a dos columnas, hay que añadir, junto al título de la diapositiva (el que va precedido por `##`): `{.columns-2}`. El único inconveniente es que no acaba de funcionar bien en Firefox, de modo que la presentación usando este truco debe hacerse en Chrome, Chromium, Safari, Opera o IE...
+
+Esto es muy útil a la hora de trabajar con figuras, pues se puede añadir junto a ellas 
+
+- algo de texto, 
+- una pequeña tabla u,
+- otra figura.
+
+## Presentación a dos columnas: un ejemplo {.columns-2}
+
+```{r fig_sabio, fig.align="center", echo=FALSE}
+root_dir <- getwd()
+knitr::include_graphics(path = paste0(root_dir, "/figuras/fisabior.png"))
+```
+
+- Este logo,
+- sí que mola,
+- se merece,
+- una ola...
+
+## Citas textuales
+
+En el documento se pueden insertar citas textuales de más de unas pocas palabras (normalmente el límite se marca en 80 caracteres, aunque puede variar). P. ej.,:
+
+Como dijo Jacinto el de mi pueblo
+
+> Yo digo muchas cosas, pero no sé de la misa la mitad...
+>
+> --- Jacinto (el "miracielos")
+
+
+## Citas y referencias bibliográficas
+
+Las referencias se generan directamente con Pandoc, siendo muy fácil introducirlas. Las referencias se añaden al final de forma automática.
+
+P. ej., vamos a añadir las referencias contenidas en el archivo `.bib` asociado, y lo único que tenemos que hacer es: 
+
+- entre paréntesis: [@Gelman2014; @Wickham2015],
+- sin paréntesis para autores: @Fawcett2006, @Blangiardo2015,
+- sin mencionar al autor: [-@Bivand2013].
+
+# Referencias bibliográficas
+
+## Referencias

@@ -29,6 +29,9 @@ link-citations: no
 ---
 
 ```{r setup, include=FALSE}
+###########################################################
+##                 NO BORRAR ESTA SECCIÓN                ##
+###########################################################
 library(tufte)
 library(knitr)
 if (!dir.exists("../../figuras/html")) dir.create("../../figuras/html")
@@ -49,6 +52,9 @@ opts_chunk$set(tidy        = F,
                comment     = "#",
                warning     = F,
                message     = F)
+###########################################################
+##              DESDE AQUÍ YA PUEDES BORRAR              ##
+###########################################################
 ```
 
 
@@ -122,7 +128,6 @@ Las opciones para representar figuras son variadas:
 
 ```{r ejemplo_marg, fig.margin = TRUE, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000.", fig.height=4, fig.width=5}
 source("configuracion/config.R")
-library(fisabior)
 data("aragon_iam")
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, "OrRd")

@@ -17,6 +17,9 @@ bibliography: referencias_prueba.bib
 ---
 
 ```{r setup, include=FALSE}
+###########################################################
+##                 NO BORRAR ESTA SECCIÓN                ##
+###########################################################
 library(knitr)
 if (!dir.exists('../../figuras/docx')) dir.create('../../figuras/docx')
 opts_knit$set(root.dir = normalizePath('../../'))
@@ -37,6 +40,9 @@ opts_chunk$set(tidy       = T,
                comment    = '#',
                warning    = F,
                message    = F)
+###########################################################
+##              DESDE AQUÍ YA PUEDES BORRAR              ##
+###########################################################
 ```
 
 # Sobre esta plantilla
@@ -52,7 +58,6 @@ Para insertar elementos de código y decorarlos para que tengan vistosidad, se u
 
 ```{r ejemplo, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=4, fig.width=5}
 source("configuracion/config.R")
-library(fisabior)
 data("aragon_iam")
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, "OrRd")

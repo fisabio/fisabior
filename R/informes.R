@@ -6,8 +6,8 @@
 #'
 #' @export
 #' @param doc_format Cadena de caracteres con el doc_format deseado para el
-#'   informe. Las opciones admitidas son pdf_markdown, latex, html, docx y odt.
-#'   Por defecto se selecciona pdf_markdown.
+#'   informe. Las opciones admitidas son pdf_markdown, latex, html, docx, odt,
+#'   pres_beamer y pres_html. Por defecto se selecciona pdf_markdown.
 #' @param title Cadena de caracteres con el título del informe. Por defecto se
 #'   asigna \emph{Informe estadístico del proyecto \code{X}}, donde \code{X} es
 #'   el nombre del directorio principal del proyecto.
@@ -23,16 +23,14 @@
 #'   \code{\link{init_proj}}, esto no debería causar molestias, pues se crea un
 #'   \emph{*.Rproj} por defecto.
 #'
-#'   Esta función requiere tener operativo los paquetes \code{knitr} y
-#'   \code{rmarkdown}. Si se desea generar informes PDF, también es necesario
-#'   tener instalada una distribución LaTeX que incorpore (como mínimo) los
-#'   siguientes paquetes: \code{adjustbox}, \code{amsmath}, \code{array},
-#'   \code{authblk}, \code{biblatex}, \code{booktabs}, \code{caption},
-#'   \code{csquotes}, \code{float}, \code{fontenc}, \code{fontspec},
-#'   \code{footmisc}, \code{graphicx}, \code{hyperref}, \code{longtable},
-#'   \code{lscape}, \code{mathtools}, \code{multirow}, \code{polyglossia},
-#'   \code{rotating}, \code{setspace}, \code{tikz}, \code{xltxtra},
-#'   \code{xunicode}.
+#'   Si se desea generar informes PDF, es necesario tener instalada una
+#'   distribución LaTeX que incorpore (como mínimo) los siguientes paquetes:
+#'   \code{adjustbox}, \code{amsmath}, \code{array}, \code{authblk},
+#'   \code{biblatex}, \code{booktabs}, \code{caption}, \code{csquotes},
+#'   \code{float}, \code{fontenc}, \code{fontspec}, \code{footmisc},
+#'   \code{graphicx}, \code{hyperref}, \code{longtable}, \code{lscape},
+#'   \code{mathtools}, \code{multirow}, \code{polyglossia}, \code{rotating},
+#'   \code{setspace}, \code{tikz}, \code{xltxtra}, \code{xunicode}.
 #'
 #'   La opción por defecto es un documento rmarkdown que produce un PDF tras ser
 #'   compilado con knitr, pandoc y XeLaTeX (en lugar de pdfLaTeX, ya que el
@@ -76,7 +74,10 @@
 #' informe(doc_format = "html",
 #'         title      = "Informe Estadístico en FISABIO",
 #'         file_name  = "informe_fisabio_html")
-#' informe(doc_format = "beamer",
+#' informe(doc_format = "pres_html",
+#'         title      = "Presentación Estadística en FISABIO",
+#'         file_name  = "presentacion_fisabio_html")
+#' informe(doc_format = "pres_beamer",
 #'         title      = "Presentación Estadística en FISABIO",
 #'         file_name  = "presentacion_fisabio_beamer")
 #' }
@@ -101,14 +102,16 @@ informe <- function(
     proj_dir <- paste0(proj_dir, "/")
   proj_opt <- readLines(proj_files[grep(".Rproj", proj_files)])
   doc_format <- tolower(doc_format)
-  if (!any(grepl(doc_format, c("pdf_markdown", "latex", "html", "docx", "odt", "beamer"))))
+  if (!any(grepl(doc_format, c("pdf_markdown", "latex", "html",
+                               "docx", "odt", "pres_html", "pres_beamer"))))
     stop("\nEl formato que has escogido no está disponible o es erróneo.",
-         "\nLos posibles formatos son: pdf_markdown, latex, html, docx, odt o beamer.")
+         "\nLos posibles formatos son: pdf_markdown, latex, html, docx,",
+         " odt, pres_html o pres_beamer.")
 
   ######################################
   # Documentos en PDF                  #
   ######################################
-  if (doc_format %in% c("pdf_markdown", "latex", "beamer")) {
+  if (doc_format %in% c("pdf_markdown", "latex", "pres_beamer")) {
     if (!any(grepl("knitr", proj_opt, ignore.case = TRUE))) {
       stop("\nknitr no es la opción por defecto para compilar archivos LaTeX",
            "\nVuelve a ejecutar la función cuando lo hayas cambiado en:\n",
@@ -137,10 +140,11 @@ informe <- function(
       writeLines(paste(rnw_out), report_path)
       copy_fisabior(from_ = "templates/referencias_prueba.bib",
                     to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
-    } else if (doc_format == "beamer") {
-      if (!dir.exists("informes/beamer")) dir.create("informes/beamer", recursive = T)
-      report_path <- paste0("informes/beamer/", file_name, ".Rmd")
-      rmarkdown::draft(file = report_path, create_dir = FALSE, template = "beamer",
+    } else if (doc_format == "pres_beamer") {
+      if (!dir.exists("informes/presentacion"))
+        dir.create("informes/presentacion", recursive = T)
+      report_path <- paste0("informes/presentacion/", file_name, ".Rmd")
+      rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pres_beamer",
                        package = "fisabior", edit = TRUE)
       pdf_draft <- readLines(report_path)
       pdf_draft[grep("^title:", pdf_draft)] <- paste("title:", title)
@@ -190,6 +194,26 @@ informe <- function(
     writeLines(paste(html_draft, collapse = "\n"), report_path)
     copy_fisabior(from_ = "templates/referencias_prueba.bib",
                   to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
+  } else {
+
+    ######################################
+    # Presentaciones en HTML             #
+    ######################################
+    if (!dir.exists("informes/presentacion/fonts"))
+      dir.create("informes/presentacion/fonts", recursive = T)
+    report_path <- paste0("informes/presentacion/", file_name, ".Rmd")
+    rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pres_html",
+                     package = "fisabior", edit = TRUE)
+    pres_html_draft <- readLines(report_path)
+    pres_html_draft[grep("^title:", pres_html_draft)] <- paste("title:", title)
+    writeLines(paste(pres_html_draft, collapse = "\n"), report_path)
+    copy_fisabior(from_ = "templates/referencias_prueba.bib",
+                  to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
+    fonts <- list.files(system.file("templates/fonts", package = "fisabior"))
+    for (i in fonts) {
+      copy_fisabior(from_ = paste0("templates/fonts/", i),
+                    to_   = paste0("informes/presentacion/fonts/", i))
+    }
   }
 }
 
@@ -223,8 +247,9 @@ informe_pdf <- function(beamer = FALSE) {
       fig_caption      = TRUE,
       md_extensions    = "-autolink_bare_uris",
       keep_tex         = TRUE)
+    doc_format$inherits <- "pdf_document"
   } else {
-    template <- system.file("rmarkdown/templates/beamer/resources/template.tex",
+    template <- system.file("rmarkdown/templates/pres_beamer/resources/template.tex",
                             package = "fisabior")
     doc_format <- rmarkdown::beamer_presentation(
       template         = template,
@@ -234,7 +259,7 @@ informe_pdf <- function(beamer = FALSE) {
       fig_caption      = TRUE,
       md_extensions    = "-autolink_bare_uris",
       keep_tex         = TRUE)
+    doc_format$inherits <- "beamer_presentation"
   }
-  doc_format$inherits <- "beamer_presentation"
   doc_format
 }
