@@ -8,8 +8,8 @@ informe(doc_format = "pdf_markdown", title = NULL, file_name = NULL)
 }
 \arguments{
 \item{doc_format}{Cadena de caracteres con el doc_format deseado para el
-informe. Las opciones admitidas son pdf_markdown, latex, html, docx y odt.
-Por defecto se selecciona pdf_markdown.}
+informe. Las opciones admitidas son pdf_markdown, latex, html, docx, odt,
+pres_beamer y pres_html. Por defecto se selecciona pdf_markdown.}
 
 \item{title}{Cadena de caracteres con el título del informe. Por defecto se
 asigna \emph{Informe estadístico del proyecto \code{X}}, donde \code{X} es
@@ -39,19 +39,14 @@ La función solo funciona si el directorio de trabajo se circunscribe
   \code{\link{init_proj}}, esto no debería causar molestias, pues se crea un
   \emph{*.Rproj} por defecto.
 
-  Esta función requiere tener operativo los paquetes \code{knitr} y
-  \code{rmarkdown}. Si se desea generar informes PDF, también es necesario
-  tener instalada una distribución LaTeX que incorpore (como mínimo) los
-  siguientes paquetes: \code{adjustbox}, \code{amsmath}, \code{amssymb},
-  \code{array}, \code{authblk}, \code{biblatex}, \code{booktabs},
-  \code{cleveref}, \code{caption}, \code{csquotes},\code{fancyhdr},
+  Si se desea generar informes PDF, es necesario tener instalada una
+  distribución LaTeX que incorpore (como mínimo) los siguientes paquetes:
+  \code{adjustbox}, \code{amsmath}, \code{array}, \code{authblk},
+  \code{biblatex}, \code{booktabs}, \code{caption}, \code{csquotes},
   \code{float}, \code{fontenc}, \code{fontspec}, \code{footmisc},
-  \code{geometry}, \code{graphicx}, \code{hyperref}, \code{lastpage},
-  \code{letltxmacro}, \code{lmodern}, \code{longtable}, \code{lscape},
-  \code{mathtools}, \code{microtype}, \code{multirow}, \code{nag},
-  \code{parskip}, \code{polyglossia}, \code{rotating}, \code{setspace},
-  \code{stackengine}, \code{tabularx}, \code{tikz}, \code{titling},
-  \code{xltxtra}, \code{xunicode}.
+  \code{graphicx}, \code{hyperref}, \code{longtable}, \code{lscape},
+  \code{mathtools}, \code{multirow}, \code{polyglossia}, \code{rotating},
+  \code{setspace}, \code{tikz}, \code{xltxtra}, \code{xunicode}.
 
   La opción por defecto es un documento rmarkdown que produce un PDF tras ser
   compilado con knitr, pandoc y XeLaTeX (en lugar de pdfLaTeX, ya que el
@@ -90,7 +85,10 @@ informe(doc_format = "docx",
 informe(doc_format = "html",
         title      = "Informe Estadístico en FISABIO",
         file_name  = "informe_fisabio_html")
-informe(doc_format = "beamer",
+informe(doc_format = "pres_html",
+        title      = "Presentación Estadística en FISABIO",
+        file_name  = "presentacion_fisabio_html")
+informe(doc_format = "pres_beamer",
         title      = "Presentación Estadística en FISABIO",
         file_name  = "presentacion_fisabio_beamer")
 }
