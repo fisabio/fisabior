@@ -28,6 +28,10 @@ Imports:
     tikzDevice (>= 0.10-1),
     tufte (>= 0.2)
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.0.0)
+Suggest:
+    huxtable (>= 0.1.1),
+    sp (>= 1.2-4),
+    RColorBrewer (>= 1.1-2)
 SystemRequirements: git
 RoxygenNote: 6.0.1
