@@ -8,9 +8,6 @@
 #' @param doc_format Cadena de caracteres con el doc_format deseado para el
 #'   informe. Las opciones admitidas son pdf_markdown, latex, html, docx, odt,
 #'   pres_beamer y pres_html. Por defecto se selecciona pdf_markdown.
-#' @param title Cadena de caracteres con el título del informe. Por defecto se
-#'   asigna \emph{Informe estadístico del proyecto \code{X}}, donde \code{X} es
-#'   el nombre del directorio principal del proyecto.
 #' @param file_name Cadena de caracteres con el nombre del archivo sin
 #'   extensión. Por defecto, los archivos recibirán el nombre genérico se asigna
 #'   el nombre \code{informe_form}, donde "form" (doc_format) varía en función
@@ -60,30 +57,22 @@
 #'           proj_dir = "~/proyectos",
 #'           git      = TRUE)
 #' informe(doc_format = "pdf_markdown",
-#'         title      = "Informe Estadístico en FISABIO",
 #'         file_name  = "informe_fisabio_md")
 #' informe(doc_format = "latex",
-#'         title      = "Informe Estadístico en FISABIO",
 #'         file_name  = "informe_fisabio_tex")
 #' informe(doc_format = "odt",
-#'         title      = "Informe Estadístico en FISABIO",
 #'         file_name  = "informe_fisabio_odt")
 #' informe(doc_format = "docx",
-#'         title      = "Informe Estadístico en FISABIO",
 #'         file_name  = "informe_fisabio_docx")
 #' informe(doc_format = "html",
-#'         title      = "Informe Estadístico en FISABIO",
 #'         file_name  = "informe_fisabio_html")
 #' informe(doc_format = "pres_html",
-#'         title      = "Presentación Estadística en FISABIO",
 #'         file_name  = "presentacion_fisabio_html")
 #' informe(doc_format = "pres_beamer",
-#'         title      = "Presentación Estadística en FISABIO",
 #'         file_name  = "presentacion_fisabio_beamer")
 #' }
 informe <- function(
   doc_format = "pdf_markdown",
-  title      = NULL,
   file_name  = NULL) {
 
   ######################################
@@ -95,8 +84,7 @@ informe <- function(
   if (!any(grepl(".Rproj", proj_files)))
     stop("\nEl directorio de trabajo no contiene ningún proyecto de RStudio.",
          "\nCambia al directorio principal creado con la función fisabior::init_proj()")
-  if (is.null(title))
-    title <- paste("Informe Estadístico del Proyecto", basename(getwd()))
+  title <- "Informe Estadístico del Proyecto"
   if (is.null(file_name))
     file_name <- paste0("informe_", doc_format)
   if (!grepl("/$", proj_dir))
@@ -128,9 +116,6 @@ informe <- function(
       report_path <- paste0("informes/pdf_markdown/", file_name, ".Rmd")
       rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pdf_markdown",
                        package = "fisabior", edit = FALSE)
-      pdf_draft <- readLines(report_path)
-      pdf_draft[grep("^title:", pdf_draft)] <- paste("title:", title)
-      writeLines(paste(pdf_draft, collapse = "\n"), report_path)
       copy_fisabior(from_ = "templates/referencias_prueba.bib",
                     to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
     } else if (doc_format == "latex") {
@@ -138,7 +123,6 @@ informe <- function(
       report_path <- paste0("informes/latex/", file_name, ".Rnw")
       rnw_path <- system.file("templates/template.Rnw", package = "fisabior", mustWork = TRUE)
       rnw_out <- paste(readLines(rnw_path))
-      rnw_out[grep("^\\\\title\\{", rnw_out)] <- paste0("\\title{", title, "}")
       writeLines(paste(rnw_out), report_path)
       copy_fisabior(from_ = "templates/referencias_prueba.bib",
                     to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
@@ -148,9 +132,6 @@ informe <- function(
       report_path <- paste0("informes/presentacion/", file_name, ".Rmd")
       rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pres_beamer",
                        package = "fisabior", edit = FALSE)
-      pdf_draft <- readLines(report_path)
-      pdf_draft[grep("^title:", pdf_draft)] <- paste("title:", title)
-      writeLines(paste(pdf_draft, collapse = "\n"), report_path)
       copy_fisabior(from_ = "templates/referencias_prueba.bib",
                     to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
     }
@@ -164,9 +145,6 @@ informe <- function(
     report_path <- paste0("informes/docx/", file_name, ".Rmd")
     rmarkdown::draft(file = report_path, create_dir = FALSE, template = "docx",
                      package = "fisabior", edit = FALSE)
-    docx_draft <- readLines(report_path)
-    docx_draft[grep("^title:", docx_draft)] <- paste("title:", title)
-    writeLines(paste(docx_draft, collapse = "\n"), report_path)
     copy_fisabior(from_ = "templates/referencias_prueba.bib",
                   to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
   } else if (doc_format == "odt") {
@@ -179,9 +157,6 @@ informe <- function(
     report_path <- paste0("informes/odt/", file_name, ".Rmd")
     rmarkdown::draft(file = report_path, create_dir = FALSE, template = "odt",
                      package = "fisabior", edit = FALSE)
-    odt_draft <- readLines(report_path)
-    odt_draft[grep("^title:", odt_draft)] <- paste("title:", title)
-    writeLines(paste(odt_draft, collapse = "\n"), report_path)
     copy_fisabior(from_ = "templates/referencias_prueba.bib",
                   to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
   } else if (doc_format == "html") {
@@ -194,9 +169,6 @@ informe <- function(
     report_path <- paste0("informes/html/", file_name, ".Rmd")
     rmarkdown::draft(file = report_path, create_dir = FALSE, template = "html",
                      package = "fisabior", edit = FALSE)
-    html_draft <- readLines(report_path)
-    html_draft[grep("^title:", html_draft)] <- paste("title:", title)
-    writeLines(paste(html_draft, collapse = "\n"), report_path)
     copy_fisabior(from_ = "templates/referencias_prueba.bib",
                   to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
   } else {
@@ -210,9 +182,6 @@ informe <- function(
     report_path <- paste0("informes/presentacion/", file_name, ".Rmd")
     rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pres_html",
                      package = "fisabior", edit = FALSE)
-    pres_html_draft <- readLines(report_path)
-    pres_html_draft[grep("^title:", pres_html_draft)] <- paste("title:", title)
-    writeLines(paste(pres_html_draft, collapse = "\n"), report_path)
     copy_fisabior(from_ = "templates/referencias_prueba.bib",
                   to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
     fonts <- list.files(system.file("templates/fonts", package = "fisabior",

@@ -4,16 +4,12 @@
 \alias{informe}
 \title{Crea un informe estadístico (estático o dinámico) empleando una plantilla}
 \usage{
-informe(doc_format = "pdf_markdown", title = NULL, file_name = NULL)
+informe(doc_format = "pdf_markdown", file_name = NULL)
 }
 \arguments{
 \item{doc_format}{Cadena de caracteres con el doc_format deseado para el
 informe. Las opciones admitidas son pdf_markdown, latex, html, docx, odt,
 pres_beamer y pres_html. Por defecto se selecciona pdf_markdown.}
-
-\item{title}{Cadena de caracteres con el título del informe. Por defecto se
-asigna \emph{Informe estadístico del proyecto \code{X}}, donde \code{X} es
-el nombre del directorio principal del proyecto.}
 
 \item{file_name}{Cadena de caracteres con el nombre del archivo sin
 extensión. Por defecto, los archivos recibirán el nombre genérico se asigna
@@ -71,25 +67,18 @@ init_proj(proj_nom = "proyecto_europeo_X",
           proj_dir = "~/proyectos",
           git      = TRUE)
 informe(doc_format = "pdf_markdown",
-        title      = "Informe Estadístico en FISABIO",
         file_name  = "informe_fisabio_md")
 informe(doc_format = "latex",
-        title      = "Informe Estadístico en FISABIO",
         file_name  = "informe_fisabio_tex")
 informe(doc_format = "odt",
-        title      = "Informe Estadístico en FISABIO",
         file_name  = "informe_fisabio_odt")
 informe(doc_format = "docx",
-        title      = "Informe Estadístico en FISABIO",
         file_name  = "informe_fisabio_docx")
 informe(doc_format = "html",
-        title      = "Informe Estadístico en FISABIO",
         file_name  = "informe_fisabio_html")
 informe(doc_format = "pres_html",
-        title      = "Presentación Estadística en FISABIO",
         file_name  = "presentacion_fisabio_html")
 informe(doc_format = "pres_beamer",
-        title      = "Presentación Estadística en FISABIO",
         file_name  = "presentacion_fisabio_beamer")
 }
 }
