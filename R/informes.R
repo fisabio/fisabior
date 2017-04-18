@@ -209,7 +209,12 @@ informe <- function(
     writeLines(paste(pres_html_draft, collapse = "\n"), report_path)
     copy_fisabior(from_ = "templates/referencias_prueba.bib",
                   to_   = paste0(dirname(report_path), "/referencias_prueba.bib"))
-    fonts <- list.files(system.file("templates/fonts", package = "fisabior"))
+    fonts <- list.files(system.file("templates/fonts", package = "fisabior",
+                                    mustWork = TRUE), recursive = TRUE)
+    dirs <- c(paste0("font-awesome-4.7.0/", c("scss", "less", "fonts", "css")),
+              paste0("bootstrap-3.3.7-dist/", c("js", "fonts", "css")))
+    for (i in dirs)
+      dir.create(path = paste0("informes/presentacion/fonts/", i), recursive = TRUE)
     for (i in fonts) {
       copy_fisabior(from_ = paste0("templates/fonts/", i),
                     to_   = paste0("informes/presentacion/fonts/", i))

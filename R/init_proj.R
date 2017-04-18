@@ -2,8 +2,8 @@
 copy_fisabior <- function(from_, to_) {
   invisible(
     file.copy(
-      from = system.file(from_, package = "fisabior", mustWork = T),
-      to   = to_
+      from      = system.file(from_, package = "fisabior", mustWork = T),
+      to        = to_
     )
   )
 }
