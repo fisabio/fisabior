@@ -89,6 +89,7 @@ informe <- function(
   ######################################
   # Comprobaciones iniciales           #
   ######################################
+
   proj_dir <- getwd()
   proj_files <- list.files(proj_dir)
   if (!any(grepl(".Rproj", proj_files)))
@@ -111,6 +112,7 @@ informe <- function(
   ######################################
   # Documentos en PDF                  #
   ######################################
+
   if (doc_format %in% c("pdf_markdown", "latex", "pres_beamer")) {
     if (!any(grepl("knitr", proj_opt, ignore.case = TRUE))) {
       stop("\nknitr no es la opción por defecto para compilar archivos LaTeX",
@@ -125,7 +127,7 @@ informe <- function(
       if (!dir.exists("informes/pdf_markdown")) dir.create("informes/pdf_markdown", recursive = T)
       report_path <- paste0("informes/pdf_markdown/", file_name, ".Rmd")
       rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pdf_markdown",
-                       package = "fisabior", edit = TRUE)
+                       package = "fisabior", edit = FALSE)
       pdf_draft <- readLines(report_path)
       pdf_draft[grep("^title:", pdf_draft)] <- paste("title:", title)
       writeLines(paste(pdf_draft, collapse = "\n"), report_path)
@@ -145,7 +147,7 @@ informe <- function(
         dir.create("informes/presentacion", recursive = T)
       report_path <- paste0("informes/presentacion/", file_name, ".Rmd")
       rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pres_beamer",
-                       package = "fisabior", edit = TRUE)
+                       package = "fisabior", edit = FALSE)
       pdf_draft <- readLines(report_path)
       pdf_draft[grep("^title:", pdf_draft)] <- paste("title:", title)
       writeLines(paste(pdf_draft, collapse = "\n"), report_path)
@@ -157,10 +159,11 @@ informe <- function(
     ######################################
     # Documentos en DOCX                 #
     ######################################
+
     if (!dir.exists("informes/docx")) dir.create("informes/docx", recursive = T)
     report_path <- paste0("informes/docx/", file_name, ".Rmd")
     rmarkdown::draft(file = report_path, create_dir = FALSE, template = "docx",
-                     package = "fisabior", edit = TRUE)
+                     package = "fisabior", edit = FALSE)
     docx_draft <- readLines(report_path)
     docx_draft[grep("^title:", docx_draft)] <- paste("title:", title)
     writeLines(paste(docx_draft, collapse = "\n"), report_path)
@@ -171,10 +174,11 @@ informe <- function(
     ######################################
     # Documentos en ODT                  #
     ######################################
+
     if (!dir.exists("informes/odt")) dir.create("informes/odt", recursive = T)
     report_path <- paste0("informes/odt/", file_name, ".Rmd")
     rmarkdown::draft(file = report_path, create_dir = FALSE, template = "odt",
-                     package = "fisabior", edit = TRUE)
+                     package = "fisabior", edit = FALSE)
     odt_draft <- readLines(report_path)
     odt_draft[grep("^title:", odt_draft)] <- paste("title:", title)
     writeLines(paste(odt_draft, collapse = "\n"), report_path)
@@ -185,10 +189,11 @@ informe <- function(
     ######################################
     # Documentos en HTML                 #
     ######################################
+
     if (!dir.exists("informes/html")) dir.create("informes/html", recursive = T)
     report_path <- paste0("informes/html/", file_name, ".Rmd")
     rmarkdown::draft(file = report_path, create_dir = FALSE, template = "html",
-                     package = "fisabior", edit = TRUE)
+                     package = "fisabior", edit = FALSE)
     html_draft <- readLines(report_path)
     html_draft[grep("^title:", html_draft)] <- paste("title:", title)
     writeLines(paste(html_draft, collapse = "\n"), report_path)
@@ -199,11 +204,12 @@ informe <- function(
     ######################################
     # Presentaciones en HTML             #
     ######################################
+
     if (!dir.exists("informes/presentacion/fonts"))
       dir.create("informes/presentacion/fonts", recursive = T)
     report_path <- paste0("informes/presentacion/", file_name, ".Rmd")
     rmarkdown::draft(file = report_path, create_dir = FALSE, template = "pres_html",
-                     package = "fisabior", edit = TRUE)
+                     package = "fisabior", edit = FALSE)
     pres_html_draft <- readLines(report_path)
     pres_html_draft[grep("^title:", pres_html_draft)] <- paste("title:", title)
     writeLines(paste(pres_html_draft, collapse = "\n"), report_path)
