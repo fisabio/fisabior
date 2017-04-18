@@ -39,7 +39,7 @@ opts_chunk$set(tidy       = F,
                warning    = F,
                message    = F)
 knit_hooks$set(crop = hook_pdfcrop)
-source("configuracion/config.R")
+source("../../configuracion/config.R")
 ###########################################################
 ##              DESDE AQUÍ YA PUEDES BORRAR              ##
 ###########################################################
@@ -63,6 +63,7 @@ Esta es la plantilla base para la elaboración de presentaciones estadísticas e
 Como siempre, la plantilla está en formato `.Rmd`, de forma que resulta extremadamente fácil generar una presentación con tablas, figuras o código de `R`. Por ejemplo:
 
 ```{r ejemplo_noev, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=3, fig.width=4, eval = F}
+source("configuracion/config.R")
 library(sp)
 library(RColorBrewer)
 data("aragon_iam")
@@ -79,8 +80,9 @@ par(opar)
 ## Imágenes nativas
 
 Las figuras pueden proceder de la ejecución de código incrustado en el documento, como en el caso de la diapo anterior:
- 
+
 ```{r ejemplo_ev, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide", fig.height=2.5, fig.width=4, echo = F}
+source("configuracion/config.R")
 library(sp)
 library(RColorBrewer)
 data("aragon_iam")
@@ -113,7 +115,7 @@ knitr::include_graphics(path = paste0(root_dir, "/figuras/logo-ccby.png"))
 Si buscas un arreglo rápido de tabla, prueba a utilizar la función `knitr::kable()`:
 
 ```{r kable}
-kable(aragon_iam@data[1:3, 3:7], digits = 2, align = rep("c", 7), 
+kable(aragon_iam@data[1:3, 3:7], digits = 2, align = rep("c", 7),
       caption = "Esto es una Tabla...", format = "latex", row.names = F,
       booktabs = TRUE)
 ```
@@ -146,4 +148,3 @@ Como dijo Jacinto el de mi pueblo
 Las referencias se generan directamente con Pandoc, siendo muy fácil introducirlas. Las referencias se añaden al final de forma automática. P. ej.: [@Wickham2015; @Fawcett2006; @Gelman2014; @Bivand2013; @Blangiardo2015].
 
 # Referencias bibliográficas
-

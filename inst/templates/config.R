@@ -20,7 +20,6 @@ pkgs <- sapply(pkgs, function(x)
 )
 
 
-
 # Funciones ---------------------------------------------------------------
 ## Bloques de alerta en presentaciones HTML
 bloque <- function(texto, tipo = "alerta") {
