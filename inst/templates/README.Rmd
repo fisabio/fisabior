@@ -3,6 +3,33 @@ title: "Documentación del proyecto"
 output: github_document
 ---
 
+```{r setup, cache = F, include=FALSE}
+###########################################################
+##                 NO BORRAR ESTA SECCIÓN                ##
+###########################################################
+library(knitr)
+if (!dir.exists("figuras/readme")) dir.create("figuras/readme")
+opts_knit$set(base.dir = normalizePath("figuras/readme/"))
+options(formatR.arrow = T, width = 105)
+opts_chunk$set(tidy       = T,
+               prompt     = F,
+               fig.path   = "figuras/readme/fig_",
+               cache.path = "cache/readme/chunk_",
+               fig.align  = "center",
+               fig.show   = "hold",
+               fig.width  = 10,
+               fig.height = 5,
+               cache      = T,
+               par        = T,
+               comment    = "#",
+               warning    = F,
+               message    = F)
+source("../../configuracion/config.R")
+###########################################################
+##              DESDE AQUÍ YA PUEDES BORRAR              ##
+###########################################################
+```
+
 ## Acerca de este proyecto
 `fisabior` es un paquete de R cuyo único propósito es estructurar y organizar el entorno de trabajo, facilitando el trabajo en equipo. 
 
@@ -22,9 +49,11 @@ El proyecto generado con su función principal (`init_proj()`) se estructura en 
 + informes: 
     - docx: documentos MS Office Word producidos por rmarkdown-knitr,
     - odt: documentos LibreOffice Writer producidos rmarkdown-knitr,
-    - pdf-markdown: documentos markdown y html producidos por rmarkdown-knitr,
-    - pdf-latex: documentos TeX y PDF producidos por knitr-LaTeX,
-    - html: documentos HTML producidos por rmarkdown-knitr.
+    - pdf_markdown: documentos markdown y html producidos por rmarkdown-knitr,
+    - latex: documentos TeX y PDF producidos por knitr-LaTeX,
+    - html: documentos HTML producidos por rmarkdown-knitr,
+    - beamer: presentaciones en PDF gracias a rmarkdown-Beamer-LaTeX,
+    - ioslides: presentaciones en HTML gracias a rmarkdown-ioslides.
 + r: directorio principal, el cual contiene todos los scripts de código R necesarios para la ejecución del proyecto. Solo contiene archivos con extensión `*.R`.
 + src: directorio de código secundario, donde se guardan los archivos con código no-R, eligiendo para ello el subdirectorio más apropiado:
     - bugs: modelos escritos con código en lenguaje BUGS,
@@ -45,3 +74,13 @@ El proyecto generado con su función principal (`init_proj()`) se estructura en 
 + Carlos Vergara-Hernández (carlos.vergara@uv.es).
 
 Si al igual que nosotros te encanta la estadística en R, o si tuvieras alguna duda acerca del grupo o su actividad, puedes contactarnos sin problema.
+
+
+## Información del sistema
+
+El proyecto fue creado en las siguientes condiciones:
+
+```{r, info}
+devtools::session_info()
+```
+
