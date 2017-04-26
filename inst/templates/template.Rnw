@@ -1,4 +1,4 @@
-% !TeX program = XeLaTeX
+% !TeX program = xelatex
 
 %--------------------------------------------------------%
 % Clase y página                                         %
@@ -252,6 +252,9 @@ source("../../configuracion/config.R")
   Para insertar elementos de código y decorarlos para que tengan vistosidad, se usará el paquete \texttt{knitr} junto con \LaTeX. Con \texttt{knitr}, en primer lugar hay que identificar los trozos de código, y para ello escribimos \texttt{<<>>=}, indicando que a partir de esa línea comienza la sección de código qu deseamos introducir, y una última línea con \texttt{@}, indicando el final de la pieza de código. En la \href{http://yihui.name/knitr/}{web del autor de \texttt{knitr}} podrás encontrar un montón de ejemplos y de opciones útiles para obtener la salida deseada: p. ej., imagina que deseas mostrar únicamente un resultado y omitir el código, pues la solución es añadir \texttt{echo = F} en el encabezado (\texttt{<<echo = F>>=}); o que deseas que la figura que se produzca con un \texttt{plot(x)} tenga un tamaño de 10in x 5in, pues \texttt{fig.width = 10, fig.height = 5}. Como ves, la sintaxis es muy sencilla y bastante intuitiva, aunque la mejor forma de asimilarlo es mediante un ejemplo:
 
 <<ejemplo, fig.cap="Representación de la razón de mortalidad estandarizada (RME) por enfermedad isquémica en hombres en la Región de Aragón, 1991-2000", results="hide">>=
+source("configuracion/config.R")
+library(sp)
+library(RColorBrewer)
 data("aragon_iam")
 opar <- par(mar = c(1, 1, 1, 1))
 paleta <- brewer.pal(6, "OrRd")
