@@ -1,4 +1,4 @@
-% !TeX program = XeLaTeX
+% !TeX program = xelatex
 
 %--------------------------------------------------------%
 % Clase y página                                         %
@@ -180,7 +180,7 @@ $endif$
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
 % Add ',fontsize=\small' for more characters per line
 \definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\scriptsize \begin{snugshade}}{\end{snugshade} \normalsize}
+\newenvironment{Shaded}{\tiny \begin{snugshade}}{\end{snugshade} \normalsize}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
@@ -216,7 +216,7 @@ $endif$
 \makeatletter
 \patchcmd{\@verbatim}
 {\verbatim@font}
-{\verbatim@font\scriptsize}
+{\verbatim@font\tiny}
 {}{}
 \makeatother
 \addto\captionsspanish{%
