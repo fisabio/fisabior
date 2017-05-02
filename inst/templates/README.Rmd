@@ -24,7 +24,7 @@ opts_chunk$set(tidy       = T,
                comment    = "#",
                warning    = F,
                message    = F)
-source("../../configuracion/config.R")
+source("configuracion/config.R")
 ###########################################################
 ##              DESDE AQUÍ YA PUEDES BORRAR              ##
 ###########################################################
