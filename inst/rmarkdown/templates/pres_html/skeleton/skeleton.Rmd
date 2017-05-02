@@ -15,6 +15,7 @@ output:
     includes:
       in_header: header.html
 bibliography: referencias_prueba.bib
+csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}
