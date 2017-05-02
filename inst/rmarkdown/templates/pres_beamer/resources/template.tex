@@ -4,7 +4,9 @@
 % Clase y página                                         %
 %--------------------------------------------------------%
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(handout)$handout,$endif$$for(classoption)$$classoption$$sep$,$endfor$ ignorenonframetext, block=fill]{beamer}
-\usetheme[progressbar=frametitle]{metropolis}
+\usetheme[
+  $if(metropts)$$for(metropts)$$metropts$$sep$,$endfor$$endif$
+  progressbar=frametitle]{metropolis}
 \usepackage{appendixnumberbeamer}
 
 
