@@ -3,23 +3,19 @@
 %--------------------------------------------------------%
 % Clase y página                                         %
 %--------------------------------------------------------%
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(handout)$handout,$endif$$for(classoption)$$classoption$$sep$,$endfor$ ignorenonframetext, block=fill]{beamer}
-\usetheme[
-  $if(metropts)$$for(metropts)$$metropts$$sep$,$endfor$$endif$
-  progressbar=frametitle]{metropolis}
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(handout)$handout,$endif$$for(classoption)$$classoption$$sep$,$endfor$ block=fill]{beamer}
+\usetheme[$for(metropolisopts)$$metropolisopts$,$endfor$ progressbar=frametitle]{metropolis}
 \usepackage{appendixnumberbeamer}
 
 
 %--------------------------------------------------------%
 % Soporte de fuentes e idiomas                           %
 %--------------------------------------------------------%
-\usepackage[T1]{fontenc}
 \usepackage{
   fontspec,
   polyglossia,
   xltxtra,
-  xunicode,
-  lmodern
+  xunicode
 }
 \setdefaultlanguage{spanish} % Lenguaje por defecto
 \setotherlanguage{english} % Lenguaje adicional
@@ -145,13 +141,12 @@ $if(institute)$
 \institute{$for(institute)$$institute$$sep$ \and $endfor$}
 $endif$
 \date{$date$}
-
-\titlegraphic{\includegraphics[width=1.8cm,height=1.6cm]{../../figuras/fisabior.png}}
+\titlegraphic{\hfill\includegraphics[width=1.8cm,height=1.6cm]{../../figuras/fisabior.png}}
 
 \usepackage{textpos}
-\addtobeamertemplate{frametitle}{}{%
-\begin{textblock*}{100mm}(.95\textwidth,-1cm)
-\includegraphics[height=.8cm,width=.8cm]{../../figuras/fisabior.png}
+\addtobeamertemplate{footline}{}{%
+\begin{textblock*}{100mm}(.03\textwidth,-.8cm)
+\includegraphics[height=.6cm,width=.7cm]{../../figuras/fisabior.png}
 \end{textblock*}}
 
 %--------------------------------------------------------%
@@ -159,9 +154,10 @@ $endif$
 %--------------------------------------------------------%
 $if(bibliography)$
 \usepackage[autostyle = true]{csquotes}
-\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+\usepackage[backend = biber, style = apa, hyperref = true]{biblatex}
 \DeclareLanguageMapping{spanish}{spanish-apa}
 \DefineBibliographyStrings{spanish}{andothers = {et\addabbrvspace al\adddot}}
+\setbeamertemplate{bibliography item}[text]
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
@@ -215,11 +211,18 @@ $endif$
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
 
+\newcounter{cont}
 \makeatletter
 \patchcmd{\@verbatim}
 {\verbatim@font}
 {\verbatim@font\tiny}
 {}{}
+\setbeamertemplate{frametitle continuation}{%
+    \setcounter{cont}{\beamer@endpageofframe}%
+    \addtocounter{cont}{1}%
+    \addtocounter{cont}{-\beamer@startpageofframe}%
+    (\insertcontinuationcount/\arabic{cont})%
+}
 \makeatother
 \addto\captionsspanish{%
   \renewcommand\tablename{Tabla}
@@ -230,13 +233,14 @@ $endif$
 % Inicio del documento                      %
 %-------------------------------------------%
 \begin{document}
-$if(title)$
-\frame{\titlepage}
-$endif$
+
+\maketitle
+
 
 $if(toc)$
-\begin{frame}
-\tableofcontents[hideallsubsections]
+\begin{frame}{Índice de contenidos}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
 \end{frame}
 $endif$
 
@@ -245,7 +249,8 @@ $body$
 
 
 $if(biblatex)$
-\begin{frame}[allowframebreaks]{$biblio-title$}
+\section{Referencias bibliográficas}\label{refs-bib}
+\begin{frame}[allowframebreaks]{Referencias bibliográficas}
 \printbibliography[heading=none]
 \end{frame}
 $endif$

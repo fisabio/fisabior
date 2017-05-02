@@ -147,4 +147,3 @@ Como dijo Jacinto el de mi pueblo
 
 Las referencias se generan directamente con Pandoc, siendo muy fácil introducirlas. Las referencias se añaden al final de forma automática. P. ej.: [@Wickham2015; @Fawcett2006; @Gelman2014; @Bivand2013; @Blangiardo2015].
 
-# Referencias bibliográficas
