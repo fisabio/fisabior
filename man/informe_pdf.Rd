@@ -5,7 +5,7 @@
 \title{Función que devuelve el formato de salida apropiado para generar el informe
 o la presentación en PDF.}
 \usage{
-informe_pdf(beamer = FALSE)
+informe_pdf(beamer = FALSE, ...)
 }
 \arguments{
 \item{beamer}{Lógico: ¿el documento es una presentación Beamer? Falso por

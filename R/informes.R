@@ -215,7 +215,7 @@ informe <- function(
 #'
 #' @return Objeto con clase "rmarkdown_output_format".
 #'
-informe_pdf <- function(beamer = FALSE) {
+informe_pdf <- function(beamer = FALSE, ...) {
   if (!beamer) {
     template <- system.file("rmarkdown/templates/pdf_markdown/resources/template.tex",
                             package = "fisabior")
@@ -226,7 +226,8 @@ informe_pdf <- function(beamer = FALSE) {
       citation_package = "biblatex",
       fig_caption      = TRUE,
       md_extensions    = "-autolink_bare_uris",
-      keep_tex         = TRUE)
+      keep_tex         = TRUE,
+      ...)
     doc_format$inherits <- "pdf_document"
   } else {
     template <- system.file("rmarkdown/templates/pres_beamer/resources/template.tex",
@@ -238,7 +239,8 @@ informe_pdf <- function(beamer = FALSE) {
       citation_package = "biblatex",
       fig_caption      = TRUE,
       md_extensions    = "-autolink_bare_uris",
-      keep_tex         = TRUE)
+      keep_tex         = TRUE,
+      ...)
     doc_format$inherits <- "beamer_presentation"
   }
   doc_format

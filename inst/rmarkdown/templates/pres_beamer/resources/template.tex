@@ -3,8 +3,8 @@
 %--------------------------------------------------------%
 % Clase y página                                         %
 %--------------------------------------------------------%
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(handout)$handout,$endif$$for(classoption)$$classoption$$sep$,$endfor$ block=fill]{beamer}
-\usetheme[$for(metropolisopts)$$metropolisopts$,$endfor$ progressbar=frametitle]{metropolis}
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(handout)$handout,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{beamer}
+\usetheme[$for(metropolisopts)$$metropolisopts$,$endfor$block=fill, progressbar=frametitle]{metropolis}
 \usepackage{appendixnumberbeamer}
 
 
@@ -176,8 +176,8 @@ $endif$
 \newcommand{\VerbBar}{|}
 \newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\definecolor{shadecolor}{RGB}{248,248,248}
+\setlength{\OuterFrameSep}{2pt}
+\definecolor{shadecolor}{RGB}{236,236,236}
 \newenvironment{Shaded}{\tiny \begin{snugshade}}{\end{snugshade} \normalsize}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
