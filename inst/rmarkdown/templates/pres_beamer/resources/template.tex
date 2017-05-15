@@ -248,9 +248,12 @@ $endif$
 
 $body$
 
+$if(thanks)$
+\section{Muchas gracias por la atención}\label{atencion}
+$endif$
 
 $if(biblatex)$
-\section{Referencias bibliográficas}\label{refs-bib}
+\section*{Referencias bibliográficas}\label{refs-bib}
 \begin{frame}[allowframebreaks]{Referencias bibliográficas}
 \printbibliography[heading=none]
 \end{frame}
