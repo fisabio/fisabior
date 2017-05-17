@@ -175,7 +175,7 @@ $endif$
 
 \newcommand{\VerbBar}{|}
 \newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{fontsize=\tiny,commandchars=\\\{\}}
 \setlength{\OuterFrameSep}{2pt}
 \definecolor{shadecolor}{RGB}{236,236,236}
 \newenvironment{Shaded}{\tiny \begin{snugshade}}{\end{snugshade} \normalsize}
@@ -213,6 +213,7 @@ $endif$
 
 \newcounter{cont}
 \makeatletter
+\def\verbatim{\tiny\@verbatim \frenchspacing\@vobeyspaces \@xverbatim}
 \patchcmd{\@verbatim}
 {\verbatim@font}
 {\verbatim@font\tiny}
@@ -223,6 +224,7 @@ $endif$
     \addtocounter{cont}{-\beamer@startpageofframe}%
     (\insertcontinuationcount/\arabic{cont})%
 }
+\preto{\@verbatim}{\topsep=-5pt \partopsep=0pt }
 \makeatother
 \addto\captionsspanish{%
   \renewcommand\tablename{Tabla}
