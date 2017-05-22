@@ -2,83 +2,23 @@
 % Please edit documentation in R/informes.R
 \name{informe}
 \alias{informe}
-\title{Crea un informe estadístico (estático o dinámico) empleando una plantilla}
+\title{Función que devuelve el formato de salida apropiado para generar el informe o
+la presentación en PDF.}
 \usage{
-informe(doc_format = "pdf_markdown", file_name = NULL)
+informe(...)
 }
 \arguments{
-\item{doc_format}{Cadena de caracteres con el doc_format deseado para el
-informe. Las opciones admitidas son pdf_markdown, latex, html, docx, odt,
-pres_beamer y pres_html. Por defecto se selecciona pdf_markdown.}
-
-\item{file_name}{Cadena de caracteres con el nombre del archivo sin
-extensión. Por defecto, los archivos recibirán el nombre genérico se asigna
-el nombre \code{informe_form}, donde "form" (doc_format) varía en función
-de lo seleccionado en el argumento doc_format (.Rmd, .Rnw, .pdf, .html,
-.odt o .docx).}
+\item{...}{Otros argumentos a pasar.}
 }
 \value{
-En función del formato escogido, se crea un documento principal y un
-  conjunto de documentos de respaldo (algunos directamente en el directorio
-  de informes correspondiente al formato --informes/pdf_markdown/--, otros en
-  los directorios de data/cache o figuras/formato).
+Objeto con clase "rmarkdown_output_format".
 }
 \description{
-Crea automáticamente un informe estadístico empleando una plantilla base con
-detalles del grupo. El documento generado puede tener diversos doc_formats
-(PDF desde Markdown o desde LaTeX, y HTML, DOCX y ODT desde Markdown).
+Esta función crea una lista con todas las especificaciones necesarias para
+crear un PDF siguiendo el formato de la plantilla de fisabior. Por defecto se
+usa XeLaTeX como motor de LaTeX.
 }
 \details{
-La función solo funciona si el directorio de trabajo se circunscribe
-  a un proyecto de RStudio, es decir, si existe un archivo \emph{*.Rproj} en
-  el directorio de trabajo. Si el proyecto se ha creado con
-  \code{\link{init_proj}}, esto no debería causar molestias, pues se crea un
-  \emph{*.Rproj} por defecto.
-
-  Si se desea generar informes PDF, es necesario tener instalada una
-  distribución LaTeX que incorpore (como mínimo) los siguientes paquetes:
-  \code{adjustbox}, \code{amsmath}, \code{array}, \code{authblk},
-  \code{biblatex}, \code{booktabs}, \code{caption}, \code{csquotes},
-  \code{float}, \code{fontenc}, \code{fontspec}, \code{footmisc},
-  \code{graphicx}, \code{hyperref}, \code{longtable}, \code{lscape},
-  \code{mathtools}, \code{multirow}, \code{polyglossia}, \code{rotating},
-  \code{setspace}, \code{tikz}, \code{xltxtra}, \code{xunicode}.
-
-  La opción por defecto es un documento rmarkdown que produce un PDF tras ser
-  compilado con knitr, pandoc y XeLaTeX (en lugar de pdfLaTeX, ya que el
-  primero ofrece una mayor compatibilidad de fuentes para idiomas con
-  caracteres especiales --caracteres no ASCII, como el nuestro--). Del mismo
-  modo, la opción por defecto para gestionar la bibliografía es a través de
-  \code{biblatex} empleando el gestor de referencias \code{biber}, de modo
-  que este último debe estar instalado en el sistema.
-
-  Con todo, en primer lugar la función comprueba que el proyecto tenga
-  declaradas todas estas opciones (vienen por defecto al emplear
-  \code{\link{init_proj}}) y que el software apropiado esté instalado. Si no
-  hubiera un acuerdo entre lo esperado y lo declarado en las opciones del
-  proyecto, la función pregunta qué hacer para que, o bien se cambien las
-  opciones del proyecto de forma automática o se detenga la ejecución y se
-  cambien a mano.
-}
-\examples{
-\dontrun{
-library(fisabior)
-init_proj(proj_nom = "proyecto_europeo_X",
-          proj_dir = "~/proyectos",
-          git      = TRUE)
-informe(doc_format = "pdf_markdown",
-        file_name  = "informe_fisabio_md")
-informe(doc_format = "latex",
-        file_name  = "informe_fisabio_tex")
-informe(doc_format = "odt",
-        file_name  = "informe_fisabio_odt")
-informe(doc_format = "docx",
-        file_name  = "informe_fisabio_docx")
-informe(doc_format = "html",
-        file_name  = "informe_fisabio_html")
-informe(doc_format = "pres_html",
-        file_name  = "presentacion_fisabio_html")
-informe(doc_format = "pres_beamer",
-        file_name  = "presentacion_fisabio_beamer")
-}
+La función solo debe utilizarse desde una llamada a
+  rmarkdown::render() o dentro de un documento .Rmd
 }

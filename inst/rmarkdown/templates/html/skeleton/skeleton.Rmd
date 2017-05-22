@@ -25,6 +25,7 @@ output:
     css: fisabior.css
     highlight: pygments
 bibliography: referencias_prueba.bib
+csl: apa.csl
 link-citations: no
 ---
 
@@ -34,7 +35,6 @@ link-citations: no
 ###########################################################
 library(tufte)
 library(knitr)
-if (!dir.exists("../../figuras/html")) dir.create("../../figuras/html")
 opts_knit$set(root.dir = normalizePath("../../"))
 options(
   width                 = 80,
@@ -45,8 +45,8 @@ opts_chunk$set(tidy        = F,
                cache.extra = packageVersion('tufte'),
                dev         = "png",
                dpi         = 600,
-               fig.path    = "../../figuras/html/fig_",
-               cache.path  = "../../cache/html/chunk_",
+               fig.path    = "figuras/fig_",
+               cache.path  = "cache/chunk_",
                cache       = T,
                par         = T,
                comment     = "#",
@@ -145,6 +145,7 @@ par(opar)
 - se puede requerir que se emplee la amplitud de la página al completo,
 
 ```{r ejemplo_comp, fig.fullwidth = TRUE, fig.cap="Mortalidad observada vs. esperada en hombres en función del área del municipio. Región de Aragón, 1991-2000.", fig.width = 10, fig.height = 4}
+library(ggplot2)
 ggplot(aragon_iam@data, aes(x = observada, y = esperada, color = area)) +
   geom_point() +
   xlim(0, 75) + 
@@ -165,8 +166,7 @@ kable(head(aragon_iam@data), digits = 2, align = rep("c", 7), caption = "Esto es
 Para cargar imágenes que no procedan del código incrustado en el propio documento lo mejor es utilizar la función `knitr::include_graphics("ruta/a/la/imagen")` en un _chunk_ de código estándar:
 
 ```{r logo, fig.align="center", fig.cap = "Un logo molón."}
-root_dir <- getwd()
-knitr::include_graphics(path = paste0(root_dir, "/figuras/fisabior.png"), dpi = 200)
+knitr::include_graphics(path = "figuras/fisabior.png", dpi = 200)
 ```
 
 

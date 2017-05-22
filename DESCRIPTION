@@ -1,7 +1,7 @@
 Package: fisabior
 Type: Package
 Title: Funciones del Área de Desigualdades de FISABIO
-Version: 0.2.2
+Version: 0.3.2
 Authors@R: c(
     person("Miguel Ángel", "Martínez-Beneito", email = "martinez_mig@gva.es",  role = c("aut", "cre")),
     person("Gonzalo", "García-Donato",         email = "garcia_gon@gva.es",    role = c("aut")),
@@ -14,13 +14,13 @@ Authors@R: c(
 Maintainer: Miguel Ángel Martínez-Beneito <martinez_mig@gva.es>
 Description: Colección de funciones de uso común en el Área de Desigualdades de
     FISABIO. Incluye la función 'init_proj()' para crear una estructura unificada de
-    directorios, archivos y funciones comunes, así como la función 'informe()' para
-    generar un informe estadístico en varios formatos.
+    directorios, archivos y funciones comunes, así como las funciones 'informe_*()' para
+    generar informes estadísticos en varios formatos.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
-URL: https://github.com/carlosvergara/fisabioR
-BugReports: ttps://github.com/carlosvergara/fisabioR/issues
+URL: https://github.com/fisabio/fisabior
+BugReports: https://github.com/fisabio/fisabior/issues
 Imports:
     git2r (>= 0.18.0),
     knitr (>= 1.15.1),
@@ -32,6 +32,7 @@ Depends:
 Suggest:
     huxtable (>= 0.1.1),
     sp (>= 1.2-4),
-    RColorBrewer (>= 1.1-2)
+    RColorBrewer (>= 1.1-2),
+    xtable (1.8-2)
 SystemRequirements: git
 RoxygenNote: 6.0.1

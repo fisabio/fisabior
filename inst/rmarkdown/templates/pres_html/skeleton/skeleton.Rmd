@@ -10,7 +10,7 @@ output:
   ioslides_presentation:
     css: pres_html.css
     incremental: true
-    logo: ../../figuras/fisabior.png
+    logo: figuras/fisabior.png
     self_contained: true
     includes:
       in_header: header.html
@@ -23,17 +23,14 @@ csl: apa.csl
 ##                 NO BORRAR ESTA SECCIÓN                ##
 ###########################################################
 library(knitr)
-if (!dir.exists("../../figuras/presentacion"))
-  dir.create("../../figuras/presentacion")
-opts_knit$set(root.dir = normalizePath("../../"),
-              base.dir = normalizePath("../../figuras/presentacion/"))
+opts_knit$set(root.dir = normalizePath("../../"))
 options(formatR.arrow = T, width = 70)
 opts_chunk$set(tidy       = F,
                prompt     = F,
                dev        = "svg",
                dpi        = 100,
-               fig.path   = "../../figuras/presentacion/fig_",
-               cache.path = "../../cache/presentacion/chunk_",
+               fig.path   = "figuras/fig_",
+               cache.path = "cache/chunk_",
                fig.align  = "center",
                fig.show   = "hold",
                fig.width  = 10,
@@ -44,6 +41,25 @@ opts_chunk$set(tidy       = F,
                warning    = F,
                message    = F)
 source("../../configuracion/config.R")
+bloque <- function(texto, tipo = "alerta") {
+  stopifnot(is.character(texto))
+  if (tipo == "alerta") {
+    cat(paste('<div class="alerta">',
+              '<i class="fa fa-exclamation-triangle fa-1x"',
+              'style="color:#f44336" aria-hidden="true"></i>',
+              texto, '</div>'), sep = "  ")
+  } else if (tipo == "exito") {
+    cat(paste('<div class="alerta exito">',
+              '<i class="fa fa-check fa-1x',
+              'text-danger" style="color:#4CAF50" aria-hidden="true"></i>',
+              texto, '</div>'), sep = "  ")
+  } else if (tipo == "info") {
+    cat(paste('<div class="alerta info">',
+              '<i class="fa fa-info fa-1x"',
+              'style="color:#2196F3" aria-hidden="true"></i>',
+              texto, '</div>'), sep = "  ")
+  }
+}
 ###########################################################
 ##              DESDE AQUÍ YA PUEDES BORRAR              ##
 ###########################################################
@@ -109,8 +125,7 @@ par(opar)
 Para cargar imágenes que no procedan del código incrustado en el propio documento lo mejor es utilizar la función `knitr::include_graphics("ruta/a/la/imagen")` en un _chunk_ de código estándar:
 
 ```{r fig_foranea, echo = T, fig.align="center", fig.cap = "Reconóceme..."}
-root_dir <- getwd()
-knitr::include_graphics(path = paste0(root_dir, "/figuras/logo-ccby.png"))
+knitr::include_graphics(path = "figuras/logo-ccby.png")
 ```
 
 
@@ -194,8 +209,7 @@ Esto es muy útil a la hora de trabajar con figuras, pues se puede añadir junto
 ## Presentación a dos columnas: un ejemplo {.columns-2}
 
 ```{r fig_sabio, fig.align="center", echo=FALSE}
-root_dir <- getwd()
-knitr::include_graphics(path = paste0(root_dir, "/figuras/fisabior.png"))
+knitr::include_graphics(path = "figuras/fisabior.png")
 ```
 
 - Este logo,

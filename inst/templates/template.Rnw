@@ -124,7 +124,7 @@
   }
   \fancyfoot[R]{
     \raisebox{-.6\height}{
-      \href{https://creativecommons.org/licenses/by/4.0/}{\includegraphics[width = 2cm]{../../figuras/logo-ccby.png}}
+      \href{https://creativecommons.org/licenses/by/4.0/}{\includegraphics[width = 2cm]{figuras/logo-ccby.png}}
     }
   }
 }
@@ -151,7 +151,7 @@
 %--------------------------------------------------------%
 \usepackage[autostyle = true]{csquotes}
 \usepackage[backend = biber, style = apa, hyperref = true]{biblatex}
-\addbibresource{referencias.bib}
+\addbibresource{referencias_prueba.bib}
 \DeclareLanguageMapping{spanish}{spanish-apa}
 \DefineBibliographyStrings{spanish}{andothers = {et\addabbrvspace al\adddot}}
 
@@ -201,8 +201,10 @@
 
 \begin{document}
 <<setup, include=F, cache=F>>=
+###########################################################
+##                 NO BORRAR ESTA SECCIÓN                ##
+###########################################################
 library(knitr)
-if (!dir.exists("../../figuras/latex")) dir.create("../../figuras/latex")
 options(
   formatR.arrow     = T,
   width             = 80,
@@ -211,9 +213,9 @@ options(
 opts_chunk$set(
   tidy       = T,
   prompt     = F,
-  fig.path   = "../../figuras/latex/fig_",
+  fig.path   = "figuras/fig_",
   dev        = "tikz",
-  cache.path = "../../cache/latex/chunk_",
+  cache.path = "cache/chunk_",
   fig.align  = "center",
   fig.show   = "hold",
   fig.pos    = "h",
@@ -226,26 +228,29 @@ opts_chunk$set(
   warning    = F,
   message    = F
 )
-options(tikzMetricsDictionary = paste0(normalizePath("../../"),
-                                       "/figuras/latex/tikzMetrics"))
+options(tikzMetricsDictionary = paste0(dirname(current_input(T)), "/figuras/tikzMetrics"))
 knit_hooks$set(crop = hook_pdfcrop)
-opts_knit$set(root.dir = normalizePath("../../"))
+opts_knit$set(root.dir = paste0(dirname(current_input(T)), "/../../"),
+              base.dir = dirname(current_input(T)))
 source("../../configuracion/config.R")
+###########################################################
+##              DESDE AQUÍ YA PUEDES BORRAR              ##
+###########################################################
 @
 
 
-  \logotitulo{../../figuras/fisabior.png}
+  \logotitulo{figuras/fisabior.png}
   \maketitle
 
   \begin{abstract}
     \noindent
-    Esta es la plantilla base para la elaboración de informes estadísticos en FISABIO. Todo en ella es editable, bien de forma local (cargando paquetes de \LaTeX \space adicionales, cambiando la configuración de la página, o lo que se te pueda ocurrir para mejorar tu documento), o bien de forma genérica (lo que implica modificar no solo esta plantilla --archivo \texttt{.tex}--, sino también el archivo \texttt{fisabior.cls} asociado y, muy posiblemente, compartir tus sugerencias a través de nuestra cuenta de \href{https://www.github.com/fisabio/fisabior}{GitHub}).
+    Esta es la plantilla base para la elaboración de informes estadísticos en FISABIO. Todo en ella es editable, bien de forma local (cargando paquetes de \LaTeX \space adicionales, cambiando la configuración de la página, o lo que se te pueda ocurrir para mejorar tu documento), o bien de forma genérica (lo que implica modificar no solo esta plantilla --archivo \texttt{.tex}--, sino también compartir tus sugerencias a través de nuestra cuenta de \href{https://www.github.com/fisabio/fisabior}{GitHub}).
   \end{abstract}
 
   \section{Sobre esta plantilla}
   La elaboración de esta plantilla se asocia al paquete de R \texttt{fisabior}, en el que puedes participar abiertamente como desarrollador de cara a mejorar el producto final. Este paquete empieza con el propósito de homogeneizar la elaboración de proyectos estadísticos en la fundación, así como el facilitar una estructura organizativa común que facilite tanto la búsqueda de información dentro de un proyecto, como la colaboración de otros estadísticos de FISABIO en un proyecto abierto.
 
-  Fruto de esta idea inicial, una de las primeras sugerencias que se recibieron y aceptaron fue la de crear una plantilla uniforme que sirviera de base para la elaboración de informes estadísticos, y como suele decirse \emph{de aquellos polvos estos lodos}. Esta plantilla está pensada para ser trabajada directamente a través de R empleando \texttt{knitr}. Para ello se crea un archivo \texttt{.Rnw} a compilar desde R empleando \texttt{knitr} y se copian y pegan los archivos asociados a la plantilla (logotipo de los estadísticos de FISABIO e imagen de \textit{Creative Commons}, así como el archivo \texttt{fisabior.cls} que define la clase empleada por la plantilla y unas referencias bibliográficas de muestra).
+  Fruto de esta idea inicial, una de las primeras sugerencias que se recibieron y aceptaron fue la de crear una plantilla uniforme que sirviera de base para la elaboración de informes estadísticos, y como suele decirse \emph{de aquellos polvos estos lodos}. Esta plantilla está pensada para ser trabajada directamente a través de R empleando \texttt{knitr}. Para ello se crea un archivo \texttt{.Rnw} a compilar desde R empleando \texttt{knitr} y se copian y pegan los archivos asociados a la plantilla (logotipo de los estadísticos de FISABIO e imagen de \textit{Creative Commons}, así como unas referencias bibliográficas de muestra).
 
 
   \section{Acerca de \texttt{knitr}}
@@ -383,7 +388,7 @@ par(opar)
 
   \begin{figure}[h!]
     \centering
-    \includegraphics[width = 7cm]{../../figuras/fisabior.png}
+    \includegraphics[width = 7cm]{figuras/fisabior.png}
     \caption{Un logo molón, y con una leyenda un poco larga (de un mínimo de dos líneas), para ver cómo quedaría una vez compilado. \\ Además, se le ha añadido un segundo párrafo}
     \label{fig:1}
   \end{figure}
@@ -437,5 +442,5 @@ par(opar)
 \end{document}
 
 <<biber, cache=FALSE>>=
-system(paste("biber", paste0("informes/pdf-latex/", sub("\\.Rnw$", "", current_input()))))
+system(paste("biber", sub("\\.Rnw$", "", current_input(T))))
 @

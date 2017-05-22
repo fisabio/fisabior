@@ -1,26 +1,26 @@
-% !TeX program = xelatex
+% !TeX program = XeLaTeX
 
 %--------------------------------------------------------%
 % Clase y página                                         %
 %--------------------------------------------------------%
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(handout)$handout,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{beamer}
-\usetheme[$for(metropolisopts)$$metropolisopts$,$endfor$block=fill, progressbar=frametitle]{metropolis}
-\usepackage{appendixnumberbeamer}
+\documentclass[11pt, a4paper]{article}
+\usepackage[margin = 2cm, bottom = 2.5cm]{geometry}
 
 
 %--------------------------------------------------------%
 % Soporte de fuentes e idiomas                           %
 %--------------------------------------------------------%
+\usepackage[T1]{fontenc}
 \usepackage{
   fontspec,
   polyglossia,
   xltxtra,
-  xunicode
+  xunicode,
+  lmodern
 }
 \setdefaultlanguage{spanish} % Lenguaje por defecto
 \setotherlanguage{english} % Lenguaje adicional
 \PolyglossiaSetup{spanish}{indentfirst = false} % Primera línea tras título-subtítulo no tiene sangría.
-\DeclareTextCommandDefault{\nobreakspace}{\leavevmode\nobreak\ }
 
 
 %--------------------------------------------------------%
@@ -30,23 +30,17 @@
   amsmath,
   mathtools,
   amssymb,
-  nag,
   parskip,
   microtype,
   hyperref,
   letltxmacro
 }
-\hypersetup{
-$if(title-meta)$
-  pdftitle={$title-meta$},
-$endif$
-$if(author-meta)$
-  pdfauthor={$author-meta$},
-$endif$
-$if(keywords)$
-  pdfkeywords={$for(keywords)$$keywords$$sep$; $endfor$},
-$endif$
+\hypersetup{ % Opciones de hipervínculos
   pdfpagemode  = {UseOutlines},
+  colorlinks,
+  linkcolor    = {blue},
+  citecolor    = {blue},
+  urlcolor     = {blue},
   pdfstartview = {FitV},
   unicode,
   breaklinks   = true
@@ -82,7 +76,6 @@ $endif$
   booktabs,
   longtable
 }
-\usepackage[scale=2]{ccicons}
 \usetikzlibrary{arrows, petri, topaths, shapes.geometric}
 \captionsetup{ % Opciones de leyendas
   indention       = .75cm,
@@ -98,6 +91,56 @@ $endif$
 }
 \captionsetup[table]{position   = top, name = Tabla}
 \captionsetup[figure]{position   = bottom, name = Figura}
+
+
+%--------------------------------------------------------%
+% Encabezados y pies de página                           %
+%--------------------------------------------------------%
+\usepackage{
+  fancyhdr,
+  lastpage,
+  stackengine
+}
+
+\setstackEOL{\\}
+\pagestyle{fancy}
+\renewcommand{\headrule}{}
+\renewcommand{\footrule}{}
+\fancyhead{}
+\fancyfoot[L]{}
+\fancyfoot[R]{}
+\fancyfoot[C]{\scriptsize Página \thepage \space de \pageref*{LastPage}}
+\fancypagestyle{plain}{
+  \fancyhead{}
+  \fancyfoot[L]{
+      \scriptsize\vnumber \\ Compilado el \today
+  }
+  \fancyfoot[C]{
+    \raisebox{-.6\height}{
+      \scriptsize Página \thepage \space de \pageref*{LastPage}
+    }
+  }
+  \fancyfoot[R]{
+    \raisebox{-.6\height}{
+      \href{https://creativecommons.org/licenses/by/4.0/}{\includegraphics[width = 2cm]{figuras/logo-ccby.png}}
+    }
+  }
+}
+
+
+%--------------------------------------------------------%
+% Referencias a imágenes                                 %
+%--------------------------------------------------------%
+\setlength{\XeTeXLinkMargin}{1pt}
+\LetLtxMacro\SavedIncludeGraphics\includegraphics
+\def\includegraphics#1#{% #1 catches optional stuff (star/opt. arg.)
+  \IncludeGraphicsAux{#1}%
+}%
+\newcommand*{\IncludeGraphicsAux}[2]{%
+  \XeTeXLinkBox{%
+    \SavedIncludeGraphics#1{#2}%
+  }%
+}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 
@@ -119,7 +162,7 @@ $endif$
 % Numeración de secciones                                %
 %--------------------------------------------------------%
 $if(numbersections)$
-\setcounter{secnumdepth}{4}
+\setcounter{secnumdepth}{3}
 $else$
 \setcounter{secnumdepth}{0}
 $endif$
@@ -128,41 +171,61 @@ $endif$
 %--------------------------------------------------------%
 % Título, autores, filiaciones y versión                 %
 %--------------------------------------------------------%
+\usepackage{titling}
+\usepackage[noblocks]{authblk}
+\renewcommand{\Affilfont}{\small}
+\renewcommand{\Authands}{ \& }
+\newcommand{\logotitulo}[1]{
+  \begin{figure}
+    \href{https://github.com/fisabio/}{\includegraphics[width = 1.5cm]{#1}}
+  \end{figure}
+}
+\newcommand{\corresmail}[2][Dirigir correspondencia a ]{%
+  \gdef\corresponding{{#1}{\href{mailto:#2}{#2} } } }
+\newcommand{\version}[2][Versión del manuscrito: ]{%
+  \gdef\vnumber{{#1}{#2}}}
+\newcommand{\corresponding}{}
+\newcommand{\vnumber}{}
+\pretitle{\begin{center} \scshape \LARGE}
+\posttitle{\par \end{center} }
+\setlength{\droptitle}{-6.8em}
+\predate{\vskip -.5 cm}
+\date{}
+\postdate{}
 $if(title)$
 \title{$title$}
 $endif$
-$if(subtitle)$
-\subtitle{$subtitle$}
-$endif$
+
 $if(author)$
-\author{$for(author)$$author$$sep$ \and $endfor$}
+$for(author)$
+$if(author.affilnumber)$
+$if(author.corresmail)$
+\author[$author.affilnumber$*]{$author.name$}
+\corresmail{$author.corresmail$}
+$else$
+\author[$author.affilnumber$]{$author.name$}
 $endif$
-$if(institute)$
-\institute{$for(institute)$$institute$$sep$ \and $endfor$}
+$else$
+\author{$author.name$}
 $endif$
-\date{$date$}
-\titlegraphic{\hfill\includegraphics[width=1.8cm,height=1.6cm]{../../figuras/fisabior.png}}
-
-\usepackage{textpos}
-\addtobeamertemplate{footline}{}{%
-\begin{textblock*}{100mm}(.03\textwidth,-.8cm)
-\includegraphics[height=.6cm,width=.7cm]{../../figuras/fisabior.png}
-\end{textblock*}}
-
-%--------------------------------------------------------%
-% Bibliografía                                           %
-%--------------------------------------------------------%
-$if(bibliography)$
-\usepackage[autostyle = true]{csquotes}
-\usepackage[backend = biber, style = apa, hyperref = true]{biblatex}
-\DeclareLanguageMapping{spanish}{spanish-apa}
-\DefineBibliographyStrings{spanish}{andothers = {et\addabbrvspace al\adddot}}
-\setbeamertemplate{bibliography item}[text]
-$for(bibliography)$
-\addbibresource{$bibliography$}
 $endfor$
 $endif$
 
+$if(affil)$
+$for(affil)$
+\affil[$affil.number$]{$affil.name$}
+$endfor$
+$for(author)$
+$if(author.corresmail)$
+\affil[*]{\corresponding}
+$endif$
+$endfor$
+$endif$
+
+$if(version)$
+\version{$version$}
+$endif$
+\usepackage[autostyle = true]{csquotes}
 
 %--------------------------------------------------------%
 % Código incrustado para R-Markdown                      %
@@ -170,15 +233,15 @@ $endif$
 \usepackage{
   color,    % R-Markdown
   fancyvrb, % R-Markdown
-  framed   % R-Markdown
+  framed    % R-Markdown
 }
 
 \newcommand{\VerbBar}{|}
 \newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{fontsize=\tiny,commandchars=\\\{\}}
-\setlength{\OuterFrameSep}{2pt}
-\definecolor{shadecolor}{RGB}{236,236,236}
-\newenvironment{Shaded}{\tiny \begin{snugshade}}{\end{snugshade} \normalsize}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\scriptsize \begin{snugshade}}{\end{snugshade} \normalsize}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
@@ -211,25 +274,15 @@ $endif$
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
 
-\newcounter{cont}
 \makeatletter
-\def\verbatim{\tiny\@verbatim \frenchspacing\@vobeyspaces \@xverbatim}
 \patchcmd{\@verbatim}
 {\verbatim@font}
-{\verbatim@font\tiny}
+{\verbatim@font\scriptsize}
 {}{}
-\setbeamertemplate{frametitle continuation}{%
-    \setcounter{cont}{\beamer@endpageofframe}%
-    \addtocounter{cont}{1}%
-    \addtocounter{cont}{-\beamer@startpageofframe}%
-    (\insertcontinuationcount/\arabic{cont})%
-}
-\preto{\@verbatim}{\topsep=-5pt \partopsep=0pt }
 \makeatother
 \addto\captionsspanish{%
   \renewcommand\tablename{Tabla}
 }
-\AtBeginEnvironment{quote}{\footnotesize}
 
 
 %-------------------------------------------%
@@ -237,29 +290,19 @@ $endif$
 %-------------------------------------------%
 \begin{document}
 
+\logotitulo{$logo$}
+
+$if(title)$
 \maketitle
-
-
-$if(toc)$
-\begin{frame}{Índice de contenidos}
-  \setbeamertemplate{section in toc}[sections numbered]
-  \tableofcontents[hideallsubsections]
-\end{frame}
 $endif$
 
-
+$if(abstract)$
+\begin{abstract}
+  \noindent
+  $abstract$
+\end{abstract}
+$endif$
+\setlength\parindent{.5cm}
 $body$
-
-$if(thanks)$
-\section*{Muchas gracias por la atención}\label{atencion}
-$endif$
-
-$if(biblatex)$
-\section*{Referencias bibliográficas}\label{refs-bib}
-\begin{frame}[allowframebreaks]{Referencias bibliográficas}
-\printbibliography[heading=none]
-\end{frame}
-$endif$
-
 
 \end{document}

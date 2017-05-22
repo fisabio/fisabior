@@ -4,7 +4,8 @@
 \alias{init_proj}
 \title{Crea un proyecto fisabior}
 \usage{
-init_proj(proj_nom = NULL, proj_dir = NULL, git = TRUE)
+init_proj(proj_nom = NULL, proj_dir = NULL, git = TRUE,
+  otro_lenguaje = NULL, articulo = FALSE)
 }
 \arguments{
 \item{proj_nom}{Cadena de caracteres con el nombre a asignar al proyecto. Por
@@ -16,18 +17,30 @@ actual de trabajo, devuelto por la función getwd().}
 
 \item{git}{Valor lógico (TRUE o FALSE), indicando si se desea generar un
 repositorio git asociado al proyecto.}
+
+\item{otro_lenguaje}{Vector de cadena de caracteres indicando los lenguajes
+que se emplearán (p. ej., bugs, cpp, stan). Por defecto no se crea ningún
+directorio.}
+
+\item{articulo}{Cadena de caracteres indicando si ha de crearse un directorio
+para almacenar un artículo a enviar, revisado o una copia de imprenta. Por
+defecto no se crea ningún directorio.}
 }
 \value{
 La función crea la siguiente estructura de directorios en
   proj_dir/proj_nom/:
-\itemize{
+  \itemize{
   \item datos/
     \itemize{
       \item brutos/
       \item procesados/
       \item cartografia/
   }
-  \item figuras/
+  \item configuracion/
+  \item r/
+}
+  Opcionalmente, puede crear los siguientes directorios
+\itemize{
   \item informes/
   \itemize{
     \item docx/
@@ -37,16 +50,13 @@ La función crea la siguiente estructura de directorios en
     \item odt/
     \item beamer/
   }
-  \item cache/
   \item src/
   \itemize{
     \item bugs/
     \item cpp/
-    \item jags/
     \item stan/
+    \item ...
   }
-  \item configuracion/
-  \item r/
   \item articulo/
   \itemize{
     \item enviado/
@@ -65,6 +75,9 @@ La función crea la estructura de directorios a partir del nombre del
   proyecto empleando minúsculas, con independencia de si el usuario ha
   introducido el argumento con mayúsculas: P. ej., proj_name = "Proyecto_X"
   siempre será reconocido por la función como proj_name = "proyecto_x".
+
+  Los informes se almacenan, junto con sus figuras y datos de caché (si los
+  hubiera), en el directorio informes y subdirectorio específico al formato.
 }
 \examples{
 \dontrun{

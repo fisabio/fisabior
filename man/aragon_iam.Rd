@@ -4,7 +4,7 @@
 \name{aragon_iam}
 \alias{aragon_iam}
 \title{Mortalidad por IAM en hombres en Aragón (1991-2000)}
-\format{Un Spatial Polygons Data Frame con 729 filas y siete variables:
+\format{Un Spatial Polygons Data Frame (clase ) con 729 filas y siete variables:
 \describe{
   \item{area}{área del municipio}
   \item{perimeter}{perímetro del municipio}
