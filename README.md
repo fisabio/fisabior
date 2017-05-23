@@ -47,7 +47,6 @@ Puedes instalar este paquete empleando la función `install_github()` del paquet
 ```
 install.packages("devtools")
 devtools::install_github("fisabio/fisabior")
-}
 ```
 
 
