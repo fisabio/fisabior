@@ -40,15 +40,14 @@ La función solo funciona si el directorio de trabajo se circunscribe
   \code{xltxtra}, \code{xunicode} y el tema \code{motropolis}.
 
   El proceso genera un documento rmarkdown que produce un PDF tras ser
-  compilado con knitr y XeLaTeX (aunque también se puede seleccionar pdfLaTeX
-  o LuaTeX. La bibliografía se gestiona a través de \code{biblatex} empleando
-  el gestor de referencias \code{biber}, de modo que este último debe estar
-  instalado en el sistema.
+  compilado con knitr y XeLaTeX. La bibliografía se gestiona a través de
+  \code{biblatex} empleando el gestor de referencias \code{biber}, de modo
+  que este último debe estar instalado en el sistema.
 
   Con todo, en primer lugar la función comprueba que el proyecto tenga
   declaradas todas estas opciones (vienen por defecto al emplear
-  \code{\link{init_proj}}) y que el software apropiado esté instalado. Si
-  no hubiera un acuerdo entre lo esperado y lo declarado en las opciones del
+  \code{\link{init_proj}}) y que el software apropiado esté instalado. Si no
+  hubiera un acuerdo entre lo esperado y lo declarado en las opciones del
   proyecto, la función pregunta qué hacer para que, o bien se cambien las
   opciones del proyecto de forma automática o se detenga la ejecución y se
   cambien a mano.

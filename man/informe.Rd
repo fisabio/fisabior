@@ -5,7 +5,7 @@
 \title{Función que devuelve el formato de salida apropiado para generar el informe o
 la presentación en PDF.}
 \usage{
-informe(...)
+informe(beamer = FALSE, ...)
 }
 \arguments{
 \item{...}{Otros argumentos a pasar.}

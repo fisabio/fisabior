@@ -24,8 +24,8 @@ comprueba <- function(file_name = NULL, doc_format = NULL) {
     proj_dir  <- paste0(proj_dir, "/")
   proj_opt    <- readLines(proj_files[grep(".Rproj", proj_files)])
   doc_format  <- tolower(doc_format)
-  if (!any(grepl(doc_format, c("pdf", "latex", "html",
-                               "docx", "odt", "pres_html", "beamer"))))
+  if (!any(grepl(doc_format, c("pdf", "latex", "html", "docx", "odt",
+                               "pres_html", "beamer", "rmd_beamer"))))
     stop("\nEl formato que has escogido no está disponible o es erróneo.",
          "\nLos posibles formatos son: pdf, latex, html, docx,",
          " odt, pres_html o beamer.")
@@ -55,19 +55,34 @@ comprueba <- function(file_name = NULL, doc_format = NULL) {
 #'
 #' @return Objeto con clase "rmarkdown_output_format".
 #'
-informe <- function(...) {
-  template <- system.file("rmarkdown/templates/pdf/resources/template.tex",
-                          package = "fisabior")
-  doc_format <- rmarkdown::pdf_document(
-    template         = template,
-    latex_engine     = "xelatex",
-    citation_package = "none",
-    fig_caption      = TRUE,
-    md_extensions    = "-autolink_bare_uris",
-    keep_tex         = TRUE,
-    ...
-  )
-  doc_format$inherits <- "pdf_document"
+informe <- function(beamer = FALSE, ...) {
+  if (!beamer) {
+    template <- system.file("rmarkdown/templates/pdf/resources/template.tex",
+                            package = "fisabior")
+    doc_format <- rmarkdown::pdf_document(
+      template         = template,
+      latex_engine     = "xelatex",
+      citation_package = "none",
+      fig_caption      = TRUE,
+      md_extensions    = "-autolink_bare_uris",
+      keep_tex         = TRUE,
+      ...
+    )
+    doc_format$inherits <- "pdf_document"
+  } else {
+    template <- system.file("rmarkdown/templates/beamer/resources/template.tex",
+                            package = "fisabior")
+    doc_format <- rmarkdown::beamer_presentation(
+      template         = template,
+      dev              = "tikz",
+      latex_engine     = "xelatex",
+      citation_package = "biblatex",
+      fig_caption      = TRUE,
+      md_extensions    = "-autolink_bare_uris",
+      keep_tex         = TRUE,
+      ...)
+    doc_format$inherits <- "beamer_presentation"
+  }
   return(doc_format)
 }
 
@@ -444,15 +459,14 @@ presentacion_html <- function(file_name = "presentacion") {
 #'   \code{xltxtra}, \code{xunicode} y el tema \code{motropolis}.
 #'
 #'   El proceso genera un documento rmarkdown que produce un PDF tras ser
-#'   compilado con knitr y XeLaTeX (aunque también se puede seleccionar pdfLaTeX
-#'   o LuaTeX. La bibliografía se gestiona a través de \code{biblatex} empleando
-#'   el gestor de referencias \code{biber}, de modo que este último debe estar
-#'   instalado en el sistema.
+#'   compilado con knitr y XeLaTeX. La bibliografía se gestiona a través de
+#'   \code{biblatex} empleando el gestor de referencias \code{biber}, de modo
+#'   que este último debe estar instalado en el sistema.
 #'
 #'   Con todo, en primer lugar la función comprueba que el proyecto tenga
 #'   declaradas todas estas opciones (vienen por defecto al emplear
-#'   \code{\link{init_proj}}) y que el software apropiado esté instalado. Si
-#'   no hubiera un acuerdo entre lo esperado y lo declarado en las opciones del
+#'   \code{\link{init_proj}}) y que el software apropiado esté instalado. Si no
+#'   hubiera un acuerdo entre lo esperado y lo declarado en las opciones del
 #'   proyecto, la función pregunta qué hacer para que, o bien se cambien las
 #'   opciones del proyecto de forma automática o se detenga la ejecución y se
 #'   cambien a mano.
@@ -499,8 +513,8 @@ informe_latex <- function(file_name = "informe") {
 #' @details La función solo funciona si el directorio de trabajo se circunscribe
 #'   a un proyecto de RStudio, es decir, si existe un archivo \emph{*.Rproj} en
 #'   el directorio de trabajo. Si el proyecto se ha creado con
-#'   \code{\link{init_proj}}, esto no debería causar molestias, pues se crea
-#'   un \emph{*.Rproj} por defecto.
+#'   \code{\link{init_proj}}, esto no debería causar molestias, pues se crea un
+#'   \emph{*.Rproj} por defecto.
 #'
 #'   Es necesario tener instalada una distribución LaTeX que incorpore (como
 #'   mínimo) los siguientes paquetes: \code{adjustbox}, \code{amsmath},
@@ -514,10 +528,9 @@ informe_latex <- function(file_name = "informe") {
 #'   \code{xltxtra}, \code{xunicode} y el tema \code{motropolis}.
 #'
 #'   El proceso genera un documento rmarkdown que produce un PDF tras ser
-#'   compilado con knitr y XeLaTeX (aunque también se puede seleccionar pdfLaTeX
-#'   o LuaTeX. La bibliografía se gestiona a través de \code{biblatex} empleando
-#'   el gestor de referencias \code{biber}, de modo que este último debe estar
-#'   instalado en el sistema.
+#'   compilado con knitr y XeLaTeX. La bibliografía se gestiona a través de
+#'   \code{biblatex} empleando el gestor de referencias \code{biber}, de modo
+#'   que este último debe estar instalado en el sistema.
 #'
 #'   Con todo, en primer lugar la función comprueba que el proyecto tenga
 #'   declaradas todas estas opciones (vienen por defecto al emplear
@@ -538,7 +551,7 @@ informe_latex <- function(file_name = "informe") {
 #'           proj_dir = "~/proyectos",
 #'           git      = TRUE)
 #'
-#' presentacion_beamer(file_name  = "informe_proyecto_x")
+#' presentacion_beamer(file_name  = "presentacion_proyecto_x")
 #' }
 presentacion_beamer <- function(file_name = "presentacion") {
   doc_format <- "beamer"
@@ -548,6 +561,73 @@ presentacion_beamer <- function(file_name = "presentacion") {
   report_path <- paste0("informes/presentacion/", file_name, ".Rnw")
   copy_fisabior(from_ = "templates/template_b.Rnw",
                 to_   = report_path)
+  copia_referencias(path = report_path)
+  copia_imagenes(path = report_path)
+}
+
+
+#' Crea una presentación estadística en PDF -- R Markdown -- Beamer
+#'
+#' Crea automáticamente una presentación estadística en PDF -- R Markdown --
+#' Beamer empleando una plantilla base con detalles del grupo. El documento
+#' emplea formato R Markdown y tiene extensión .Rmd.
+#'
+#' @export
+#' @param file_name Cadena de caracteres con el nombre del archivo sin
+#'   extensión. Por defecto, los archivos recibirán un nombre genérico
+#'   \code{informe}.
+#'
+#' @details La función solo funciona si el directorio de trabajo se circunscribe
+#'   a un proyecto de RStudio, es decir, si existe un archivo \emph{*.Rproj} en
+#'   el directorio de trabajo. Si el proyecto se ha creado con
+#'   \code{\link{init_proj}}, esto no debería causar molestias, pues se crea un
+#'   \emph{*.Rproj} por defecto.
+#'
+#'   Es necesario tener instalada una distribución LaTeX que incorpore (como
+#'   mínimo) los siguientes paquetes: \code{adjustbox}, \code{amsmath},
+#'   \code{amssymb}, \code{array}, \code{authblk}, \code{beamer},
+#'   \code{biblatex}, \code{booktabs}, \code{caption}, \code{ccicons},
+#'   \code{csquotes}, \code{float}, \code{fontenc}, \code{fontspec},
+#'   \code{footmisc}, \code{graphicx}, \code{hyperref}, \code{letltxmacro},
+#'   \code{longtable}, \code{lscape}, \code{mathtools}, \code{microtype},
+#'   \code{multirow}, \code{parskip}, \code{polyglossia}, \code{rotating},
+#'   \code{setspace}, \code{tabularx}, \code{textpos}, \code{tikz},
+#'   \code{xltxtra}, \code{xunicode} y el tema \code{motropolis}.
+#'
+#'   El proceso genera un documento rmarkdown que produce un PDF tras ser
+#'   compilado con knitr y XeLaTeX. La bibliografía se gestiona a través de
+#'   \code{biblatex} empleando el gestor de referencias \code{biber}, de modo
+#'   que este último debe estar instalado en el sistema.
+#'
+#'   Con todo, en primer lugar la función comprueba que el proyecto tenga
+#'   declaradas todas estas opciones (vienen por defecto al emplear
+#'   \code{\link{init_proj}}) y que el software apropiado esté instalado. Si
+#'   no hubiera un acuerdo entre lo esperado y lo declarado en las opciones del
+#'   proyecto, la función pregunta qué hacer para que, o bien se cambien las
+#'   opciones del proyecto de forma automática o se detenga la ejecución y se
+#'   cambien a mano.
+#'
+#' @return Crea un documento principal y un conjunto de documentos de respaldo
+#'   (algunos directamente en el directorio de presentacion/latex y otros en los
+#'   directorios de data/cache o figuras/presentacion).
+#'
+#' @examples
+#' \dontrun{
+#' library(fisabior)
+#' init_proj(proj_nom = "proyecto_europeo_X",
+#'           proj_dir = "~/proyectos",
+#'           git      = TRUE)
+#'
+#' markdown_beamer(file_name  = "presentacion_proyecto_x")
+#' }
+markdown_beamer <- function(file_name = "presentacion") {
+  doc_format <- "rmd_beamer"
+  comprueba(file_name = file_name, doc_format = doc_format)
+  if (!dir.exists("informes/presentacion"))
+    dir.create("informes/presentacion", recursive = T)
+  report_path <- paste0("informes/presentacion/", file_name, ".Rmd")
+  rmarkdown::draft(file = report_path, create_dir = FALSE,
+                   template = "beamer", package = "fisabior", edit = FALSE)
   copia_referencias(path = report_path)
   copia_imagenes(path = report_path)
 }
