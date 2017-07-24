@@ -10,11 +10,9 @@ httr::set_config(httr::use_proxy(
 
 # Carga de paquetes -------------------------------------------------------
 pkgs <- c(
-  "knitr",
-  "rmarkdown",
-  "tufte",
   "fisabior"
 )
-pkgs <- sapply(pkgs, function(x)
+sapply(pkgs, function(x)
   suppressPackageStartupMessages(require(x, character.only = T))
 )
+rm(pkgs)

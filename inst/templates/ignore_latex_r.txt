@@ -202,7 +202,6 @@ TSWLatexianTemp*
 ## Editors:
 # WinEdt
 *.bak
-*.sav
 
 # Texpad
 .texpadtmp
@@ -254,4 +253,4 @@ vignettes/*.pdf
 
 # End of https://www.gitignore.io/api/latex,r
 
-/data/**
+/datos/brutos/info/
