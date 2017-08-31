@@ -153,6 +153,8 @@ init_proj <- function(proj_nom      = NULL,
 
   copy_fisabior(from_ = "templates/template.Rproj",
                 to_   = paste0(proj_dir, proj_nom, ".Rproj"))
+  copy_fisabior(from_ = "templates/.lintr",
+                to_   = paste0(proj_dir, ".lintr"))
   copy_fisabior(from_ = "templates/config.R",
                 to_   = paste0(proj_dir, "configuracion/config.R"))
   copy_fisabior(from_ = "templates/README.Rmd",

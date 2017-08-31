@@ -12,7 +12,5 @@ httr::set_config(httr::use_proxy(
 pkgs <- c(
   "fisabior"
 )
-sapply(pkgs, function(x)
-  suppressPackageStartupMessages(require(x, character.only = T))
-)
-rm(pkgs)
+sapply(pkgs, function(x) suppressPackageStartupMessages(require(x, character.only = T)))
+rm(list = ls())
