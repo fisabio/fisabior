@@ -15,9 +15,9 @@ comprueba <- function(file_name = NULL, doc_format = NULL) {
   proj_dir    <- getwd()
   proj_files  <- list.files(proj_dir)
   if (!any(grepl(".Rproj", proj_files)))
-    stop("\nEl directorio de trabajo no contiene ningún proyecto de RStudio.",
+    stop("\nEl directorio de trabajo no contiene ning\u00fan proyecto de RStudio.",
          "\nCambia al directorio principal creado con",
-         " la función fisabior::init_proj()")
+         " la funci\u00f3n fisabior::init_proj()")
   if (is.null(file_name))
     file_name <- "informe"
   if (!grepl("/$", proj_dir))
@@ -26,13 +26,13 @@ comprueba <- function(file_name = NULL, doc_format = NULL) {
   doc_format  <- tolower(doc_format)
   if (!any(grepl(doc_format, c("pdf", "latex", "html", "docx", "odt",
                                "pres_html", "beamer", "rmd_beamer"))))
-    stop("\nEl formato que has escogido no está disponible o es erróneo.",
+    stop("\nEl formato que has escogido no est\u00e1 disponible o es err\u00f3neo.",
          "\nLos posibles formatos son: pdf, latex, html, docx,",
          " odt, pres_html o beamer.")
   if (doc_format %in% c("pdf", "latex", "beamer")) {
     if (!any(grepl("knitr", proj_opt, ignore.case = TRUE))) {
-      stop("\nknitr no es la opción por defecto para compilar archivos LaTeX",
-           "\nVuelve a ejecutar la función cuando lo hayas cambiado en:\n",
+      stop("\nknitr no es la opci\u00f3n por defecto para compilar archivos LaTeX",
+           "\nVuelve a ejecutar la funci\u00f3n cuando lo hayas cambiado en:\n",
            "Tools/Project Options/Sweave/Program Defaults")
     }
   }
@@ -47,6 +47,7 @@ comprueba <- function(file_name = NULL, doc_format = NULL) {
 #' crear un PDF siguiendo el formato de la plantilla de fisabior. Por defecto se
 #' usa XeLaTeX como motor de LaTeX.
 #'
+#' @param beamer ¿Quieres una presentación Beamer?
 #' @param ... Otros argumentos a pasar.
 #' @export
 #'

@@ -19,7 +19,7 @@ opts_chunk$set(tidy       = T,
                fig.show   = "hold",
                fig.width  = 10,
                fig.height = 5,
-               cache      = T,
+               cache      = F,
                par        = T,
                comment    = "#",
                warning    = F,
@@ -30,7 +30,11 @@ source("configuracion/config.R")
 ###########################################################
 ```
 
-## Acerca de este proyecto
+## Descripción del proyecto 
+Describe el propósito de este proyecto para que todos puedan saber cómo usar su contenido. En caso de utilizar Git y tener un repositorio remoto (GitHub, Bitbucket o GitLab), este documento será visible al inicio del repositorio.
+
+
+## Acerca de `fisabior`
 `fisabior` es un paquete de R cuyo único propósito es estructurar y organizar el entorno de trabajo, facilitando el trabajo en equipo. 
 
 El proyecto generado con su función principal (`init_proj()`) se estructura en 8 directorios, lo que permite seguir un criterio unificado a la hora de trabajar en equipo o, sencillamente, retomar un trabajo individual que se aparcase hace algún tiempo. El contenido de cada uno de estos directorios es:

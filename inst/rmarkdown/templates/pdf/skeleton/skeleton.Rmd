@@ -40,7 +40,7 @@ options(
   width                 = 105,
   tikzDefaultEngine     = "xetex"
 )
-opts_chunk$set(tidy       = T,
+opts_chunk$set(tidy       = F,
                prompt     = F,
                fig.path   = "figuras/fig_",
                cache.path = "cache/chunk_",
@@ -53,7 +53,6 @@ opts_chunk$set(tidy       = T,
                cache      = F,
                par        = T,
                comment    = "#",
-               size       = "scriptsize",
                warning    = F,
                message    = F)
 options(tikzMetricsDictionary = paste0(dirname(current_input(T)), "/figuras/tikzMetrics"))

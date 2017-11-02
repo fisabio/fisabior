@@ -8,12 +8,12 @@ author:
     company: "Servicio de Estudios Epidemiológicos y Estadísticas Sanitarias, CSISP-DGSP"
 output:
   ioslides_presentation:
-    css: pres_html.css
+    css: pres_html_NO_ELIMINAR.css
     incremental: true
     logo: figuras/fisabior.png
     self_contained: true
     includes:
-      in_header: header.html
+      in_header: header_NO_ELIMINAR.html
 bibliography: referencias_prueba.bib
 csl: apa.csl
 ---
@@ -35,7 +35,7 @@ opts_chunk$set(tidy       = F,
                fig.show   = "hold",
                fig.width  = 10,
                fig.height = 5,
-               cache      = T,
+               cache      = F,
                par        = T,
                comment    = "#",
                warning    = F,

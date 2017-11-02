@@ -8,6 +8,8 @@ la presentación en PDF.}
 informe(beamer = FALSE, ...)
 }
 \arguments{
+\item{beamer}{¿Quieres una presentación Beamer?}
+
 \item{...}{Otros argumentos a pasar.}
 }
 \value{

@@ -22,7 +22,7 @@ abstract:
   Esta es la plantilla base para la elaboración de informes estadísticos en FISABIO. Todo en ella es editable, bien de forma local (cargando paquetes de adicionales, cambiando la configuración de la página, o lo que se te pueda ocurrir para mejorar tu documento), o bien de forma genérica (lo que implica modificar no solo esta plantilla, sino muy posiblemente compartir tus sugerencias a través de nuestra cuenta de [GitHub](https://www.github.com/fisabio/fisabior).
 output:
   tufte::tufte_html:
-    css: fisabior.css
+    css: fisabior_NO_ELIMINAR.css
     highlight: pygments
 bibliography: referencias_prueba.bib
 csl: apa.csl
@@ -47,7 +47,7 @@ opts_chunk$set(tidy        = F,
                dpi         = 600,
                fig.path    = "figuras/fig_",
                cache.path  = "cache/chunk_",
-               cache       = T,
+               cache       = F,
                par         = T,
                comment     = "#",
                warning     = F,

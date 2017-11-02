@@ -91,23 +91,23 @@ init_proj <- function(proj_nom      = NULL,
   ############################################################################
 
   if (is.null(proj_dir))
-    stop("Indica el directorio que albergará el proyecto (proj_dir).")
+    stop("Indica el directorio que albergar\u00e1 el proyecto (proj_dir).")
   dir_info <- sapply(c(0, 1:2, 4), function(x)
     file.access(names = dirname(proj_dir), mode = x))
   if (!dir.exists(proj_dir)) {
     if (dir_info[1] != 0)
       stop("Revisa el directorio de proyecto que has proporcionado. ",
-           "Quizá el problema sea que no existe el directorio inmediatamente ",
+           "Quiz\u00e1 el problema sea que no existe el directorio inmediatamente ",
            "superior o alguno intermediario...")
     if (any(dir_info[-1] != 0)) {
-      stop("No tienes permisos de ejecución, escritura o lectura en ese ",
+      stop("No tienes permisos de ejecuci\u00f3n, escritura o lectura en ese ",
            "directorio. Prueba con otro...")
     }
     dir.create(proj_dir, recursive = T)
   } else {
     if (any(dir_info[-1] != 0))
       stop("Revisa el directorio de proyecto que has proporcionado. ",
-           "Quizá el problema sea que no existe el directorio inmediatamente ",
+           "Quiz\u00e1 el problema sea que no existe el directorio inmediatamente ",
            "superior o alguno intermediario...")
   }
   if (is.null(proj_nom)) {
@@ -120,9 +120,10 @@ init_proj <- function(proj_nom      = NULL,
   proj_dir <- paste0(proj_dir, proj_nom)
   if (!grepl("/$", proj_dir)) proj_dir <- paste0(proj_dir, "/")
   if (dir.exists(proj_dir))
-    stop("¡El directorio que iba a crearse ya existe!",
+    stop("\u00a1El directorio que iba a crearse ya existe!",
          "Marca una ruta o nombre diferente.")
   dir.create(proj_dir)
+
 
   ############################################################################
   #                                                                          #
@@ -145,6 +146,7 @@ init_proj <- function(proj_nom      = NULL,
     sub_dirs <- c(sub_dirs, paste0("articulo/", c("enviado", "revision", "proof")))
   invisible(sapply(sub_dirs, dir.create, recursive = T))
 
+
   ############################################################################
   #                                                                          #
   # Copia de archivos                                                        #
@@ -153,7 +155,7 @@ init_proj <- function(proj_nom      = NULL,
 
   copy_fisabior(from_ = "templates/template.Rproj",
                 to_   = paste0(proj_dir, proj_nom, ".Rproj"))
-  copy_fisabior(from_ = "templates/.lintr",
+  copy_fisabior(from_ = "templates/lintr",
                 to_   = paste0(proj_dir, ".lintr"))
   copy_fisabior(from_ = "templates/config.R",
                 to_   = paste0(proj_dir, "configuracion/config.R"))
@@ -161,11 +163,16 @@ init_proj <- function(proj_nom      = NULL,
                 to_   = paste0(proj_dir, "README.Rmd"))
   knitr::knit(paste0(proj_dir, "README.Rmd"),
               paste0(proj_dir, "README.md"), quiet = T)
-  sample_scripts <- paste0("r/", c("importar_datos.R", "depurar_datos.R",
-                           "descriptiva.R", "analisis.R"))
-  invisible(sapply(sample_scripts, function(x) {
-    writeLines("\nsource('configuracion/config.R')", paste0(proj_dir, x))
-  }))
+  sample_scripts <- c("configuracion/config.R",
+                      paste0("r/", c("01_importar_datos.R","02_depurar_datos.R",
+                                     "03_descriptiva.R",   "04_analisis.R")))
+  for (i in seq_along(sample_scripts)[-1]) {
+    writeLines(
+      text = paste0("\nsource(\"", sample_scripts[i - 1], "\")\n\n"),
+      con  = paste0(proj_dir, sample_scripts[i])
+    )
+  }
+
 
   ############################################################################
   #                                                                          #
@@ -187,7 +194,7 @@ init_proj <- function(proj_nom      = NULL,
     git_exist <- file.exists(Sys.which("git"))
   }
   if (!git_exist && git == TRUE) {
-    warning("No tienes instalado git, así que no puedo crear el repositorio.")
+    warning("No tienes instalado git, as\u00ed que no puedo crear el repositorio.")
   } else if (git == TRUE) {
     if (git2r::in_repository(proj_dir)) {
       warning("Ya exite el repositorio git: no se hace nada.")
@@ -200,6 +207,6 @@ init_proj <- function(proj_nom      = NULL,
                               message = "Primer commit: creo proyecto",
                               all     = TRUE))
     }
-  } else message("Proyecto configurado sin git: puedes emplearlo más adelante.")
+  } else message("Proyecto configurado sin git: puedes emplearlo m\u00e1s adelante.")
   message("No olvides editar el archivo README para describir el proyecto.")
 }

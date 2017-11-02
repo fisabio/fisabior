@@ -11,7 +11,7 @@ abstract:
   Esta es la plantilla base para la elaboración de informes estadísticos en FISABIO. Todo en ella es editable, bien de forma local (cargando paquetes de \LaTeX adicionales, cambiando la configuración de la página, o lo que se te pueda ocurrir para mejorar tu documento), o bien de forma genérica (lo que implica modificar no solo esta plantilla --archivo ``.tex``--, sino también el archivo ``fisabior.cls`` asociado y, muy posiblemente, compartir tus sugerencias a través de nuestra cuenta de [GitHub](https://www.github.com/fisabio/fisabior).
 output: 
   word_document:
-    reference_docx: template_fisabior.docx
+    reference_docx: template_fisabior_NO_ELIMINAR.docx
     highlight: 'pygments'
 bibliography: referencias_prueba.bib
 csl: apa.csl
@@ -27,7 +27,7 @@ options(
   formatR.arrow         = T,
   width                 = 70
 )
-opts_chunk$set(tidy       = T,
+opts_chunk$set(tidy       = F,
                dev        = 'png',
                dpi        = 600,
                prompt     = F,
@@ -35,7 +35,7 @@ opts_chunk$set(tidy       = T,
                cache.path = 'cache/chunk_',
                fig.width  = 6.5,
                fig.height = 4,
-               cache      = T, 
+               cache      = F, 
                par        = T,
                comment    = '#',
                warning    = F,
