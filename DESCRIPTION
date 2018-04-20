@@ -1,7 +1,7 @@
 Package: fisabior
 Type: Package
 Title: Funciones del Área de Desigualdades de FISABIO
-Version: 0.3.3
+Version: 0.3.4
 Authors@R: c(
     person("Miguel Ángel", "Martínez-Beneito", email = "martinez_mig@gva.es",  role = c("aut", "cre")),
     person("Gonzalo", "García-Donato",         email = "garcia_gon@gva.es",    role = c("aut")),
@@ -25,6 +25,7 @@ Imports:
     git2r (>= 0.18.0),
     knitr (>= 1.15.1),
     rmarkdown (>= 1.4),
+    rstudioapi (>= 0.7),
     tikzDevice (>= 0.10-1),
     tufte (>= 0.2)
 Depends:

@@ -153,8 +153,7 @@ init_proj <- function(proj_nom      = NULL,
   #                                                                          #
   ############################################################################
 
-  copy_fisabior(from_ = "templates/template.Rproj",
-                to_   = paste0(proj_dir, proj_nom, ".Rproj"))
+  rstudioapi::initializeProject(proj_dir)
   copy_fisabior(from_ = "templates/lintr",
                 to_   = paste0(proj_dir, ".lintr"))
   copy_fisabior(from_ = "templates/config.R",

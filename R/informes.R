@@ -187,6 +187,11 @@ informe_pdf <- function(file_name = "informe") {
   copia_referencias(path = report_path)
   copia_csl(path = report_path)
   copia_imagenes(path = report_path)
+  if (rstudioapi::isAvailable()) {
+    rstudioapi::navigateToFile(report_path)
+  } else {
+    utils::file.edit(report_path)
+  }
 }
 
 
@@ -244,6 +249,11 @@ informe_odt <- function(file_name = "informe") {
   copia_referencias(path = report_path)
   copia_csl(path = report_path)
   copia_imagenes(path = report_path)
+  if (rstudioapi::isAvailable()) {
+    rstudioapi::navigateToFile(report_path)
+  } else {
+    utils::file.edit(report_path)
+  }
 }
 
 
@@ -301,6 +311,11 @@ informe_docx <- function(file_name = "informe") {
   copia_referencias(path = report_path)
   copia_csl(path = report_path)
   copia_imagenes(path = report_path)
+  if (rstudioapi::isAvailable()) {
+    rstudioapi::navigateToFile(report_path)
+  } else {
+    utils::file.edit(report_path)
+  }
 }
 
 
@@ -358,6 +373,11 @@ informe_html <- function(file_name = "informe") {
   copia_referencias(path = report_path)
   copia_csl(path = report_path)
   copia_imagenes(path = report_path)
+  if (rstudioapi::isAvailable()) {
+    rstudioapi::navigateToFile(report_path)
+  } else {
+    utils::file.edit(report_path)
+  }
 }
 
 
@@ -427,6 +447,11 @@ presentacion_html <- function(file_name = "presentacion") {
   copia_referencias(path = report_path)
   copia_csl(path = report_path)
   copia_imagenes(path = report_path)
+  if (rstudioapi::isAvailable()) {
+    rstudioapi::navigateToFile(report_path)
+  } else {
+    utils::file.edit(report_path)
+  }
 }
 
 
@@ -495,6 +520,11 @@ informe_latex <- function(file_name = "informe") {
                 to_   = report_path)
   copia_referencias(path = report_path)
   copia_imagenes(path = report_path)
+  if (rstudioapi::isAvailable()) {
+    rstudioapi::navigateToFile(report_path)
+  } else {
+    utils::file.edit(report_path)
+  }
 }
 
 
@@ -564,6 +594,11 @@ presentacion_beamer <- function(file_name = "presentacion") {
                 to_   = report_path)
   copia_referencias(path = report_path)
   copia_imagenes(path = report_path)
+  if (rstudioapi::isAvailable()) {
+    rstudioapi::navigateToFile(report_path)
+  } else {
+    utils::file.edit(report_path)
+  }
 }
 
 
@@ -631,4 +666,9 @@ markdown_beamer <- function(file_name = "presentacion") {
                    template = "beamer", package = "fisabior", edit = FALSE)
   copia_referencias(path = report_path)
   copia_imagenes(path = report_path)
+  if (rstudioapi::isAvailable()) {
+    rstudioapi::navigateToFile(report_path)
+  } else {
+    utils::file.edit(report_path)
+  }
 }
